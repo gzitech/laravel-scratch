@@ -11,5 +11,18 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+mix
+    .sass('resources/sass/app.scss', 'public/css')
+    .js('resources/js/app.js', 'public/js')
+    .version()
+    .webpackConfig({
+        resolve: {
+            modules: [
+                path.resolve(__dirname, 'resources/js/ssky'),
+                'node_modules'
+            ],
+            alias: {
+                'vue$': mix.inProduction() ? 'vue/dist/vue.min' : 'vue/dist/vue.js'
+            }
+        }
+    });
