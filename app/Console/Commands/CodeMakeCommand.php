@@ -92,10 +92,12 @@ class CodeMakeCommand extends Command
         $this->pluralStudlyName = Str::plural($this->studlyName);
         $this->snakePluralStudlyName = Str::snake($this->pluralStudlyName);
 
-        $this->info("studlyName: " . $this->studlyName);
-        $this->info("snakeStudlyName: " . $this->snakeStudlyName);
-        $this->info("pluralStudlyName: " . $this->pluralStudlyName);
-        $this->info("snakePluralStudlyName: " . $this->snakePluralStudlyName);
+        if($this->option('check')) {
+            $this->info("studlyName: " . $this->studlyName);
+            $this->info("snakeStudlyName: " . $this->snakeStudlyName);
+            $this->info("pluralStudlyName: " . $this->pluralStudlyName);
+            $this->info("snakePluralStudlyName: " . $this->snakePluralStudlyName);
+        }
 
         $class = $this->modelNamespace . '\\' . $this->studlyName;
 
@@ -143,6 +145,11 @@ class CodeMakeCommand extends Command
     protected function save($path, $content)
     {
         if(empty($content)) return;
+
+        if($this->option('check')) {
+            $this->info("create: " . substr($path, strlen(base_path())));
+            return "";
+        }
 
         if($this->option('force')) {
             $this->file->put($path, $content);

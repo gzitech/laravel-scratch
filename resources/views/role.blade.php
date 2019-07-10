@@ -5,12 +5,12 @@
     <div class="row justify-content-center">
         @include('nav.left')
         @vueif
-        <ssky-user-list inline-template :paginate="{{ $users->toJson() }}">
+        <ssky-role-list inline-template :paginate="{{ $roles->toJson() }}">
             @vuend
             <div class="col-md-10">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item active" aria-current="page">User</li>
+                        <li class="breadcrumb-item active" aria-current="page">Role</li>
                     </ol>
                 </nav>
                 <div class="card">
@@ -19,8 +19,8 @@
 
                         </div>
                         <div class="nav ml-auto">
-                            <a href="/user/create" role="button" class="btn btn-primary btn-sm" @vueif
-                                @click.prevent="showUserCreateForm" @vuend>Create</a>
+                            <a href="/role/create" role="button" class="btn btn-primary btn-sm" @vueif
+                                @click.prevent="showRoleCreateForm" @vuend>Create</a>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -29,12 +29,8 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Id</th>
-<th scope="col">First Name</th>
-<th scope="col">Last Name</th>
-<th scope="col">Email</th>
-<th scope="col">Email Verified At</th>
-<th scope="col">Password</th>
-<th scope="col">Remember Token</th>
+<th scope="col">Role Name</th>
+<th scope="col">Role Description</th>
 <th scope="col">Right</th>
 <th scope="col">Deleted At</th>
 <th scope="col">Created At</th>
@@ -44,54 +40,46 @@
                             </thead>
                             <tbody>
                                 @vueif
-                                <tr v-for="user in users" :key="user.id">
-                                    <th scope="row">@{{ user.id }}</th>
-                                     <td>@{{ user.id }}</td>
- <td>@{{ user.first_name }}</td>
- <td>@{{ user.last_name }}</td>
- <td>@{{ user.email }}</td>
- <td>@{{ user.email_verified_at }}</td>
- <td>@{{ user.password }}</td>
- <td>@{{ user.remember_token }}</td>
- <td>@{{ user.right }}</td>
- <td>@{{ user.deleted_at }}</td>
- <td>@{{ user.created_at }}</td>
- <td>@{{ user.updated_at }}</td>
+                                <tr v-for="role in roles" :key="role.id">
+                                    <th scope="row">@{{ role.id }}</th>
+                                     <td>@{{ role.id }}</td>
+ <td>@{{ role.role_name }}</td>
+ <td>@{{ role.role_description }}</td>
+ <td>@{{ role.right }}</td>
+ <td>@{{ role.deleted_at }}</td>
+ <td>@{{ role.created_at }}</td>
+ <td>@{{ role.updated_at }}</td>
                                     <td class="text-md-right">
-                                        <a :href="showUrl(user.id)" title="Show"
+                                        <a :href="showUrl(role.id)" title="Show"
                                             class="btn btn-outline-primary"><i
-                                                class="fa fa-user-o"></i></a>
+                                                class="fa fa-role-o"></i></a>
                                         <a href="#edit" title="Edit" class="btn btn-outline-primary"
-                                            @click.prevent="showUserEditForm(user)"><i
+                                            @click.prevent="showRoleEditForm(role)"><i
                                                 class="fa fa-pencil"></i></a>
                                         <a href="#del" title="Destroy" class="btn btn-outline-danger"
-                                            @click.prevent="showUserDestroyConfirm(user)"><i
+                                            @click.prevent="showRoleDestroyConfirm(role)"><i
                                                 class="fa fa-trash-o"></i></a>
                                     </td>
                                 </tr>
                                 @vuend
                                 @noneif
-                                @foreach ($users as $user)
+                                @foreach ($roles as $role)
                                 <tr>
-                                    <th scope="row">{{ $user->id }}</th>
-                                     <td>{{ $user->id }}</td>
- <td>{{ $user->first_name }}</td>
- <td>{{ $user->last_name }}</td>
- <td>{{ $user->email }}</td>
- <td>{{ $user->email_verified_at }}</td>
- <td>{{ $user->password }}</td>
- <td>{{ $user->remember_token }}</td>
- <td>{{ $user->right }}</td>
- <td>{{ $user->deleted_at }}</td>
- <td>{{ $user->created_at }}</td>
- <td>{{ $user->updated_at }}</td>
+                                    <th scope="row">{{ $role->id }}</th>
+                                     <td>{{ $role->id }}</td>
+ <td>{{ $role->role_name }}</td>
+ <td>{{ $role->role_description }}</td>
+ <td>{{ $role->right }}</td>
+ <td>{{ $role->deleted_at }}</td>
+ <td>{{ $role->created_at }}</td>
+ <td>{{ $role->updated_at }}</td>
                                     <td class="text-md-right">
-                                        <a href="/user/{{ $user->id }}" title="Show"
+                                        <a href="/role/{{ $role->id }}" title="Show"
                                             class="btn btn-outline-primary"><i
-                                                class="fa fa-user-o"></i></a>
-                                        <a href="/user/{{ $user->id }}/edit" title="Edit"
+                                                class="fa fa-role-o"></i></a>
+                                        <a href="/role/{{ $role->id }}/edit" title="Edit"
                                             class="btn btn-outline-primary"><i class="fa fa-pencil"></i></a>
-                                        <a href="/user/{{ $user->id }}/destroy"
+                                        <a href="/role/{{ $role->id }}/destroy"
                                             title="Destroy" class="btn btn-outline-danger"><i
                                                 class="fa fa-trash-o"></i></a>
                                     </td>
@@ -101,24 +89,24 @@
                             </tbody>
                         </table>
                     </div>
-                    @if($users->previousPageUrl() || $users->nextPageUrl())
+                    @if($roles->previousPageUrl() || $roles->nextPageUrl())
                     <div class="card-footer d-flex">
                         <div class="nav mr-auto">
 
                         </div>
                         <div class="nav ml-auto">
-                            {{ $users->links() }}
+                            {{ $roles->links() }}
                         </div>
                     </div>
                     @endif
                 </div>
                 @vueif
-                <ssky-user-create inline-template :old="{}" :errors="{}">
-                    <div class="modal" tabindex="-1" role="dialog" id="user-create-form">
+                <ssky-role-create inline-template :old="{}" :errors="{}">
+                    <div class="modal" tabindex="-1" role="dialog" id="role-create-form">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
-                                <form method="POST" action="{{ route('user.index') }}"
-                                    @submit="validateUserCreateForm">
+                                <form method="POST" action="{{ route('role.index') }}"
+                                    @submit="validateRoleCreateForm">
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title">
@@ -129,11 +117,11 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        @include('user.create-form')
+                                        @include('role.create-form')
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary"
-                                            :disabled="userCreateForm.busy">{{ __('Save') }}</button>
+                                            :disabled="roleCreateForm.busy">{{ __('Save') }}</button>
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Close</button>
                                     </div>
@@ -141,13 +129,13 @@
                             </div>
                         </div>
                     </div>
-                </ssky-user-create>
-                <ssky-user-edit inline-template :user="user" :old="{}"
-                    :errors="{}" @user-updated="updatedUser">
-                    <div class="modal" tabindex="-1" role="dialog" id="user-edit-form">
+                </ssky-role-create>
+                <ssky-role-edit inline-template :role="role" :old="{}"
+                    :errors="{}" @role-updated="updatedRole">
+                    <div class="modal" tabindex="-1" role="dialog" id="role-edit-form">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
-                                <form method="POST" action="#update" @submit="validateUserEditForm">
+                                <form method="POST" action="#update" @submit="validateRoleEditForm">
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title">
@@ -158,11 +146,11 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        @include('user.edit-form')
+                                        @include('role.edit-form')
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary"
-                                            :disabled="userEditForm.busy">{{ __('Update') }}</button>
+                                            :disabled="roleEditForm.busy">{{ __('Update') }}</button>
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Close</button>
                                     </div>
@@ -170,8 +158,8 @@
                             </div>
                         </div>
                     </div>
-                </ssky-user-edit>
-                <div class="modal" tabindex="-1" role="dialog" id="user-destroy-confirm">
+                </ssky-role-edit>
+                <div class="modal" tabindex="-1" role="dialog" id="role-destroy-confirm">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <form method="POST" action="#destroy">
@@ -179,7 +167,7 @@
                                 @method('DELETE')
                                 <div class="modal-header">
                                     <h5 class="modal-title">
-                                        <strong>{{ __("Are you sure delete this user?") }}</strong>
+                                        <strong>{{ __("Are you sure delete this role?") }}</strong>
                                     </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
@@ -189,67 +177,43 @@
                                     <div class="form-group row">
     <label class="col-md-4 col-form-label text-md-right">{{ __('Id') }}</label>
     <div class="col-md-6">
-        <div class="form-control">@{{user.id}}</div>
+        <div class="form-control">@{{role.id}}</div>
     </div>
 </div>
 <div class="form-group row">
-    <label class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>
+    <label class="col-md-4 col-form-label text-md-right">{{ __('Role Name') }}</label>
     <div class="col-md-6">
-        <div class="form-control">@{{user.first_name}}</div>
+        <div class="form-control">@{{role.role_name}}</div>
     </div>
 </div>
 <div class="form-group row">
-    <label class="col-md-4 col-form-label text-md-right">{{ __('Last Name') }}</label>
+    <label class="col-md-4 col-form-label text-md-right">{{ __('Role Description') }}</label>
     <div class="col-md-6">
-        <div class="form-control">@{{user.last_name}}</div>
-    </div>
-</div>
-<div class="form-group row">
-    <label class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label>
-    <div class="col-md-6">
-        <div class="form-control">@{{user.email}}</div>
-    </div>
-</div>
-<div class="form-group row">
-    <label class="col-md-4 col-form-label text-md-right">{{ __('Email Verified At') }}</label>
-    <div class="col-md-6">
-        <div class="form-control">@{{user.email_verified_at}}</div>
-    </div>
-</div>
-<div class="form-group row">
-    <label class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-    <div class="col-md-6">
-        <div class="form-control">@{{user.password}}</div>
-    </div>
-</div>
-<div class="form-group row">
-    <label class="col-md-4 col-form-label text-md-right">{{ __('Remember Token') }}</label>
-    <div class="col-md-6">
-        <div class="form-control">@{{user.remember_token}}</div>
+        <div class="form-control">@{{role.role_description}}</div>
     </div>
 </div>
 <div class="form-group row">
     <label class="col-md-4 col-form-label text-md-right">{{ __('Right') }}</label>
     <div class="col-md-6">
-        <div class="form-control">@{{user.right}}</div>
+        <div class="form-control">@{{role.right}}</div>
     </div>
 </div>
 <div class="form-group row">
     <label class="col-md-4 col-form-label text-md-right">{{ __('Deleted At') }}</label>
     <div class="col-md-6">
-        <div class="form-control">@{{user.deleted_at}}</div>
+        <div class="form-control">@{{role.deleted_at}}</div>
     </div>
 </div>
 <div class="form-group row">
     <label class="col-md-4 col-form-label text-md-right">{{ __('Created At') }}</label>
     <div class="col-md-6">
-        <div class="form-control">@{{user.created_at}}</div>
+        <div class="form-control">@{{role.created_at}}</div>
     </div>
 </div>
 <div class="form-group row">
     <label class="col-md-4 col-form-label text-md-right">{{ __('Updated At') }}</label>
     <div class="col-md-6">
-        <div class="form-control">@{{user.updated_at}}</div>
+        <div class="form-control">@{{role.updated_at}}</div>
     </div>
 </div>
                                 </div>
@@ -264,7 +228,7 @@
                 @vuend
             </div>
             @vueif
-        </ssky-user-list>
+        </ssky-role-list>
         @vuend
     </div>
 </div>
