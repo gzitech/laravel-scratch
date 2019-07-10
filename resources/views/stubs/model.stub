@@ -1,0 +1,176 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        @include('nav.left')
+        @vueif
+        <ssky-#snakeStudlyName#-list inline-template :paginate="{{ $#snakePluralStudlyName#->toJson() }}">
+            @vuend
+            <div class="col-md-10">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">#studlyName#</li>
+                    </ol>
+                </nav>
+                <div class="card">
+                    <div class="card-header d-flex">
+                        <div class="nav mr-auto">
+
+                        </div>
+                        <div class="nav ml-auto">
+                            <a href="/#snakeStudlyName#/create" role="button" class="btn btn-primary btn-sm" @vueif
+                                @click.prevent="show#studlyName#CreateForm" @vuend>Create</a>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    #model.table.header#
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @vueif
+                                <tr v-for="#snakeStudlyName# in #snakePluralStudlyName#" :key="#snakeStudlyName#.id">
+                                    <th scope="row">@{{ #snakeStudlyName#.id }}</th>
+                                    #model.table.item.vue#
+                                    <td class="text-md-right">
+                                        <a :href="showUrl(#snakeStudlyName#.id)" title="Show"
+                                            class="btn btn-outline-primary"><i
+                                                class="fa fa-#snakeStudlyName#-o"></i></a>
+                                        <a href="#edit" title="Edit" class="btn btn-outline-primary"
+                                            @click.prevent="show#studlyName#EditForm(#snakeStudlyName#)"><i
+                                                class="fa fa-pencil"></i></a>
+                                        <a href="#del" title="Destroy" class="btn btn-outline-danger"
+                                            @click.prevent="show#studlyName#DestroyConfirm(#snakeStudlyName#)"><i
+                                                class="fa fa-trash-o"></i></a>
+                                    </td>
+                                </tr>
+                                @vuend
+                                @noneif
+                                @foreach ($#snakePluralStudlyName# as $#snakeStudlyName#)
+                                <tr>
+                                    <th scope="row">{{ $#snakeStudlyName#->id }}</th>
+                                    #model.table.item#
+                                    <td class="text-md-right">
+                                        <a href="/#snakeStudlyName#/{{ $#snakeStudlyName#->id }}" title="Show"
+                                            class="btn btn-outline-primary"><i
+                                                class="fa fa-#snakeStudlyName#-o"></i></a>
+                                        <a href="/#snakeStudlyName#/{{ $#snakeStudlyName#->id }}/edit" title="Edit"
+                                            class="btn btn-outline-primary"><i class="fa fa-pencil"></i></a>
+                                        <a href="/#snakeStudlyName#/{{ $#snakeStudlyName#->id }}/destroy"
+                                            title="Destroy" class="btn btn-outline-danger"><i
+                                                class="fa fa-trash-o"></i></a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                                @nonend
+                            </tbody>
+                        </table>
+                    </div>
+                    @if($#snakePluralStudlyName#->previousPageUrl() || $#snakePluralStudlyName#->nextPageUrl())
+                    <div class="card-footer d-flex">
+                        <div class="nav mr-auto">
+
+                        </div>
+                        <div class="nav ml-auto">
+                            {{ $#snakePluralStudlyName#->links() }}
+                        </div>
+                    </div>
+                    @endif
+                </div>
+                @vueif
+                <ssky-#snakeStudlyName#-create inline-template :old="{}" :errors="{}">
+                    <div class="modal" tabindex="-1" role="dialog" id="#snakeStudlyName#-create-form">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <form method="POST" action="{{ route('#snakeStudlyName#.index') }}"
+                                    @submit="validate#studlyName#CreateForm">
+                                    @csrf
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">
+                                            {{ __('Create') }}
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        @include('#snakeStudlyName#.create-form')
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary"
+                                            :disabled="#snakeStudlyName#CreateForm.busy">{{ __('Save') }}</button>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </ssky-#snakeStudlyName#-create>
+                <ssky-#snakeStudlyName#-edit inline-template :#snakeStudlyName#="#snakeStudlyName#" :old="{}"
+                    :errors="{}" @#snakeStudlyName#-updated="updated#studlyName#">
+                    <div class="modal" tabindex="-1" role="dialog" id="#snakeStudlyName#-edit-form">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <form method="POST" action="#update" @submit="validate#studlyName#EditForm">
+                                    @csrf
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">
+                                            {{ __('Edit') }}
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        @include('#snakeStudlyName#.edit-form')
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary"
+                                            :disabled="#snakeStudlyName#EditForm.busy">{{ __('Update') }}</button>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </ssky-#snakeStudlyName#-edit>
+                <div class="modal" tabindex="-1" role="dialog" id="#snakeStudlyName#-destroy-confirm">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form method="POST" action="#destroy">
+                                @csrf
+                                @method('DELETE')
+                                <div class="modal-header">
+                                    <h5 class="modal-title">
+                                        <strong>{{ __("Are you sure delete this #snakeStudlyName#?") }}</strong>
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    #model.table.confirm.item#
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">{{ __('Delete') }}</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                @vuend
+            </div>
+            @vueif
+        </ssky-#snakeStudlyName#-list>
+        @vuend
+    </div>
+</div>
+@endsection

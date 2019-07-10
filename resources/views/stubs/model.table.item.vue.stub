@@ -1,0 +1,1 @@
+ <td>@{{ #snakeStudlyName#.#ColumnName# }}</td>

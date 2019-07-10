@@ -1,0 +1,22 @@
+<div class="form-group row">
+    <label for="#ColumnName#" class="col-md-4 col-form-label text-md-right">{{ __('#ColumnTitle#') }}</label>
+
+    <div class="col-md-6">
+        @vueif
+        <input id="#ColumnName#" type="text" class="form-control" name="#ColumnName#" v-model="#snakeStudlyName#EditForm.#ColumnName#"
+            :class="{'is-invalid': #snakeStudlyName#EditForm.errors.has('#ColumnName#')}" required autocomplete="#ColumnName#" autofocus>
+        <span class="invalid-feedback" role="alert" v-show="#snakeStudlyName#EditForm.errors.has('#ColumnName#')">
+            <strong>@{{ #snakeStudlyName#EditForm.errors.get('#ColumnName#') }}</strong>
+        </span>
+        @vuelse
+        <input id="#ColumnName#" type="text" class="form-control @error('#ColumnName#') is-invalid @enderror"
+            name="#ColumnName#" value="{{ old('#ColumnName#') ?? $#snakeStudlyName#->#ColumnName# }}" required autocomplete="#ColumnName#"
+            autofocus>
+        @error('#ColumnName#')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+        @vuend
+    </div>
+</div>
