@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
@@ -28,6 +29,7 @@ class CodeMakeCommand extends Command
     {--p|model-path=app : Specify model directory}
     {--s|model-namespace=App : Specify model namespace}
     {--c|check : Only show you what will create without write}
+    {--d|delete : Delete all files base on rules}
     {--f|force : Overwrite existing code by default}';
 
     /**
@@ -37,6 +39,9 @@ class CodeMakeCommand extends Command
      */
     protected $description = 'Scaffold code for you base on models';
 
+    /**
+     * use $this->compileFile() to compile.
+     */
     protected $compileFiles = [
         //views
         'resources/views/stubs/model.stub' => 'resources/views/#snakeStudlyName#.blade.php',
@@ -52,10 +57,17 @@ class CodeMakeCommand extends Command
         'resources/js/stubs/components/edit.stub' => 'resources/js/components/#snakeStudlyName#/edit.js',
     ];
 
+    /**
+     * use $this->compileDetailFile() to compile.
+     */
     protected $compileDetailFiles = [
         //views
         'resources/views/stubs/create-form.stub' => 'resources/views/#snakeStudlyName#/create-form.blade.php',
         'resources/views/stubs/edit-form.stub' => 'resources/views/#snakeStudlyName#/edit-form.blade.php',
+    ];
+
+    protected $ignoreFieldNames = [
+        'id', 'email_verified_at', 'remember_token', 'right', 'deleted_at', 'created_at', 'updated_at', 'password'
     ];
 
     /**
@@ -125,6 +137,8 @@ class CodeMakeCommand extends Command
             $tableName = $obj->getTable();
             $columns = Schema::getColumnListing($tableName);
 
+            $columns = array_diff($columns, $this->ignoreFieldNames);
+
             $this->generateFile($columns);
 
         } else {
@@ -136,12 +150,13 @@ class CodeMakeCommand extends Command
 
         if($this->option('check')) {
             $this->info("will create:");
-            foreach($this->compileFiles as $src=>$target) {
+
+            foreach($this->compileDetailFiles as $src=>$target) {
                 $target = $this->replaceModelName($target);
                 $this->info("$target");
             }
 
-            foreach($this->compileDetailFiles as $src=>$target) {
+            foreach($this->compileFiles as $src=>$target) {
                 $target = $this->replaceModelName($target);
                 $this->info("$target");
             }
@@ -149,27 +164,48 @@ class CodeMakeCommand extends Command
             return "";
         }
 
-        if($this->option('force')) {
+        if($this->option('delete')) {
+
+            foreach($this->compileDetailFiles as $src=>$target) {
+                $target = $this->replaceModelName($target);
+                $this->file->delete($target);
+            }
+
             foreach($this->compileFiles as $src=>$target) {
+                $target = $this->replaceModelName($target);
+                $this->file->delete($target);
+            }
+
+            return "";
+        }
+
+        if($this->option('force')) {
+
+            foreach($this->compileDetailFiles as $src=>$target) {
+                $target = $this->replaceModelName($target);
+                $content = $this->compileDetailFile($src, $columns);
+                $this->save($target, $content);
+            }
+
+            foreach($this->compileFiles as $src=>$target) {
+                $target = $this->replaceModelName($target);
                 $content = $this->compileFile($src, $columns);
                 $this->save($target, $content);
             }
 
-            foreach($this->compileDetailFiles as $src=>$target) {
-                $content = $this->compileDetailFile($src, $columns);
-                $this->save($target, $content);
-            }
         } else {
-            foreach($this->compileFiles as $src=>$target) {
+            foreach($this->compileDetailFiles as $src=>$target) {
+                $target = $this->replaceModelName($target);
                 if(!file_exists($target)) {
-                    $content = $this->compileFile($src, $columns);
+                    $content = $this->compileDetailFile($src, $columns);
                     $this->save($target, $content);
                 }
             }
 
-            foreach($this->compileDetailFiles as $src=>$target) {
+            foreach($this->compileFiles as $src=>$target) {
+                $target = $this->replaceModelName($target);
                 if(!file_exists($target)) {
-                    $content = $this->compileDetailFile($src, $columns);
+                    $content = $this->compileFile($src, $columns);
                     $this->save($target, $content);
                 }
             }
@@ -182,75 +218,6 @@ class CodeMakeCommand extends Command
         ]);
     }
 
-    // protected function createView($columns) {
-
-    //     if (! is_dir($directory = $this->getViewPath($this->snakeStudlyName))) {
-    //         mkdir($directory, 0755, true);
-    //     }
-
-    //     $modelViewPath = $this->getViewPath($this->snakeStudlyName . ".blade.php");
-    //     $createViewPath = $this->getViewPath($this->snakeStudlyName . "/create.blade.php");
-    //     $editViewPath = $this->getViewPath($this->snakeStudlyName . "/edit.blade.php");
-    //     $showViewPath = $this->getViewPath($this->snakeStudlyName . "/show.blade.php");
-    //     $createFormViewPath = $this->getViewPath($this->snakeStudlyName . "/create-form.blade.php");
-    //     $editFormViewPath = $this->getViewPath($this->snakeStudlyName . "/edit-form.blade.php");
-
-    //     $modelView = $this->buildView('model', $columns);
-    //     $createView = $this->buildView('create', $columns);
-    //     $editView = $this->buildView('edit', $columns);
-    //     $showView = $this->buildView('show', $columns);
-    //     $createFormView = $this->buildDetailView('create-form', $columns);
-    //     $editFormView = $this->buildDetailView('edit-form', $columns);
-
-        
-    //     $this->save($modelViewPath, $modelView);
-    //     $this->save($createViewPath, $createView);
-    //     $this->save($editViewPath, $editView);
-    //     $this->save($showViewPath, $showView);
-    //     $this->save($createFormViewPath, $createFormView);
-    //     $this->save($editFormViewPath, $editFormView);
-    // }
-
-    // protected function createJs($columns) {
-    //     if (! is_dir($directory = $this->getJsPath('ssky/' . $this->snakeStudlyName))) {
-    //         mkdir($directory, 0755, true);
-    //     }
-
-    //     $listJsPath = $this->getJsPath('ssky/' . $this->snakeStudlyName . "/list.js");
-    //     $createJsPath = $this->getJsPath('ssky/' . $this->snakeStudlyName . "/create.js");
-    //     $editJsPath = $this->getJsPath('ssky/' . $this->snakeStudlyName . "/edit.js");
-
-    //     $listJs = $this->buildJs('list', $columns);
-    //     $createJs = $this->buildJs('create', $columns);
-    //     $editJs = $this->buildJs('edit', $columns);
-
-    //     $this->save($listJsPath, $listJs);
-    //     $this->save($createJsPath, $createJs);
-    //     $this->save($editJsPath, $editJs);
-
-    //     if (! is_dir($directory = $this->getJsPath('components/' . $this->snakeStudlyName))) {
-    //         mkdir($directory, 0755, true);
-    //     }
-
-    //     $listJsPath = $this->getJsPath('components/' . $this->snakeStudlyName . "/list.js");
-    //     $createJsPath = $this->getJsPath('components/' . $this->snakeStudlyName . "/create.js");
-    //     $editJsPath = $this->getJsPath('components/' . $this->snakeStudlyName . "/edit.js");
-
-    //     $listJs = $this->buildComponent('list', $columns);
-    //     $createJs = $this->buildComponent('create', $columns);
-    //     $editJs = $this->buildComponent('edit', $columns);
-
-    //     $this->save($listJsPath, $listJs);
-    //     $this->save($createJsPath, $createJs);
-    //     $this->save($editJsPath, $editJs);
-
-    //     $this->updateComponentBootstrap([
-    //         "require('./$this->snakeStudlyName/list');",
-    //         "require('./$this->snakeStudlyName/create');",
-    //         "require('./$this->snakeStudlyName/edit');",
-    //     ]);
-    // }
-
     protected function save($path, $content)
     {
         if(empty($content)) return;
@@ -262,45 +229,6 @@ class CodeMakeCommand extends Command
         $this->file->put($path, $content);
     }
 
-    // protected function getViewStub($viewStubName)
-    // {
-    //     return $this->getViewPath("stubs/$viewStubName");
-    // }
-
-    // protected function getJsStub($viewStubName)
-    // {
-    //     return $this->getJsPath("stubs/$viewStubName");
-    // }
-
-    // protected function buildView($name, $columns)
-    // {
-    //     $path = $this->getViewStub("$name.stub");
-
-    //     return $this->buildFile($name, $path, $columns);
-    // }
-
-    // protected function buildDetailView($name, $columns) {
-    //     $path = $this->getViewStub("$name.stub");
-    //     return $this->buildDetailFile($name, $path, $columns);
-    // }
-
-    // protected function buildJs($name, $columns)
-    // {
-    //     $path = $this->getJsStub("$name.stub");
-    //     return $this->buildFile($name, $path, $columns);
-    // }
-
-    // protected function buildDetailJs($name, $columns) {
-    //     $path = $this->getJsStub("$name.stub");
-    //     return $this->buildDetailFile($name, $path, $columns);
-    // }
-
-    // protected function buildComponent($name, $columns)
-    // {
-    //     $path = $this->getJsStub("component.stub");
-    //     return $this->buildFile($name, $path, $columns);
-    // }
-
     protected function compileFile($path, $columns)
     {
         if(!file_exists($path)) {
@@ -309,9 +237,6 @@ class CodeMakeCommand extends Command
         }
 
         $name = basename($path, '.stub');
-
-        $this->info($name);
-        return;
 
         $stub = $this->file->get($path);
 
