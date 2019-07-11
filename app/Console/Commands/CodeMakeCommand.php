@@ -220,9 +220,13 @@ class CodeMakeCommand extends Command
         }
         
         $this->updateComponentBootstrap([
-            "require('./$this->snakeStudlyName/list');",
-            "require('./$this->snakeStudlyName/create');",
-            "require('./$this->snakeStudlyName/edit');",
+            "require('./{$this->snakeStudlyName}/list');",
+            "require('./{$this->snakeStudlyName}/create');",
+            "require('./{$this->snakeStudlyName}/edit');",
+        ]);
+
+        $this->updateRoute([
+            "Route::resource('/{$this->snakeStudlyName}', '{$this->studlyName}Controller');",
         ]);
     }
 
@@ -299,8 +303,20 @@ class CodeMakeCommand extends Command
 
     protected function updateComponentBootstrap($lines)
     {
-        $path = $this->getJsPath('components/bootstrap.js');
+        $path = resource_path('js/components/bootstrap.js');
 
+        $this->updateFile($path, $lines);
+    }
+
+    protected function updateRoute($lines)
+    {
+        $path = base_path('routes/web.php');
+
+        $this->updateFile($path, $lines);
+    }
+
+    protected function updateFile($path, $lines)
+    {
         if(!file_exists($path)) {
             $this->error("File Not Exists: " . substr($path, strlen(base_path())));
             return "";
@@ -322,48 +338,6 @@ class CodeMakeCommand extends Command
                 $this->file->append($path, "$line\n");
             }
         }
-    }
-    
-    protected function getViewPath($path)
-    {
-        return implode(DIRECTORY_SEPARATOR, [
-            config('view.paths')[0] ?? resource_path('views'), $path,
-        ]);
-    }
-
-    protected function getJsPath($path)
-    {
-        return implode(DIRECTORY_SEPARATOR, [
-            resource_path('js'), $path,
-        ]);
-    }
-
-    protected function getSassPath($path)
-    {
-        return implode(DIRECTORY_SEPARATOR, [
-            resource_path('sass'), $path,
-        ]);
-    }
-
-    protected function getControllerPath($path)
-    {
-        return implode(DIRECTORY_SEPARATOR, [
-            app_path('Http/Controllers'), $path,
-        ]);
-    }
-
-    protected function getContractPath($path)
-    {
-        return implode(DIRECTORY_SEPARATOR, [
-            app_path('Contracts/Repositories'), $path,
-        ]);
-    }
-
-    protected function getRepositoryPath($path)
-    {
-        return implode(DIRECTORY_SEPARATOR, [
-            app_path('Repositories'), $path,
-        ]);
     }
 
     private function strTitle($str) {
