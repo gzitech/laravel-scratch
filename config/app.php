@@ -228,4 +228,8 @@ return [
 
     ],
 
+    'frontend' => env('FRONTEND') ?? 'vue',
+    'max_page_size' => env('MAX_PAGE_SIZE') ?? 20,
+    'paginate_type' => env('PAGINATE_TYPE') ?? 'simplePaginate',
+
 ];

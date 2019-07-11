@@ -5,12 +5,12 @@
     <div class="row justify-content-center">
         @include('nav.left')
         @vueif
-        <ssky-#snakeStudlyName#-list inline-template :paginate="{{ $#snakePluralStudlyName#->toJson() }}">
+        <ssky-user-list inline-template :paginate="{{ $users->toJson() }}">
             @vuend
             <div class="col-md-10">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item active" aria-current="page">#studlyName#</li>
+                        <li class="breadcrumb-item active" aria-current="page">User</li>
                     </ol>
                 </nav>
                 <div class="card">
@@ -19,8 +19,8 @@
 
                         </div>
                         <div class="nav ml-auto">
-                            <a href="/#snakeStudlyName#/create" role="button" class="btn btn-primary btn-sm" @vueif
-                                @click.prevent="show#studlyName#CreateForm" @vuend>Create</a>
+                            <a href="/user/create" role="button" class="btn btn-primary btn-sm" @vueif
+                                @click.prevent="showUserCreateForm" @vuend>Create</a>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -28,40 +28,46 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    #model.table.header#
+                                    <th scope="col">First Name</th>
+                                    <th scope="col">Last Name</th>
+                                    <th scope="col">Email</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @vueif
-                                <tr v-for="#snakeStudlyName# in #snakePluralStudlyName#" :key="#snakeStudlyName#.id">
-                                    <th scope="row">@{{ #snakeStudlyName#.id }}</th>
-                                    #model.table.item.vue#
+                                <tr v-for="user in users" :key="user.id">
+                                    <th scope="row">@{{ user.id }}</th>
+                                    <td>@{{ user.first_name }}</td>
+                                    <td>@{{ user.last_name }}</td>
+                                    <td>@{{ user.email }}</td>
                                     <td class="text-md-right">
-                                        <a :href="showUrl(#snakeStudlyName#.id)" title="Show"
+                                        <a :href="showUrl(user.id)" title="Show"
                                             class="btn btn-outline-primary"><i
                                                 class="fa fa-user-o"></i></a>
                                         <a href="#edit" title="Edit" class="btn btn-outline-primary"
-                                            @click.prevent="show#studlyName#EditForm(#snakeStudlyName#)"><i
+                                            @click.prevent="showUserEditForm(user)"><i
                                                 class="fa fa-pencil"></i></a>
                                         <a href="#del" title="Destroy" class="btn btn-outline-danger"
-                                            @click.prevent="show#studlyName#DestroyConfirm(#snakeStudlyName#)"><i
+                                            @click.prevent="showUserDestroyConfirm(user)"><i
                                                 class="fa fa-trash-o"></i></a>
                                     </td>
                                 </tr>
                                 @vuend
                                 @noneif
-                                @foreach ($#snakePluralStudlyName# as $#snakeStudlyName#)
+                                @foreach ($users as $user)
                                 <tr>
-                                    <th scope="row">{{ $#snakeStudlyName#->id }}</th>
-                                    #model.table.item#
+                                    <th scope="row">{{ $user->id }}</th>
+                                    <td>{{ $user->first_name }}</td>
+                                    <td>{{ $user->last_name }}</td>
+                                    <td>{{ $user->email }}</td>
                                     <td class="text-md-right">
-                                        <a href="/#snakeStudlyName#/{{ $#snakeStudlyName#->id }}" title="Show"
+                                        <a href="/user/{{ $user->id }}" title="Show"
                                             class="btn btn-outline-primary"><i
                                                 class="fa fa-user-o"></i></a>
-                                        <a href="/#snakeStudlyName#/{{ $#snakeStudlyName#->id }}/edit" title="Edit"
+                                        <a href="/user/{{ $user->id }}/edit" title="Edit"
                                             class="btn btn-outline-primary"><i class="fa fa-pencil"></i></a>
-                                        <a href="/#snakeStudlyName#/{{ $#snakeStudlyName#->id }}/destroy"
+                                        <a href="/user/{{ $user->id }}/destroy"
                                             title="Destroy" class="btn btn-outline-danger"><i
                                                 class="fa fa-trash-o"></i></a>
                                     </td>
@@ -71,24 +77,24 @@
                             </tbody>
                         </table>
                     </div>
-                    @if($#snakePluralStudlyName#->previousPageUrl() || $#snakePluralStudlyName#->nextPageUrl())
+                    @if($users->previousPageUrl() || $users->nextPageUrl())
                     <div class="card-footer d-flex">
                         <div class="nav mr-auto">
 
                         </div>
                         <div class="nav ml-auto">
-                            {{ $#snakePluralStudlyName#->links() }}
+                            {{ $users->links() }}
                         </div>
                     </div>
                     @endif
                 </div>
                 @vueif
-                <ssky-#snakeStudlyName#-create inline-template :old="{}" :errors="{}">
-                    <div class="modal" tabindex="-1" role="dialog" id="#snakeStudlyName#-create-form">
+                <ssky-user-create inline-template :old="{}" :errors="{}">
+                    <div class="modal" tabindex="-1" role="dialog" id="user-create-form">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
-                                <form method="POST" action="{{ route('#snakeStudlyName#.index') }}"
-                                    @submit="validate#studlyName#CreateForm">
+                                <form method="POST" action="{{ route('user.index') }}"
+                                    @submit="validateUserCreateForm">
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title">
@@ -99,11 +105,11 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        @include('#snakeStudlyName#.create-form')
+                                        @include('user.create-form')
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary"
-                                            :disabled="#snakeStudlyName#CreateForm.busy">{{ __('Save') }}</button>
+                                            :disabled="userCreateForm.busy">{{ __('Save') }}</button>
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Close</button>
                                     </div>
@@ -111,13 +117,13 @@
                             </div>
                         </div>
                     </div>
-                </ssky-#snakeStudlyName#-create>
-                <ssky-#snakeStudlyName#-edit inline-template :#snakeStudlyName#="#snakeStudlyName#" :old="{}"
-                    :errors="{}" @#snakeStudlyName#-updated="updated#studlyName#">
-                    <div class="modal" tabindex="-1" role="dialog" id="#snakeStudlyName#-edit-form">
+                </ssky-user-create>
+                <ssky-user-edit inline-template :user="user" :old="{}"
+                    :errors="{}" @user-updated="updatedUser">
+                    <div class="modal" tabindex="-1" role="dialog" id="user-edit-form">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
-                                <form method="POST" action="#update" @submit="validate#studlyName#EditForm">
+                                <form method="POST" action="#update" @submit="validateUserEditForm">
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title">
@@ -128,11 +134,11 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        @include('#snakeStudlyName#.edit-form')
+                                        @include('user.edit-form')
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary"
-                                            :disabled="#snakeStudlyName#EditForm.busy">{{ __('Update') }}</button>
+                                            :disabled="userEditForm.busy">{{ __('Update') }}</button>
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Close</button>
                                     </div>
@@ -140,8 +146,8 @@
                             </div>
                         </div>
                     </div>
-                </ssky-#snakeStudlyName#-edit>
-                <div class="modal" tabindex="-1" role="dialog" id="#snakeStudlyName#-destroy-confirm">
+                </ssky-user-edit>
+                <div class="modal" tabindex="-1" role="dialog" id="user-destroy-confirm">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <form method="POST" action="#destroy">
@@ -149,14 +155,31 @@
                                 @method('DELETE')
                                 <div class="modal-header">
                                     <h5 class="modal-title">
-                                        <strong>{{ __("Are you sure delete this #snakeStudlyName#?") }}</strong>
+                                        <strong>{{ __("Are you sure delete this user?") }}</strong>
                                     </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    #model.table.confirm.item#
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>
+                                        <div class="col-md-6">
+                                            <div class="form-control">@{{user.first_name}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label text-md-right">{{ __('Last Name') }}</label>
+                                        <div class="col-md-6">
+                                            <div class="form-control">@{{user.last_name}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label>
+                                        <div class="col-md-6">
+                                            <div class="form-control">@{{user.email}}</div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">{{ __('Delete') }}</button>
@@ -169,7 +192,7 @@
                 @vuend
             </div>
             @vueif
-        </ssky-#snakeStudlyName#-list>
+        </ssky-user-list>
         @vuend
     </div>
 </div>
