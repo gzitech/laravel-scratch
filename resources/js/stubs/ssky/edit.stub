@@ -1,0 +1,71 @@
+module.exports = {
+
+    props: {
+        #snakeStudlyName#: {
+            type: Object,
+            required: true,
+        },
+        old: {
+            type: [Object, Array],
+            required: true,
+        },
+        errors: {
+            type: [Object, Array],
+            required: true,
+        },
+    },
+
+    data() {
+        return {
+            #snakeStudlyName#EditForm: new SSky.Form({
+                #edit.return.item#
+            }),
+        };
+    },
+
+
+    watch: {
+        #snakeStudlyName#: function (#snakeStudlyName#) {
+            this.#snakeStudlyName#EditForm.resetStatus();
+            #edit.watch.item#
+        }
+    },
+
+    created() {
+
+        if (typeof this.errors === 'object') {
+            this.#snakeStudlyName#EditForm.setErrors(this.errors);
+        }
+    },
+
+
+    methods: {
+
+        validate#studlyName#EditForm: function (event) {
+            event.preventDefault();
+
+            this.#snakeStudlyName#EditForm.startProcessing();
+
+            if (this.#snakeStudlyName#EditForm.validate({
+                #edit.validate.item#
+            })) {
+                var url = '/#snakeStudlyName#/' + this.#snakeStudlyName#.id + '/';
+
+                SSky.put(url, this.#snakeStudlyName#EditForm)
+                    .then(response => {
+                        var data = this.#snakeStudlyName#EditForm.getData();
+                        data.id = this.#snakeStudlyName#.id;
+                        this.$emit('#snakeStudlyName#-updated', data);
+                        this.#snakeStudlyName#EditForm.finishProcessing();
+                    });
+            } else {
+                this.#snakeStudlyName#EditForm.finishProcessing();
+            }
+        },
+    },
+
+
+    computed: {
+
+    }
+};

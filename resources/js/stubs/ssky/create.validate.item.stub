@@ -1,0 +1,1 @@
+                '#ColumnName#': 'required|string|max:255',

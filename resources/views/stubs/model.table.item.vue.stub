@@ -1,1 +1,1 @@
- <td>@{{ #snakeStudlyName#.#ColumnName# }}</td>
+                                    <td>@{{ #snakeStudlyName#.#ColumnName# }}</td>

@@ -1,0 +1,54 @@
+module.exports = {
+
+    props: {
+        old: {
+            type: [Object, Array],
+            required: true,
+        },
+        errors: {
+            type: [Object, Array],
+            required: true,
+        },
+    },
+
+    data() {
+        return {
+            #snakeStudlyName#CreateForm: new SSky.Form({
+                #create.return.item#
+            }),
+        };
+    },
+
+
+    watch: {
+
+    },
+
+    created() {
+        
+        if (this.errors && (typeof this.errors === 'object')) {
+            this.#snakeStudlyName#CreateForm.setErrors(this.errors);
+        }
+    },
+
+
+    methods: {
+
+        validate#studlyName#CreateForm: function (event) {
+
+            this.#snakeStudlyName#CreateForm.startProcessing();
+            
+            if(!this.#snakeStudlyName#CreateForm.validate({
+                #create.validate.item#
+            })) {
+                event.preventDefault();
+                this.#snakeStudlyName#CreateForm.finishProcessing();
+            }
+        },
+    },
+
+
+    computed: {
+
+    }
+};

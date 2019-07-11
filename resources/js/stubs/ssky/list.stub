@@ -1,0 +1,71 @@
+module.exports = {
+
+    props: {
+        paginate: {
+            type: Object,
+            required: true,
+        }
+    },
+
+    data() {
+        return {
+            #snakeStudlyName#: {},
+            #snakePluralStudlyName#: this.paginate.data,
+        };
+    },
+
+
+    watch: {
+
+    },
+
+    created() {
+        $(function () {
+            #snakeStudlyName#CreateFormDialog = $('##snakeStudlyName#-create-form').on('hidden.bs.modal', function () {
+                history.back();
+            });
+
+            #snakeStudlyName#EditFormDialog = $('##snakeStudlyName#-edit-form').on('hidden.bs.modal', function () {
+                history.back();
+            });
+        });
+    },
+
+
+    methods: {
+        showUrl: function (id) {
+            return '/#snakeStudlyName#/' + id;
+        },
+        show#studlyName#CreateForm: function () {
+            var url = '/#snakeStudlyName#/create';
+            history.pushState({}, "", url);
+            #snakeStudlyName#CreateFormDialog.modal('show');
+        },
+        show#studlyName#EditForm: function (#snakeStudlyName#) {
+            var url = '/#snakeStudlyName#/' + #snakeStudlyName#.id + '/edit';
+            history.pushState({}, "", url);
+            this.#snakeStudlyName# = #snakeStudlyName#;
+            #snakeStudlyName#EditFormDialog.modal('show');
+        },
+        show#studlyName#DestroyConfirm: function (#snakeStudlyName#) {
+            var url = '/#snakeStudlyName#/' + #snakeStudlyName#.id + '/';
+            this.#snakeStudlyName# = #snakeStudlyName#;
+            #snakeStudlyName#DestroyConfirm = $('##snakeStudlyName#-destroy-confirm');
+            #snakeStudlyName#DestroyConfirm.find('form').attr('action', url);
+            #snakeStudlyName#DestroyConfirm.modal('show');
+        },
+        updated#studlyName#: function (#snakeStudlyName#) {
+            u = this.#snakePluralStudlyName#.find(u => u.id === #snakeStudlyName#.id);
+            if (u) {
+                #list.updated.item#
+            }
+
+            #snakeStudlyName#EditFormDialog.modal('hide');
+        }
+    },
+
+
+    computed: {
+
+    }
+};

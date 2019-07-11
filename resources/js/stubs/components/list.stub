@@ -1,0 +1,5 @@
+var base = require('#snakeStudlyName#/list');
+
+Vue.component('ssky-#snakeStudlyName#-list', {
+    mixins: [base]
+});
