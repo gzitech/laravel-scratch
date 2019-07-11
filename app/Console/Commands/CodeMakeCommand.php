@@ -55,6 +55,14 @@ class CodeMakeCommand extends Command
         'resources/js/stubs/components/list.stub' => 'resources/js/components/#snakeStudlyName#/list.js',
         'resources/js/stubs/components/create.stub' => 'resources/js/components/#snakeStudlyName#/create.js',
         'resources/js/stubs/components/edit.stub' => 'resources/js/components/#snakeStudlyName#/edit.js',
+        //Controller
+        'app/Http/Controllers/stubs/controller.stub' => 'app/Http/Controllers/#studlyName#Controller.php',
+        //Repository
+        'app/Contracts/Repositories/stubs/repository.stub' => 'app/Contracts/Repositories/#studlyName#Repository.php',
+        'app/Repositories/stubs/repository.stub' => 'app/Repositories/#studlyName#Repository.php',
+        //Request
+        'app/Http/Requests/stubs/create.stub' => 'app/Http/Requests/Create#studlyName#Post.php',
+        'app/Http/Requests/stubs/update.stub' => 'app/Http/Requests/Update#studlyName#Post.php',
     ];
 
     /**
