@@ -1,0 +1,57 @@
+<?php
+
+namespace App\Repositories;
+
+use App\#studlyName#;
+use App\Contracts\Repositories\#studlyName#Repository as Contract;
+use Carbon\Carbon;
+
+class #studlyName#Repository implements Contract
+{
+
+    /**
+     * {@inheritdoc}
+     */
+    public function paginate()
+    {
+        if(config('app.paginate_type') == 'paginate') {
+            return #studlyName#::paginate(config("app.max_page_size"));
+        } else {
+            return #studlyName#::simplePaginate(config("app.max_page_size"));
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function find($id)
+    {
+        return #studlyName#::find($id);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function create(array $data)
+    {
+        $#snakeStudlyName# = #studlyName#::create($data);
+
+        return $#snakeStudlyName#;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function update($id, array $data)
+    {
+        #studlyName#::where('id', $id)->update($data);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function destroy($id)
+    {
+        #studlyName#::destroy($id);
+    }
+}
