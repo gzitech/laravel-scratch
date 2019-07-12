@@ -113,7 +113,8 @@ class CodeMakeCommand extends Command
                 $this->generateCode($modelName);
             }
         } else {
-            $this->copyTo($clone);
+            $this->copyTo($this->compileFiles, $clone);
+            $this->copyTo($this->compileDetailFiles, $clone);
         }
     }
 
@@ -360,7 +361,7 @@ class CodeMakeCommand extends Command
         );
     }
 
-    private function copyTo($dir)
+    private function copyTo($compileFiles, $dir)
     {
         $targetDir = realpath($dir);
 
@@ -369,31 +370,25 @@ class CodeMakeCommand extends Command
             return;
         }
 
-        foreach($this->compileDetailFiles as $stub=>$compiledFile) {
-            $srcStub = base_path($stub);
-            $stubFile = $this->combinePath($targetDir, $stub);
+        foreach($compileFiles as $stub=>$compiledFile) {
 
-            if($this->filesystem->exists($srcStub) && !$this->filesystem->exists($stubFile)) {
+            $stubs = $this->filesystem->files(dirname($stub));
 
-                if (! $this->filesystem->isDirectory($directory = $this->filesystem->dirname($stubFile))) {
-                    $this->filesystem->makeDirectory($directory, 0755, true);
+            foreach($stubs as $stub){
+                $rel = $stub->getRelativePathName();
+                $src = base_path($stub);
+                $target = $this->combinePath($targetDir, $stub);
+                $this->info($src);
+                $this->info($target);
+
+                if($this->filesystem->exists($src) && !$this->filesystem->exists($target)) {
+
+                    if (! $this->filesystem->isDirectory($directory = $this->filesystem->dirname($target))) {
+                        $this->filesystem->makeDirectory($directory, 0755, true);
+                    }
+    
+                    $this->filesystem->copy($src, $target);
                 }
-
-                $this->filesystem->copy($srcStub, $stubFile);
-            }
-        }
-
-        foreach($this->compileFiles as $stub=>$compiledFile) {
-            $srcStub = base_path($stub);
-            $stubFile = $this->combinePath($targetDir, $stub);
-
-            if($this->filesystem->exists($srcStub) && !$this->filesystem->exists($stubFile)) {
-
-                if (! $this->filesystem->isDirectory($directory = $this->filesystem->dirname($stubFile))) {
-                    $this->filesystem->makeDirectory($directory, 0755, true);
-                }
-
-                $this->filesystem->copy($srcStub, $stubFile);
             }
         }
     }
