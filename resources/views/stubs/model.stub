@@ -34,34 +34,34 @@
                             </thead>
                             <tbody>
                                 @vueif
-                                <tr v-for="#snakeStudlyName# in #camelPluralStudlyName#" :key="#snakeStudlyName#.id">
-                                    <th scope="row">@{{ #snakeStudlyName#.id }}</th>
+                                <tr v-for="#camelStudlyName# in #camelPluralStudlyName#" :key="#camelStudlyName#.id">
+                                    <th scope="row">@{{ #camelStudlyName#.id }}</th>
                                     #model.table.item.vue#
                                     <td class="text-md-right">
-                                        <a :href="showUrl(#snakeStudlyName#.id)" title="Show"
+                                        <a :href="showUrl(#camelStudlyName#.id)" title="Show"
                                             class="btn btn-outline-primary"><i
                                                 class="fa fa-user-o"></i></a>
                                         <a href="#edit" title="Edit" class="btn btn-outline-primary"
-                                            @click.prevent="show#studlyName#EditForm(#snakeStudlyName#)"><i
+                                            @click.prevent="show#studlyName#EditForm(#camelStudlyName#)"><i
                                                 class="fa fa-pencil"></i></a>
                                         <a href="#del" title="Destroy" class="btn btn-outline-danger"
-                                            @click.prevent="show#studlyName#DestroyConfirm(#snakeStudlyName#)"><i
+                                            @click.prevent="show#studlyName#DestroyConfirm(#camelStudlyName#)"><i
                                                 class="fa fa-trash-o"></i></a>
                                     </td>
                                 </tr>
                                 @vuend
                                 @noneif
-                                @foreach ($#camelPluralStudlyName# as $#snakeStudlyName#)
+                                @foreach ($#camelPluralStudlyName# as $#camelStudlyName#)
                                 <tr>
-                                    <th scope="row">{{ $#snakeStudlyName#->id }}</th>
+                                    <th scope="row">{{ $#camelStudlyName#->id }}</th>
                                     #model.table.item#
                                     <td class="text-md-right">
-                                        <a href="/#snakeStudlyName#/{{ $#snakeStudlyName#->id }}" title="Show"
+                                        <a href="/#snakeStudlyName#/{{ $#camelStudlyName#->id }}" title="Show"
                                             class="btn btn-outline-primary"><i
                                                 class="fa fa-user-o"></i></a>
-                                        <a href="/#snakeStudlyName#/{{ $#snakeStudlyName#->id }}/edit" title="Edit"
+                                        <a href="/#snakeStudlyName#/{{ $#camelStudlyName#->id }}/edit" title="Edit"
                                             class="btn btn-outline-primary"><i class="fa fa-pencil"></i></a>
-                                        <a href="/#snakeStudlyName#/{{ $#snakeStudlyName#->id }}/destroy"
+                                        <a href="/#snakeStudlyName#/{{ $#camelStudlyName#->id }}/destroy"
                                             title="Destroy" class="btn btn-outline-danger"><i
                                                 class="fa fa-trash-o"></i></a>
                                     </td>
@@ -84,7 +84,7 @@
                 </div>
                 @vueif
                 <ssky-#kebabStudlyName#-create inline-template :old="{}" :errors="{}">
-                    <div class="modal" tabindex="-1" role="dialog" id="#snakeStudlyName#-create-form">
+                    <div class="modal" tabindex="-1" role="dialog" id="#kebabStudlyName#-create-form">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <form method="POST" action="{{ route('#snakeStudlyName#.index') }}"
@@ -103,7 +103,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary"
-                                            :disabled="#snakeStudlyName#CreateForm.busy">{{ __('Save') }}</button>
+                                            :disabled="#camelStudlyName#CreateForm.busy">{{ __('Save') }}</button>
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Close</button>
                                     </div>
@@ -112,9 +112,9 @@
                         </div>
                     </div>
                 </ssky-#kebabStudlyName#-create>
-                <ssky-#kebabStudlyName#-edit inline-template :#snakeStudlyName#="#snakeStudlyName#" :old="{}"
-                    :errors="{}" @#snakeStudlyName#-updated="updated#studlyName#">
-                    <div class="modal" tabindex="-1" role="dialog" id="#snakeStudlyName#-edit-form">
+                <ssky-#kebabStudlyName#-edit inline-template :#snakeStudlyName#="#camelStudlyName#" :old="{}"
+                    :errors="{}" @#kebabStudlyName#-updated="updated#studlyName#">
+                    <div class="modal" tabindex="-1" role="dialog" id="#kebabStudlyName#-edit-form">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <form method="POST" action="#update" @submit="validate#studlyName#EditForm">
@@ -132,7 +132,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary"
-                                            :disabled="#snakeStudlyName#EditForm.busy">{{ __('Update') }}</button>
+                                            :disabled="#camelStudlyName#EditForm.busy">{{ __('Update') }}</button>
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Close</button>
                                     </div>
@@ -141,7 +141,7 @@
                         </div>
                     </div>
                 </ssky-#kebabStudlyName#-edit>
-                <div class="modal" tabindex="-1" role="dialog" id="#snakeStudlyName#-destroy-confirm">
+                <div class="modal" tabindex="-1" role="dialog" id="#kebabStudlyName#-destroy-confirm">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <form method="POST" action="#destroy">
@@ -149,7 +149,7 @@
                                 @method('DELETE')
                                 <div class="modal-header">
                                     <h5 class="modal-title">
-                                        <strong>{{ __("Are you sure delete this #snakeStudlyName#?") }}</strong>
+                                        <strong>{{ __("Are you sure delete this #camelStudlyName#?") }}</strong>
                                     </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>

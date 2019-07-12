@@ -3,11 +3,11 @@
 
     <div class="col-md-6">
         @vueif
-        <input id="#ColumnName#" type="text" class="form-control" name="#ColumnName#" v-model="#snakeStudlyName#CreateForm.#ColumnName#"
-            :class="{'is-invalid': #snakeStudlyName#CreateForm.errors.has('#ColumnName#')}" required autocomplete="#ColumnName#"
+        <input id="#ColumnName#" type="text" class="form-control" name="#ColumnName#" v-model="#camelStudlyName#CreateForm.#ColumnName#"
+            :class="{'is-invalid': #camelStudlyName#CreateForm.errors.has('#ColumnName#')}" required autocomplete="#ColumnName#"
             autofocus>
-        <span class="invalid-feedback" role="alert" v-show="#snakeStudlyName#CreateForm.errors.has('#ColumnName#')">
-            <strong>@{{ #snakeStudlyName#CreateForm.errors.get('#ColumnName#') }}</strong>
+        <span class="invalid-feedback" role="alert" v-show="#camelStudlyName#CreateForm.errors.has('#ColumnName#')">
+            <strong>@{{ #camelStudlyName#CreateForm.errors.get('#ColumnName#') }}</strong>
         </span>
         @vuelse
         <input id="#ColumnName#" type="text" class="form-control @error('#ColumnName#') is-invalid @enderror" name="#ColumnName#"

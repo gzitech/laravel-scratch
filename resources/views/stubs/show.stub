@@ -16,7 +16,7 @@
                     #show.table.item#
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
-                            <a href="/#snakeStudlyName#/{{ $#snakeStudlyName#->id }}/edit" class="btn btn-primary">
+                            <a href="/#snakeStudlyName#/{{ $#camelStudlyName#->id }}/edit" class="btn btn-primary">
                                 {{ __('Edit') }}
                             </a>
                         </div>

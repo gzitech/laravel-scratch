@@ -17,7 +17,7 @@ module.exports = {
 
     data() {
         return {
-            #snakeStudlyName#EditForm: new SSky.Form({
+            #camelStudlyName#EditForm: new SSky.Form({
                 #edit.return.item#
             }),
         };
@@ -25,8 +25,8 @@ module.exports = {
 
 
     watch: {
-        #snakeStudlyName#: function (#snakeStudlyName#) {
-            this.#snakeStudlyName#EditForm.resetStatus();
+        #snakeStudlyName#: function (#camelStudlyName#) {
+            this.#camelStudlyName#EditForm.resetStatus();
             #edit.watch.item#
         }
     },
@@ -34,7 +34,7 @@ module.exports = {
     created() {
 
         if (typeof this.errors === 'object') {
-            this.#snakeStudlyName#EditForm.setErrors(this.errors);
+            this.#camelStudlyName#EditForm.setErrors(this.errors);
         }
     },
 
@@ -44,22 +44,22 @@ module.exports = {
         validate#studlyName#EditForm: function (event) {
             event.preventDefault();
 
-            this.#snakeStudlyName#EditForm.startProcessing();
+            this.#camelStudlyName#EditForm.startProcessing();
 
-            if (this.#snakeStudlyName#EditForm.validate({
+            if (this.#camelStudlyName#EditForm.validate({
                 #edit.validate.item#
             })) {
                 var url = '/#snakeStudlyName#/' + this.#snakeStudlyName#.id + '/';
 
-                SSky.put(url, this.#snakeStudlyName#EditForm)
+                SSky.put(url, this.#camelStudlyName#EditForm)
                     .then(response => {
-                        var data = this.#snakeStudlyName#EditForm.getData();
+                        var data = this.#camelStudlyName#EditForm.getData();
                         data.id = this.#snakeStudlyName#.id;
-                        this.$emit('#snakeStudlyName#-updated', data);
-                        this.#snakeStudlyName#EditForm.finishProcessing();
+                        this.$emit('#kebabStudlyName#-updated', data);
+                        this.#camelStudlyName#EditForm.finishProcessing();
                     });
             } else {
-                this.#snakeStudlyName#EditForm.finishProcessing();
+                this.#camelStudlyName#EditForm.finishProcessing();
             }
         },
     },

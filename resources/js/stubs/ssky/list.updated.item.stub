@@ -1,1 +1,1 @@
-                u.#ColumnName# = #snakeStudlyName#.#ColumnName#;
+                u.#ColumnName# = #camelStudlyName#.#ColumnName#;

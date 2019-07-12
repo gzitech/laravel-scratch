@@ -13,7 +13,7 @@ module.exports = {
 
     data() {
         return {
-            #snakeStudlyName#CreateForm: new SSky.Form({
+            #camelStudlyName#CreateForm: new SSky.Form({
                 #create.return.item#
             }),
         };
@@ -27,7 +27,7 @@ module.exports = {
     created() {
         
         if (this.errors && (typeof this.errors === 'object')) {
-            this.#snakeStudlyName#CreateForm.setErrors(this.errors);
+            this.#camelStudlyName#CreateForm.setErrors(this.errors);
         }
     },
 
@@ -36,13 +36,13 @@ module.exports = {
 
         validate#studlyName#CreateForm: function (event) {
 
-            this.#snakeStudlyName#CreateForm.startProcessing();
+            this.#camelStudlyName#CreateForm.startProcessing();
             
-            if(!this.#snakeStudlyName#CreateForm.validate({
+            if(!this.#camelStudlyName#CreateForm.validate({
                 #create.validate.item#
             })) {
                 event.preventDefault();
-                this.#snakeStudlyName#CreateForm.finishProcessing();
+                this.#camelStudlyName#CreateForm.finishProcessing();
             }
         },
     },

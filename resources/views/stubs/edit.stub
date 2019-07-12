@@ -13,9 +13,9 @@
             </nav>
             <div class="card">
                 <div class="card-body">
-                    @vueif<ssky-#kebabStudlyName#-edit inline-template :#snakeStudlyName#="{{ $#snakeStudlyName#->toJson() }}" :old="{{ json_encode(Session::getOldInput()) }}"
+                    @vueif<ssky-#kebabStudlyName#-edit inline-template :#snakeStudlyName#="{{ $#camelStudlyName#->toJson() }}" :old="{{ json_encode(Session::getOldInput()) }}"
                     :errors="{{ $errors }}">@vuend
-                    <form method="POST" action="{{ route('#snakeStudlyName#.index') }}/{{$#snakeStudlyName#->id}}">
+                    <form method="POST" action="{{ route('#snakeStudlyName#.index') }}/{{$#camelStudlyName#->id}}">
                         @csrf
                         @method('PUT')
                         @include('#snakeStudlyName#.edit-form')

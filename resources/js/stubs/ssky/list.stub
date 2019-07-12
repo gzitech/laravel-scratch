@@ -9,7 +9,7 @@ module.exports = {
 
     data() {
         return {
-            #snakeStudlyName#: {},
+            #camelStudlyName#: {},
             #camelPluralStudlyName#: this.paginate.data,
         };
     },
@@ -21,11 +21,11 @@ module.exports = {
 
     created() {
         $(function () {
-            #snakeStudlyName#CreateFormDialog = $('##snakeStudlyName#-create-form').on('hidden.bs.modal', function () {
+            #camelStudlyName#CreateFormDialog = $('##kebabStudlyName#-create-form').on('hidden.bs.modal', function () {
                 history.back();
             });
 
-            #snakeStudlyName#EditFormDialog = $('##snakeStudlyName#-edit-form').on('hidden.bs.modal', function () {
+            #camelStudlyName#EditFormDialog = $('##kebabStudlyName#-edit-form').on('hidden.bs.modal', function () {
                 history.back();
             });
         });
@@ -39,28 +39,28 @@ module.exports = {
         show#studlyName#CreateForm: function () {
             var url = '/#snakeStudlyName#/create';
             history.pushState({}, "", url);
-            #snakeStudlyName#CreateFormDialog.modal('show');
+            #camelStudlyName#CreateFormDialog.modal('show');
         },
-        show#studlyName#EditForm: function (#snakeStudlyName#) {
-            var url = '/#snakeStudlyName#/' + #snakeStudlyName#.id + '/edit';
+        show#studlyName#EditForm: function (#camelStudlyName#) {
+            var url = '/#snakeStudlyName#/' + #camelStudlyName#.id + '/edit';
             history.pushState({}, "", url);
-            this.#snakeStudlyName# = #snakeStudlyName#;
-            #snakeStudlyName#EditFormDialog.modal('show');
+            this.#camelStudlyName# = #camelStudlyName#;
+            #camelStudlyName#EditFormDialog.modal('show');
         },
-        show#studlyName#DestroyConfirm: function (#snakeStudlyName#) {
-            var url = '/#snakeStudlyName#/' + #snakeStudlyName#.id + '/';
-            this.#snakeStudlyName# = #snakeStudlyName#;
-            #snakeStudlyName#DestroyConfirm = $('##snakeStudlyName#-destroy-confirm');
-            #snakeStudlyName#DestroyConfirm.find('form').attr('action', url);
-            #snakeStudlyName#DestroyConfirm.modal('show');
+        show#studlyName#DestroyConfirm: function (#camelStudlyName#) {
+            var url = '/#snakeStudlyName#/' + #camelStudlyName#.id + '/';
+            this.#camelStudlyName# = #camelStudlyName#;
+            #camelStudlyName#DestroyConfirm = $('##kebabStudlyName#-destroy-confirm');
+            #camelStudlyName#DestroyConfirm.find('form').attr('action', url);
+            #camelStudlyName#DestroyConfirm.modal('show');
         },
-        updated#studlyName#: function (#snakeStudlyName#) {
-            u = this.#camelPluralStudlyName#.find(u => u.id === #snakeStudlyName#.id);
+        updated#studlyName#: function (#camelStudlyName#) {
+            u = this.#camelPluralStudlyName#.find(u => u.id === #camelStudlyName#.id);
             if (u) {
                 #list.updated.item#
             }
 
-            #snakeStudlyName#EditFormDialog.modal('hide');
+            #camelStudlyName#EditFormDialog.modal('hide');
         }
     },
 

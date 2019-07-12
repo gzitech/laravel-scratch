@@ -25,9 +25,9 @@ class #studlyName#Controller extends Controller
      *
      * @return void
      */
-    public function __construct(#studlyName#Repository $#snakeStudlyName#)
+    public function __construct(#studlyName#Repository $#camelStudlyName#)
     {
-        $this->#snakeStudlyName# = $#snakeStudlyName#;
+        $this->#camelStudlyName# = $#camelStudlyName#;
         $this->middleware('auth');
     }
     
@@ -39,7 +39,7 @@ class #studlyName#Controller extends Controller
     public function index()
     {
         $data = [
-            '#camelPluralStudlyName#'=>$this->#snakeStudlyName#->paginate(),
+            '#camelPluralStudlyName#'=>$this->#camelStudlyName#->paginate(),
         ];
 
         return view("#snakeStudlyName#", $data);
@@ -65,9 +65,9 @@ class #studlyName#Controller extends Controller
     {
         $data = $request->only([
             #controller.store.item#
-            ]);
+        ]);
 
-        $#snakeStudlyName# = $this->#snakeStudlyName#->create($data);
+        $#camelStudlyName# = $this->#camelStudlyName#->create($data);
         
         return redirect($this->redirectTo);
     }
@@ -81,7 +81,7 @@ class #studlyName#Controller extends Controller
     public function show($id)
     {
         $data = [
-            '#snakeStudlyName#'=>$this->#snakeStudlyName#->find($id),
+            '#camelStudlyName#'=>$this->#camelStudlyName#->find($id),
         ];
 
         return view("#snakeStudlyName#.show", $data);
@@ -96,7 +96,7 @@ class #studlyName#Controller extends Controller
     public function edit($id)
     {
         $data = [
-            '#snakeStudlyName#'=>$this->#snakeStudlyName#->find($id),
+            '#camelStudlyName#'=>$this->#camelStudlyName#->find($id),
         ];
 
         return view("#snakeStudlyName#.edit", $data);
@@ -113,9 +113,9 @@ class #studlyName#Controller extends Controller
     {
         $data = $request->only([
             #controller.store.item#
-            ]);
+        ]);
 
-        $this->#snakeStudlyName#->update($id, $data);
+        $this->#camelStudlyName#->update($id, $data);
 
         return $request->ajax() ? ""  : redirect()->route('#snakeStudlyName#.index');
     }
@@ -128,7 +128,7 @@ class #studlyName#Controller extends Controller
      */
     public function destroy($id)
     {
-        $this->#snakeStudlyName#->destroy($id);
+        $this->#camelStudlyName#->destroy($id);
 
         return request()->ajax() ? ""  : redirect()->route('#snakeStudlyName#.index');
     }
