@@ -1,5 +1,5 @@
 var base = require('#snakeStudlyName#/list');
 
-Vue.component('ssky-#snakeStudlyName#-list', {
+Vue.component('ssky-#kebabStudlyName#-list', {
     mixins: [base]
 });

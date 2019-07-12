@@ -10,7 +10,7 @@ module.exports = {
     data() {
         return {
             #snakeStudlyName#: {},
-            #snakePluralStudlyName#: this.paginate.data,
+            #camelPluralStudlyName#: this.paginate.data,
         };
     },
 
@@ -55,7 +55,7 @@ module.exports = {
             #snakeStudlyName#DestroyConfirm.modal('show');
         },
         updated#studlyName#: function (#snakeStudlyName#) {
-            u = this.#snakePluralStudlyName#.find(u => u.id === #snakeStudlyName#.id);
+            u = this.#camelPluralStudlyName#.find(u => u.id === #snakeStudlyName#.id);
             if (u) {
                 #list.updated.item#
             }

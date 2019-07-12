@@ -135,14 +135,20 @@ class CodeMakeCommand extends Command
     protected function generateCode($className) {
 
         $this->studlyName = Str::studly(class_basename($className));
+        $this->kebabStudlyName = Str::kebab($this->studlyName);
+        $this->camelStudlyName = Str::camel($this->studlyName);
         $this->snakeStudlyName = Str::snake($this->studlyName);
         $this->pluralStudlyName = Str::plural($this->studlyName);
+        $this->camelPluralStudlyName = Str::camel($this->pluralStudlyName);
         $this->snakePluralStudlyName = Str::snake($this->pluralStudlyName);
 
         if($this->option('check')) {
             $this->info("studlyName: " . $this->studlyName);
+            $this->info("kebabStudlyName: " . $this->kebabStudlyName);
+            $this->info("camelStudlyName: " . $this->camelStudlyName);
             $this->info("snakeStudlyName: " . $this->snakeStudlyName);
             $this->info("pluralStudlyName: " . $this->pluralStudlyName);
+            $this->info("camelPluralStudlyName: " . $this->camelPluralStudlyName);
             $this->info("snakePluralStudlyName: " . $this->snakePluralStudlyName);
         }
 
@@ -298,8 +304,8 @@ class CodeMakeCommand extends Command
             $columnTitle = $this->strTitle($column);
 
             $outLine .= str_replace(
-                ['#ColumnName#', '#ColumnTitle#', '#studlyName#', '#snakeStudlyName#', '#pluralStudlyName#', '#snakePluralStudlyName#'],
-                [$column, $columnTitle, $this->studlyName, $this->snakeStudlyName, $this->pluralStudlyName, $this->snakePluralStudlyName],
+                ['#ColumnName#', '#ColumnTitle#', '#studlyName#', '#kebabStudlyName#', '#camelStudlyName#', '#snakeStudlyName#', '#pluralStudlyName#', '#camelPluralStudlyName#', '#snakePluralStudlyName#'],
+                [$column, $columnTitle, $this->studlyName, $this->kebabStudlyName, $this->camelStudlyName, $this->snakeStudlyName, $this->pluralStudlyName, $this->camelPluralStudlyName, $this->snakePluralStudlyName],
                 $content
             ). "\n";
         }
@@ -355,8 +361,8 @@ class CodeMakeCommand extends Command
     private function replaceModelName($stub)
     {
         return str_replace(
-            ['#studlyName#', '#snakeStudlyName#', '#pluralStudlyName#', '#snakePluralStudlyName#'],
-            [$this->studlyName, $this->snakeStudlyName, $this->pluralStudlyName, $this->snakePluralStudlyName],
+            ['#studlyName#', '#kebabStudlyName#', '#camelStudlyName#', '#snakeStudlyName#', '#pluralStudlyName#', '#camelPluralStudlyName#', '#snakePluralStudlyName#'],
+            [$this->studlyName, $this->kebabStudlyName, $this->camelStudlyName, $this->snakeStudlyName, $this->pluralStudlyName, $this->camelPluralStudlyName, $this->snakePluralStudlyName],
             $stub
         );
     }
@@ -378,16 +384,15 @@ class CodeMakeCommand extends Command
                 $rel = $stub->getRelativePathName();
                 $src = base_path($stub);
                 $target = $this->combinePath($targetDir, $stub);
-                $this->info($src);
-                $this->info($target);
 
-                if($this->filesystem->exists($src) && !$this->filesystem->exists($target)) {
+                if($this->filesystem->exists($src) && ($this->option('force') || !$this->filesystem->exists($target))) {
 
                     if (! $this->filesystem->isDirectory($directory = $this->filesystem->dirname($target))) {
                         $this->filesystem->makeDirectory($directory, 0755, true);
                     }
     
                     $this->filesystem->copy($src, $target);
+                    $this->info($stub);
                 }
             }
         }
