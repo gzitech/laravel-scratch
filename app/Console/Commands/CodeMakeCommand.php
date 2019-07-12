@@ -17,7 +17,7 @@ class CodeMakeCommand extends Command
      *
      * @var \Illuminate\Filesystem\Filesystem
      */
-    private $file;
+    private $filesystem;
 
     /**
      * The name and signature of the console command.
@@ -84,11 +84,11 @@ class CodeMakeCommand extends Command
      * @param  \Illuminate\Filesystem\Filesystem  $files
      * @return void
      */
-    public function __construct(Filesystem $file)
+    public function __construct(Filesystem $filesystem)
     {
         parent::__construct();
 
-        $this->file = $file;
+        $this->filesystem = $filesystem;
     }
 
 
@@ -111,8 +111,8 @@ class CodeMakeCommand extends Command
     }
 
     protected function generateCodes() {
-        $models = collect(\File::allFiles(base_path($this->modelPath)))->filter(function ($model) {
-            $rel = $model->getRelativePathName();
+        $models = collect($this->file->files(base_path($this->modelPath)))->filter(function ($item) {
+            $rel = $item->getRelativePathName();
             return !strrpos($rel, '/');
         });
 
@@ -150,7 +150,7 @@ class CodeMakeCommand extends Command
             $this->generateFile($columns);
 
         } else {
-            $this->error("Model not exists: " . $class);
+            $this->error("Class not exists: " . $class);
         }
     }
 
@@ -176,12 +176,12 @@ class CodeMakeCommand extends Command
 
             foreach($this->compileDetailFiles as $src=>$target) {
                 $target = $this->replaceModelName($target);
-                $this->file->delete($target);
+                $this->filesystem->delete($target);
             }
 
             foreach($this->compileFiles as $src=>$target) {
                 $target = $this->replaceModelName($target);
-                $this->file->delete($target);
+                $this->filesystem->delete($target);
             }
 
             return "";
@@ -238,7 +238,7 @@ class CodeMakeCommand extends Command
             mkdir($directory, 0755, true);
         }
 
-        $this->file->put($path, $content);
+        $this->filesystem->put($path, $content);
     }
 
     protected function compileFile($path, $columns)
@@ -250,7 +250,7 @@ class CodeMakeCommand extends Command
 
         $name = basename($path, '.stub');
 
-        $stub = $this->file->get($path);
+        $stub = $this->filesystem->get($path);
 
         $stub = $this->replaceModelName($stub);
 
@@ -282,7 +282,7 @@ class CodeMakeCommand extends Command
             return "";
         }
 
-        $content = $this->file->get($path);
+        $content = $this->filesystem->get($path);
 
         $outLine = "";
 
@@ -327,15 +327,15 @@ class CodeMakeCommand extends Command
             return "";
         }
 
-        $content = $this->file->get($path);
+        $content = $this->filesystem->get($path);
 
         if(!Str::endsWith($content, "\n")) {
-            $this->file->append($path, "\n");
+            $this->filesystem->append($path, "\n");
         }
 
         foreach($lines as $line) {
             if(!Str::contains($content, $line)) {
-                $this->file->append($path, "$line\n");
+                $this->filesystem->append($path, "$line\n");
             }
         }
     }
