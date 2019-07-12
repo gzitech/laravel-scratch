@@ -7,14 +7,14 @@
         <div class="col-md-10">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/#snakeStudlyName#/">{{__('#studlyName#')}}</a></li>
+                    <li class="breadcrumb-item"><a href="/#url#/">{{__('#studlyName#')}}</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{{ __('Create') }}</li>
                 </ol>
             </nav>
             <div class="card">
                 <div class="card-body">
                     @vueif<ssky-#kebabStudlyName#-create inline-template :old="{{ json_encode(Session::getOldInput()) }}" :errors="{{ $errors }}">@vuend
-                    <form method="POST" action="{{ route('#snakeStudlyName#.index') }}" @submit="validate#studlyName#CreateForm">
+                    <form method="POST" action="/#url#" @submit="validate#studlyName#CreateForm">
                         @csrf
                         @include('#snakeStudlyName#.create-form')
                         <div class="form-group row mb-0">

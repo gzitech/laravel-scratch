@@ -141,6 +141,7 @@ class CodeMakeCommand extends Command
         $this->pluralStudlyName = Str::plural($this->studlyName);
         $this->camelPluralStudlyName = Str::camel($this->pluralStudlyName);
         $this->snakePluralStudlyName = Str::snake($this->pluralStudlyName);
+        $this->url = str_replace('_', '/', $this->snakeStudlyName);
 
         if($this->option('check')) {
             $this->info("studlyName: " . $this->studlyName);
@@ -150,6 +151,7 @@ class CodeMakeCommand extends Command
             $this->info("pluralStudlyName: " . $this->pluralStudlyName);
             $this->info("camelPluralStudlyName: " . $this->camelPluralStudlyName);
             $this->info("snakePluralStudlyName: " . $this->snakePluralStudlyName);
+            $this->info("url: " . $this->url);
         }
 
         $class = $this->modelNamespace . '\\' . $this->studlyName;
@@ -240,7 +242,7 @@ class CodeMakeCommand extends Command
         ]);
 
         $this->updateRoute([
-            "Route::resource('/{$this->snakeStudlyName}', '{$this->studlyName}Controller');",
+            "Route::resource('/{$this->url}', '{$this->studlyName}Controller');",
         ]);
     }
 
@@ -304,8 +306,8 @@ class CodeMakeCommand extends Command
             $columnTitle = $this->strTitle($column);
 
             $outLine .= str_replace(
-                ['#ColumnName#', '#ColumnTitle#', '#studlyName#', '#kebabStudlyName#', '#camelStudlyName#', '#snakeStudlyName#', '#pluralStudlyName#', '#camelPluralStudlyName#', '#snakePluralStudlyName#'],
-                [$column, $columnTitle, $this->studlyName, $this->kebabStudlyName, $this->camelStudlyName, $this->snakeStudlyName, $this->pluralStudlyName, $this->camelPluralStudlyName, $this->snakePluralStudlyName],
+                ['#ColumnName#', '#ColumnTitle#', '#studlyName#', '#kebabStudlyName#', '#camelStudlyName#', '#snakeStudlyName#', '#pluralStudlyName#', '#camelPluralStudlyName#', '#snakePluralStudlyName#', '#url#'],
+                [$column, $columnTitle, $this->studlyName, $this->kebabStudlyName, $this->camelStudlyName, $this->snakeStudlyName, $this->pluralStudlyName, $this->camelPluralStudlyName, $this->snakePluralStudlyName, $this->url],
                 $content
             ). "\n";
         }
@@ -361,8 +363,8 @@ class CodeMakeCommand extends Command
     private function replaceModelName($stub)
     {
         return str_replace(
-            ['#studlyName#', '#kebabStudlyName#', '#camelStudlyName#', '#snakeStudlyName#', '#pluralStudlyName#', '#camelPluralStudlyName#', '#snakePluralStudlyName#'],
-            [$this->studlyName, $this->kebabStudlyName, $this->camelStudlyName, $this->snakeStudlyName, $this->pluralStudlyName, $this->camelPluralStudlyName, $this->snakePluralStudlyName],
+            ['#studlyName#', '#kebabStudlyName#', '#camelStudlyName#', '#snakeStudlyName#', '#pluralStudlyName#', '#camelPluralStudlyName#', '#snakePluralStudlyName#', '#url#'],
+            [$this->studlyName, $this->kebabStudlyName, $this->camelStudlyName, $this->snakeStudlyName, $this->pluralStudlyName, $this->camelPluralStudlyName, $this->snakePluralStudlyName, $this->url],
             $stub
         );
     }

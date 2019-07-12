@@ -19,7 +19,7 @@
 
                         </div>
                         <div class="nav ml-auto">
-                            <a href="/#snakeStudlyName#/create" role="button" class="btn btn-primary btn-sm" @vueif
+                            <a href="/#url#/create" role="button" class="btn btn-primary btn-sm" @vueif
                                 @click.prevent="show#studlyName#CreateForm" @vuend>Create</a>
                         </div>
                     </div>
@@ -56,12 +56,12 @@
                                     <th scope="row">{{ $#camelStudlyName#->id }}</th>
                                     #model.table.item#
                                     <td class="text-md-right">
-                                        <a href="/#snakeStudlyName#/{{ $#camelStudlyName#->id }}" title="Show"
+                                        <a href="/#url#/{{ $#camelStudlyName#->id }}" title="Show"
                                             class="btn btn-outline-primary"><i
                                                 class="fa fa-user-o"></i></a>
-                                        <a href="/#snakeStudlyName#/{{ $#camelStudlyName#->id }}/edit" title="Edit"
+                                        <a href="/#url#/{{ $#camelStudlyName#->id }}/edit" title="Edit"
                                             class="btn btn-outline-primary"><i class="fa fa-pencil"></i></a>
-                                        <a href="/#snakeStudlyName#/{{ $#camelStudlyName#->id }}/destroy"
+                                        <a href="/#url#/{{ $#camelStudlyName#->id }}/destroy"
                                             title="Destroy" class="btn btn-outline-danger"><i
                                                 class="fa fa-trash-o"></i></a>
                                     </td>
@@ -87,7 +87,7 @@
                     <div class="modal" tabindex="-1" role="dialog" id="#kebabStudlyName#-create-form">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
-                                <form method="POST" action="{{ route('#snakeStudlyName#.index') }}"
+                                <form method="POST" action="/#url#"
                                     @submit="validate#studlyName#CreateForm">
                                     @csrf
                                     <div class="modal-header">

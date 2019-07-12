@@ -34,21 +34,21 @@ module.exports = {
 
     methods: {
         showUrl: function (id) {
-            return '/#snakeStudlyName#/' + id;
+            return '/#url#/' + id;
         },
         show#studlyName#CreateForm: function () {
-            var url = '/#snakeStudlyName#/create';
+            var url = '/#url#/create';
             history.pushState({}, "", url);
             #camelStudlyName#CreateFormDialog.modal('show');
         },
         show#studlyName#EditForm: function (#camelStudlyName#) {
-            var url = '/#snakeStudlyName#/' + #camelStudlyName#.id + '/edit';
+            var url = '/#url#/' + #camelStudlyName#.id + '/edit';
             history.pushState({}, "", url);
             this.#camelStudlyName# = #camelStudlyName#;
             #camelStudlyName#EditFormDialog.modal('show');
         },
         show#studlyName#DestroyConfirm: function (#camelStudlyName#) {
-            var url = '/#snakeStudlyName#/' + #camelStudlyName#.id + '/';
+            var url = '/#url#/' + #camelStudlyName#.id + '/';
             this.#camelStudlyName# = #camelStudlyName#;
             #camelStudlyName#DestroyConfirm = $('##kebabStudlyName#-destroy-confirm');
             #camelStudlyName#DestroyConfirm.find('form').attr('action', url);

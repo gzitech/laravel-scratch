@@ -49,7 +49,7 @@ module.exports = {
             if (this.#camelStudlyName#EditForm.validate({
                 #edit.validate.item#
             })) {
-                var url = '/#snakeStudlyName#/' + this.#snakeStudlyName#.id + '/';
+                var url = '/#url#/' + this.#snakeStudlyName#.id + '/';
 
                 SSky.put(url, this.#camelStudlyName#EditForm)
                     .then(response => {

@@ -18,7 +18,7 @@ class #studlyName#Controller extends Controller
      */
     protected $#snakeStudlyName#;
 
-    protected $redirectTo = '/#snakeStudlyName#/';
+    protected $redirectTo = '/#url#/';
 
     /**
      * Create a new controller instance.
@@ -117,7 +117,7 @@ class #studlyName#Controller extends Controller
 
         $this->#camelStudlyName#->update($id, $data);
 
-        return $request->ajax() ? ""  : redirect()->route('#snakeStudlyName#.index');
+        return $request->ajax() ? ""  : redirect($this->redirectTo);
     }
 
     /**
@@ -130,6 +130,6 @@ class #studlyName#Controller extends Controller
     {
         $this->#camelStudlyName#->destroy($id);
 
-        return request()->ajax() ? ""  : redirect()->route('#snakeStudlyName#.index');
+        return request()->ajax() ? ""  : redirect($this->redirectTo);
     }
 }
