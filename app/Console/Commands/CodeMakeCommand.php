@@ -76,7 +76,7 @@ class CodeMakeCommand extends Command
     ];
 
     protected $ignoreFieldNames = [
-        'id', 'email_verified_at', 'remember_token', 'right', 'deleted_at', 'created_at', 'updated_at', 'password'
+        'id', 'user_id', 'email_verified_at', 'remember_token', 'right', 'deleted_at', 'created_at', 'updated_at', 'password'
     ];
 
     /**
