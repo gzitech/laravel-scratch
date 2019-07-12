@@ -111,7 +111,7 @@ class CodeMakeCommand extends Command
     }
 
     protected function generateCodes() {
-        $models = collect($this->file->files(base_path($this->modelPath)))->filter(function ($item) {
+        $models = collect($this->filesystem->files(base_path($this->modelPath)))->filter(function ($item) {
             $rel = $item->getRelativePathName();
             return !strrpos($rel, '/');
         });
