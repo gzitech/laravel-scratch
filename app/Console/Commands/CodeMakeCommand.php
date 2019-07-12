@@ -26,6 +26,7 @@ class CodeMakeCommand extends Command
      */
     protected $signature = 'make:code
     {model-name? : Specify an model class}
+    {--clone= : Copy stubs to other directory}
     {--p|model-path=app : Specify model directory}
     {--s|model-namespace=App : Specify model namespace}
     {--c|check : Only show you what will create without write}
@@ -103,10 +104,16 @@ class CodeMakeCommand extends Command
         $this->modelPath = $this->option('model-path');
         $this->modelNamespace = $this->option('model-namespace');
 
-        if(empty($modelName)) {
-            $this->generateCodes();
+        $clone = $this->option('clone');
+
+        if(empty($clone)) {
+            if(empty($modelName)) {
+                $this->generateCodes();
+            } else {
+                $this->generateCode($modelName);
+            }
         } else {
-            $this->generateCode($modelName);
+            $this->copyTo($clone);
         }
     }
 
@@ -204,7 +211,7 @@ class CodeMakeCommand extends Command
         } else {
             foreach($this->compileDetailFiles as $src=>$target) {
                 $target = $this->replaceModelName($target);
-                if(!file_exists($target)) {
+                if(!$this->filesystem->exists($target)) {
                     $content = $this->compileDetailFile($src, $columns);
                     $this->save($target, $content);
                 }
@@ -212,7 +219,7 @@ class CodeMakeCommand extends Command
 
             foreach($this->compileFiles as $src=>$target) {
                 $target = $this->replaceModelName($target);
-                if(!file_exists($target)) {
+                if(!$this->filesystem->exists($target)) {
                     $content = $this->compileFile($src, $columns);
                     $this->save($target, $content);
                 }
@@ -234,8 +241,8 @@ class CodeMakeCommand extends Command
     {
         if(empty($content)) return;
 
-        if (! is_dir($directory = dirname($path))) {
-            mkdir($directory, 0755, true);
+        if (! $this->filesystem->isDirectory($directory = $this->filesystem->dirname($path))) {
+            $this->filesystem->makeDirectory($directory, 0755, true);
         }
 
         $this->filesystem->put($path, $content);
@@ -243,7 +250,7 @@ class CodeMakeCommand extends Command
 
     protected function compileFile($path, $columns)
     {
-        if(!file_exists($path)) {
+        if(!$this->filesystem->exists($path)) {
             $this->error("File Not Exists: " . substr($path, strlen(base_path())));
             return "";
         }
@@ -254,7 +261,7 @@ class CodeMakeCommand extends Command
 
         $stub = $this->replaceModelName($stub);
 
-        $subStubs = collect(\File::allFiles(dirname($path)));
+        $subStubs = collect($this->filesystem->files(dirname($path)));
 
         foreach($subStubs as $subStub){
             $rel = $subStub->getRelativePathName();
@@ -277,7 +284,7 @@ class CodeMakeCommand extends Command
 
     protected function compileDetailFile($path, $columns) {
 
-        if(!file_exists($path)) {
+        if(!$this->filesystem->exists($path)) {
             $this->error("File Not Exists: " . substr($path, strlen(base_path())));
             return "";
         }
@@ -317,7 +324,7 @@ class CodeMakeCommand extends Command
 
     protected function updateFile($path, $lines)
     {
-        if(!file_exists($path)) {
+        if(!$this->filesystem->exists($path)) {
             $this->error("File Not Exists: " . substr($path, strlen(base_path())));
             return "";
         }
@@ -351,5 +358,50 @@ class CodeMakeCommand extends Command
             [$this->studlyName, $this->snakeStudlyName, $this->pluralStudlyName, $this->snakePluralStudlyName],
             $stub
         );
+    }
+
+    private function copyTo($dir)
+    {
+        $targetDir = realpath($dir);
+
+        if(Str::startsWith($targetDir, base_path())) {
+            $this->error("can't copy to $dir");
+            return;
+        }
+
+        foreach($this->compileDetailFiles as $stub=>$compiledFile) {
+            $srcStub = base_path($stub);
+            $stubFile = $this->combinePath($targetDir, $stub);
+
+            if($this->filesystem->exists($srcStub) && !$this->filesystem->exists($stubFile)) {
+
+                if (! $this->filesystem->isDirectory($directory = $this->filesystem->dirname($stubFile))) {
+                    $this->filesystem->makeDirectory($directory, 0755, true);
+                }
+
+                $this->filesystem->copy($srcStub, $stubFile);
+            }
+        }
+
+        foreach($this->compileFiles as $stub=>$compiledFile) {
+            $srcStub = base_path($stub);
+            $stubFile = $this->combinePath($targetDir, $stub);
+
+            if($this->filesystem->exists($srcStub) && !$this->filesystem->exists($stubFile)) {
+
+                if (! $this->filesystem->isDirectory($directory = $this->filesystem->dirname($stubFile))) {
+                    $this->filesystem->makeDirectory($directory, 0755, true);
+                }
+
+                $this->filesystem->copy($srcStub, $stubFile);
+            }
+        }
+    }
+
+    private function combinePath($targetDir, $path)
+    {
+        return implode(DIRECTORY_SEPARATOR, [
+            $targetDir, $path,
+        ]);
     }
 }
