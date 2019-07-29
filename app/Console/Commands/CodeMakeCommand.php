@@ -76,7 +76,7 @@ class CodeMakeCommand extends Command
     ];
 
     protected $ignoreFieldNames = [
-        'id', 'user_id', 'email_verified_at', 'remember_token', 'right', 'deleted_at', 'created_at', 'updated_at', 'password'
+        'id', 'user_id', 'mass_message_id', 'email_verified_at', 'remember_token', 'right', 'deleted_at', 'created_at', 'updated_at', 'password'
     ];
 
     /**
@@ -144,17 +144,17 @@ class CodeMakeCommand extends Command
         $this->snakePluralStudlyName = Str::snake($this->pluralStudlyName);
         $this->url = str_replace('_', '/', $this->snakeStudlyName);
 
-        if($this->option('check')) {
-            $this->info("studlyName: " . $this->studlyName);
-            $this->info("kebabStudlyName: " . $this->kebabStudlyName);
-            $this->info("camelStudlyName: " . $this->camelStudlyName);
-            $this->info("snakeStudlyName: " . $this->snakeStudlyName);
-            $this->info("titleName: " . $this->titleName);
-            $this->info("pluralStudlyName: " . $this->pluralStudlyName);
-            $this->info("camelPluralStudlyName: " . $this->camelPluralStudlyName);
-            $this->info("snakePluralStudlyName: " . $this->snakePluralStudlyName);
-            $this->info("url: " . $this->url);
-        }
+        // if($this->option('check')) {
+        //     $this->info("studlyName: " . $this->studlyName);
+        //     $this->info("kebabStudlyName: " . $this->kebabStudlyName);
+        //     $this->info("camelStudlyName: " . $this->camelStudlyName);
+        //     $this->info("snakeStudlyName: " . $this->snakeStudlyName);
+        //     $this->info("titleName: " . $this->titleName);
+        //     $this->info("pluralStudlyName: " . $this->pluralStudlyName);
+        //     $this->info("camelPluralStudlyName: " . $this->camelPluralStudlyName);
+        //     $this->info("snakePluralStudlyName: " . $this->snakePluralStudlyName);
+        //     $this->info("url: " . $this->url);
+        // }
 
         $class = $this->modelNamespace . '\\' . $this->studlyName;
 
@@ -175,16 +175,19 @@ class CodeMakeCommand extends Command
     protected function generateFile($columns) {
 
         if($this->option('check')) {
-            $this->info("will create:");
 
             foreach($this->compileDetailFiles as $src=>$target) {
                 $target = $this->replaceModelName($target);
-                $this->info("$target");
+                if(!$this->filesystem->exists($target)) {
+                    $this->info("$target");
+                }
             }
 
             foreach($this->compileFiles as $src=>$target) {
                 $target = $this->replaceModelName($target);
-                $this->info("$target");
+                if(!$this->filesystem->exists($target)) {
+                    $this->info("$target");
+                }
             }
 
             return "";
