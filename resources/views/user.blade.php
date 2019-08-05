@@ -8,11 +8,6 @@
         <ssky-user-list inline-template :paginate="{{ $users->toJson() }}">
             @vuend
             <div class="col-md-10">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item active" aria-current="page">User</li>
-                    </ol>
-                </nav>
                 <div class="card">
                     <div class="card-header d-flex">
                         <div class="nav mr-auto">

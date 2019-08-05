@@ -5,17 +5,8 @@
         </h3>
         <ul class="nav flex-column ">
             <li class="nav-item">
-                <a class="nav-link{{ Request::is('home', 'home/*') ?  ' active' : '' }}" href="/home/"><i class="fa fa-home"></i> Home</a>
-            </li>
-        </ul>
-    </aside>
-    <aside>
-        <h3 class="nav-heading">
-            Message
-        </h3>
-        <ul class="nav flex-column ">
-            <li class="nav-item">
-                <a class="nav-link{{ Request::is('sms', 'sms/*') ?  ' active' : '' }}" href="/sms/"><i class="fa fa-comments"></i> SMS</a>
+                <a class="nav-link{{ Request::is('home', 'home/*') ?  ' active' : '' }}" href="/home/"><i
+                        class="fa fa-home"></i> Home</a>
             </li>
         </ul>
     </aside>
@@ -25,10 +16,24 @@
         </h3>
         <ul class="nav flex-column ">
             <li class="nav-item">
-                <a class="nav-link{{ Request::is('user', 'user/*') ?  ' active' : '' }}" href="/user/"><i class="fa fa-users"></i> User</a>
+                <a class="nav-link{{ Request::is('token', 'token/*') ?  ' active' : '' }}" href="/token/"><i
+                        class="fa fa-gift"></i>Token</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link{{ Request::is('setting', 'setting/*') ?  ' active' : '' }}" href="/setting/"><i class="fa fa-gift"></i> Setting</a>
+                <a class="nav-link{{ Request::is('code', 'code/*') ?  ' active' : '' }}" href="/code/"><i
+                        class="fa fa-code"></i>Code</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link{{ Request::is('user', 'user/*') ?  ' active' : '' }}" href="/user/"><i
+                        class="fa fa-user"></i>User</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link{{ Request::is('role', 'role/*') ?  ' active' : '' }}" href="/role/"><i
+                        class="fa fa-users"></i>Role</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link{{ Request::is('right', 'right/*') ?  ' active' : '' }}" href="/right/"><i
+                        class="fa fa-lock"></i>Right</a>
             </li>
         </ul>
     </aside>
