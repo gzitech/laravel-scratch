@@ -2,7 +2,7 @@
 
 namespace App\Contracts\Repositories;
 
-interface #studlyName#Repository
+interface #modelName#Repository
 {
     public function paginate();
     public function find($id);

@@ -2,11 +2,11 @@
 
 namespace App\Repositories;
 
-use App\#studlyName#;
-use App\Contracts\Repositories\#studlyName#Repository as Contract;
+use App\#modelName#;
+use App\Contracts\Repositories\#modelName#Repository as Contract;
 use Carbon\Carbon;
 
-class #studlyName#Repository implements Contract
+class #modelName#Repository implements Contract
 {
 
     /**
@@ -15,9 +15,9 @@ class #studlyName#Repository implements Contract
     public function paginate()
     {
         if(config('app.paginate_type') == 'paginate') {
-            return #studlyName#::paginate(config("app.max_page_size"));
+            return #modelName#::paginate(config("app.max_page_size"));
         } else {
-            return #studlyName#::simplePaginate(config("app.max_page_size"));
+            return #modelName#::simplePaginate(config("app.max_page_size"));
         }
     }
 
@@ -26,7 +26,7 @@ class #studlyName#Repository implements Contract
      */
     public function find($id)
     {
-        return #studlyName#::find($id);
+        return #modelName#::find($id);
     }
 
     /**
@@ -34,9 +34,9 @@ class #studlyName#Repository implements Contract
      */
     public function create(array $data)
     {
-        $#snakeStudlyName# = #studlyName#::create($data);
+        $#snakeModelName# = #modelName#::create($data);
 
-        return $#snakeStudlyName#;
+        return $#snakeModelName#;
     }
 
     /**
@@ -44,7 +44,7 @@ class #studlyName#Repository implements Contract
      */
     public function update($id, array $data)
     {
-        #studlyName#::where('id', $id)->update($data);
+        #modelName#::where('id', $id)->update($data);
     }
 
     /**
@@ -52,6 +52,6 @@ class #studlyName#Repository implements Contract
      */
     public function destroy($id)
     {
-        #studlyName#::destroy($id);
+        #modelName#::destroy($id);
     }
 }

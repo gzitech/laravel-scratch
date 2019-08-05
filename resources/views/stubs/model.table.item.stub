@@ -1,1 +1,1 @@
-                                    <td>{{ $#camelStudlyName#->#ColumnName# }}</td>
+                                    <td>{{ $#camelModelName#->#ColumnName# }}</td>

@@ -3,14 +3,14 @@
 
     <div class="col-md-6">
         @vueif
-        <input id="#ColumnName#" type="text" class="form-control" name="#ColumnName#" v-model="#camelStudlyName#EditForm.#ColumnName#"
-            :class="{'is-invalid': #camelStudlyName#EditForm.errors.has('#ColumnName#')}" required autocomplete="#ColumnName#" autofocus>
-        <span class="invalid-feedback" role="alert" v-show="#camelStudlyName#EditForm.errors.has('#ColumnName#')">
-            <strong>@{{ #camelStudlyName#EditForm.errors.get('#ColumnName#') }}</strong>
+        <input id="#ColumnName#" type="text" class="form-control" name="#ColumnName#" v-model="#camelModelName#EditForm.#ColumnName#"
+            :class="{'is-invalid': #camelModelName#EditForm.errors.has('#ColumnName#')}" required autocomplete="#ColumnName#" autofocus>
+        <span class="invalid-feedback" role="alert" v-show="#camelModelName#EditForm.errors.has('#ColumnName#')">
+            <strong>@{{ #camelModelName#EditForm.errors.get('#ColumnName#') }}</strong>
         </span>
         @vuelse
         <input id="#ColumnName#" type="text" class="form-control @error('#ColumnName#') is-invalid @enderror"
-            name="#ColumnName#" value="{{ old('#ColumnName#') ?? $#camelStudlyName#->#ColumnName# }}" required autocomplete="#ColumnName#"
+            name="#ColumnName#" value="{{ old('#ColumnName#') ?? $#camelModelName#->#ColumnName# }}" required autocomplete="#ColumnName#"
             autofocus>
         @error('#ColumnName#')
         <span class="invalid-feedback" role="alert">

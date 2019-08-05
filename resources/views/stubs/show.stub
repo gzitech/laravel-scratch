@@ -7,7 +7,7 @@
         <div class="col-md-10">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/#url#/">#studlyName#</a></li>
+                    <li class="breadcrumb-item"><a href="/#url#/">#modelName#</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Show</li>
                 </ol>
             </nav>
@@ -16,7 +16,7 @@
                     #show.table.item#
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
-                            <a href="/#url#/{{ $#camelStudlyName#->id }}/edit" class="btn btn-primary">
+                            <a href="/#url#/{{ $#camelModelName#->id }}/edit" class="btn btn-primary">
                                 {{ __('Edit') }}
                             </a>
                         </div>

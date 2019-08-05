@@ -1,1 +1,1 @@
-                u.#ColumnName# = #camelStudlyName#.#ColumnName#;
+                u.#ColumnName# = #camelModelName#.#ColumnName#;

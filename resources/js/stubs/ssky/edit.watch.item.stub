@@ -1,1 +1,1 @@
-            this.#camelStudlyName#EditForm.#ColumnName# = #camelStudlyName#.#ColumnName#;
+            this.#camelModelName#EditForm.#ColumnName# = #camelModelName#.#ColumnName#;

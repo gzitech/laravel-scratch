@@ -3,6 +3,6 @@
 
                         <div class="col-md-6">
                             <input id="#ColumnName#" type="text" class="form-control" name="#ColumnName#"
-                                value="{{ $#camelStudlyName#->#ColumnName# }}" disabled>
+                                value="{{ $#camelModelName#->#ColumnName# }}" disabled>
                         </div>
                     </div>

@@ -1,1 +1,1 @@
-                #ColumnName#: this.old.#ColumnName# || this.#snakeStudlyName#.#ColumnName# || '',
+                #ColumnName#: this.old.#ColumnName# || this.#snakeModelName#.#ColumnName# || '',

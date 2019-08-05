@@ -9,8 +9,8 @@ module.exports = {
 
     data() {
         return {
-            #camelStudlyName#: {},
-            #camelPluralStudlyName#: this.paginate.data,
+            #camelModelName#: {},
+            #camelTableName#: this.paginate.data,
         };
     },
 
@@ -21,11 +21,11 @@ module.exports = {
 
     created() {
         $(function () {
-            #camelStudlyName#CreateFormDialog = $('##kebabStudlyName#-create-form').on('hidden.bs.modal', function () {
+            #camelModelName#CreateFormDialog = $('##kebabModelName#-create-form').on('hidden.bs.modal', function () {
                 history.back();
             });
 
-            #camelStudlyName#EditFormDialog = $('##kebabStudlyName#-edit-form').on('hidden.bs.modal', function () {
+            #camelModelName#EditFormDialog = $('##kebabModelName#-edit-form').on('hidden.bs.modal', function () {
                 history.back();
             });
         });
@@ -36,31 +36,31 @@ module.exports = {
         showUrl: function (id) {
             return '/#url#/' + id;
         },
-        show#studlyName#CreateForm: function () {
+        show#modelName#CreateForm: function () {
             var url = '/#url#/create';
             history.pushState({}, "", url);
-            #camelStudlyName#CreateFormDialog.modal('show');
+            #camelModelName#CreateFormDialog.modal('show');
         },
-        show#studlyName#EditForm: function (#camelStudlyName#) {
-            var url = '/#url#/' + #camelStudlyName#.id + '/edit';
+        show#modelName#EditForm: function (#camelModelName#) {
+            var url = '/#url#/' + #camelModelName#.id + '/edit';
             history.pushState({}, "", url);
-            this.#camelStudlyName# = #camelStudlyName#;
-            #camelStudlyName#EditFormDialog.modal('show');
+            this.#camelModelName# = #camelModelName#;
+            #camelModelName#EditFormDialog.modal('show');
         },
-        show#studlyName#DestroyConfirm: function (#camelStudlyName#) {
-            var url = '/#url#/' + #camelStudlyName#.id + '/';
-            this.#camelStudlyName# = #camelStudlyName#;
-            #camelStudlyName#DestroyConfirm = $('##kebabStudlyName#-destroy-confirm');
-            #camelStudlyName#DestroyConfirm.find('form').attr('action', url);
-            #camelStudlyName#DestroyConfirm.modal('show');
+        show#modelName#DestroyConfirm: function (#camelModelName#) {
+            var url = '/#url#/' + #camelModelName#.id + '/';
+            this.#camelModelName# = #camelModelName#;
+            #camelModelName#DestroyConfirm = $('##kebabModelName#-destroy-confirm');
+            #camelModelName#DestroyConfirm.find('form').attr('action', url);
+            #camelModelName#DestroyConfirm.modal('show');
         },
-        updated#studlyName#: function (#camelStudlyName#) {
-            u = this.#camelPluralStudlyName#.find(u => u.id === #camelStudlyName#.id);
+        updated#modelName#: function (#camelModelName#) {
+            u = this.#camelTableName#.find(u => u.id === #camelModelName#.id);
             if (u) {
                 #list.updated.item#
             }
 
-            #camelStudlyName#EditFormDialog.modal('hide');
+            #camelModelName#EditFormDialog.modal('hide');
         }
     },
 

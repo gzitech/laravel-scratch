@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 class CodeMakeCommand extends Command
 {
     private $modelPath, $modelNamespace;
-    private $studlyName, $snakeStudlyName, $pluralStudlyName, $snakePluralStudlyName;
+    private $modelName, $snakeModelName, $tableName, $snakeTableName;
     /**
      * The filesystem instance.
      *
@@ -45,25 +45,25 @@ class CodeMakeCommand extends Command
      */
     protected $compileFiles = [
         //views
-        'resources/views/stubs/model.stub' => 'resources/views/#snakeStudlyName#.blade.php',
-        'resources/views/stubs/show.stub' => 'resources/views/#snakeStudlyName#/show.blade.php',
-        'resources/views/stubs/create.stub' => 'resources/views/#snakeStudlyName#/create.blade.php',
-        'resources/views/stubs/edit.stub' => 'resources/views/#snakeStudlyName#/edit.blade.php',
+        'resources/views/stubs/model.stub' => 'resources/views/#snakeModelName#.blade.php',
+        'resources/views/stubs/show.stub' => 'resources/views/#snakeModelName#/show.blade.php',
+        'resources/views/stubs/create.stub' => 'resources/views/#snakeModelName#/create.blade.php',
+        'resources/views/stubs/edit.stub' => 'resources/views/#snakeModelName#/edit.blade.php',
         //JS
-        'resources/js/stubs/ssky/list.stub' => 'resources/js/ssky/#snakeStudlyName#/list.js',
-        'resources/js/stubs/ssky/create.stub' => 'resources/js/ssky/#snakeStudlyName#/create.js',
-        'resources/js/stubs/ssky/edit.stub' => 'resources/js/ssky/#snakeStudlyName#/edit.js',
-        'resources/js/stubs/components/list.stub' => 'resources/js/components/#snakeStudlyName#/list.js',
-        'resources/js/stubs/components/create.stub' => 'resources/js/components/#snakeStudlyName#/create.js',
-        'resources/js/stubs/components/edit.stub' => 'resources/js/components/#snakeStudlyName#/edit.js',
+        'resources/js/stubs/ssky/list.stub' => 'resources/js/ssky/#snakeModelName#/list.js',
+        'resources/js/stubs/ssky/create.stub' => 'resources/js/ssky/#snakeModelName#/create.js',
+        'resources/js/stubs/ssky/edit.stub' => 'resources/js/ssky/#snakeModelName#/edit.js',
+        'resources/js/stubs/components/list.stub' => 'resources/js/components/#snakeModelName#/list.js',
+        'resources/js/stubs/components/create.stub' => 'resources/js/components/#snakeModelName#/create.js',
+        'resources/js/stubs/components/edit.stub' => 'resources/js/components/#snakeModelName#/edit.js',
         //Controller
-        'app/Http/Controllers/stubs/controller.stub' => 'app/Http/Controllers/#studlyName#Controller.php',
+        'app/Http/Controllers/stubs/controller.stub' => 'app/Http/Controllers/#modelName#Controller.php',
         //Repository
-        'app/Contracts/Repositories/stubs/repository.stub' => 'app/Contracts/Repositories/#studlyName#Repository.php',
-        'app/Repositories/stubs/repository.stub' => 'app/Repositories/#studlyName#Repository.php',
+        'app/Contracts/Repositories/stubs/repository.stub' => 'app/Contracts/Repositories/#modelName#Repository.php',
+        'app/Repositories/stubs/repository.stub' => 'app/Repositories/#modelName#Repository.php',
         //Request
-        'app/Http/Requests/stubs/create.stub' => 'app/Http/Requests/Create#studlyName#Post.php',
-        'app/Http/Requests/stubs/update.stub' => 'app/Http/Requests/Update#studlyName#Post.php',
+        'app/Http/Requests/stubs/create.stub' => 'app/Http/Requests/Create#modelName#Post.php',
+        'app/Http/Requests/stubs/update.stub' => 'app/Http/Requests/Update#modelName#Post.php',
     ];
 
     /**
@@ -71,8 +71,8 @@ class CodeMakeCommand extends Command
      */
     protected $compileDetailFiles = [
         //views
-        'resources/views/stubs/create-form.stub' => 'resources/views/#snakeStudlyName#/create-form.blade.php',
-        'resources/views/stubs/edit-form.stub' => 'resources/views/#snakeStudlyName#/edit-form.blade.php',
+        'resources/views/stubs/create-form.stub' => 'resources/views/#snakeModelName#/create-form.blade.php',
+        'resources/views/stubs/edit-form.stub' => 'resources/views/#snakeModelName#/edit-form.blade.php',
     ];
 
     protected $ignoreFieldNames = [
@@ -134,29 +134,29 @@ class CodeMakeCommand extends Command
 
     protected function generateCode($className) {
 
-        $this->studlyName = Str::studly(class_basename($className));
-        $this->kebabStudlyName = Str::kebab($this->studlyName);
-        $this->camelStudlyName = Str::camel($this->studlyName);
-        $this->snakeStudlyName = Str::snake($this->studlyName);
-        $this->titleName = $this->strTitle($this->snakeStudlyName);
-        $this->pluralStudlyName = Str::plural($this->studlyName);
-        $this->camelPluralStudlyName = Str::camel($this->pluralStudlyName);
-        $this->snakePluralStudlyName = Str::snake($this->pluralStudlyName);
-        $this->url = str_replace('_', '/', $this->snakeStudlyName);
+        $this->modelName = Str::studly(class_basename($className));
+        $this->kebabModelName = Str::kebab($this->modelName);
+        $this->camelModelName = Str::camel($this->modelName);
+        $this->snakeModelName = Str::snake($this->modelName);
+        $this->titleName = $this->strTitle($this->snakeModelName);
+        $this->tableName = Str::plural($this->modelName);
+        $this->camelTableName = Str::camel($this->tableName);
+        $this->snakeTableName = Str::snake($this->tableName);
+        $this->url = str_replace('_', '/', $this->snakeModelName);
 
-        // if($this->option('check')) {
-        //     $this->info("studlyName: " . $this->studlyName);
-        //     $this->info("kebabStudlyName: " . $this->kebabStudlyName);
-        //     $this->info("camelStudlyName: " . $this->camelStudlyName);
-        //     $this->info("snakeStudlyName: " . $this->snakeStudlyName);
-        //     $this->info("titleName: " . $this->titleName);
-        //     $this->info("pluralStudlyName: " . $this->pluralStudlyName);
-        //     $this->info("camelPluralStudlyName: " . $this->camelPluralStudlyName);
-        //     $this->info("snakePluralStudlyName: " . $this->snakePluralStudlyName);
-        //     $this->info("url: " . $this->url);
-        // }
+        if($this->option('check')) {
+            $this->info("modelName: " . $this->modelName);
+            $this->info("kebabModelName: " . $this->kebabModelName);
+            $this->info("camelModelName: " . $this->camelModelName);
+            $this->info("snakeModelName: " . $this->snakeModelName);
+            $this->info("titleName: " . $this->titleName);
+            $this->info("tableName: " . $this->tableName);
+            $this->info("camelTableName: " . $this->camelTableName);
+            $this->info("snakeTableName: " . $this->snakeTableName);
+            $this->info("url: " . $this->url);
+        }
 
-        $class = $this->modelNamespace . '\\' . $this->studlyName;
+        $class = $this->modelNamespace . '\\' . $this->modelName;
 
         if (class_exists($class)) {
             $obj = new $class();
@@ -241,13 +241,13 @@ class CodeMakeCommand extends Command
         }
         
         $this->updateComponentBootstrap([
-            "require('./{$this->snakeStudlyName}/list');",
-            "require('./{$this->snakeStudlyName}/create');",
-            "require('./{$this->snakeStudlyName}/edit');",
+            "require('./{$this->snakeModelName}/list');",
+            "require('./{$this->snakeModelName}/create');",
+            "require('./{$this->snakeModelName}/edit');",
         ]);
 
         $this->updateRoute([
-            "Route::resource('/{$this->url}', '{$this->studlyName}Controller');",
+            "Route::resource('/{$this->url}', '{$this->modelName}Controller');",
         ]);
     }
 
@@ -311,8 +311,8 @@ class CodeMakeCommand extends Command
             $columnTitle = $this->strTitle($column);
 
             $outLine .= str_replace(
-                ['#ColumnName#', '#ColumnTitle#', '#studlyName#', '#kebabStudlyName#', '#camelStudlyName#', '#snakeStudlyName#', '#titleName#', '#pluralStudlyName#', '#camelPluralStudlyName#', '#snakePluralStudlyName#', '#url#'],
-                [$column, $columnTitle, $this->studlyName, $this->kebabStudlyName, $this->camelStudlyName, $this->snakeStudlyName, $this->titleName, $this->pluralStudlyName, $this->camelPluralStudlyName, $this->snakePluralStudlyName, $this->url],
+                ['#ColumnName#', '#ColumnTitle#', '#modelName#', '#kebabModelName#', '#camelModelName#', '#snakeModelName#', '#titleName#', '#tableName#', '#camelTableName#', '#snakeTableName#', '#url#'],
+                [$column, $columnTitle, $this->modelName, $this->kebabModelName, $this->camelModelName, $this->snakeModelName, $this->titleName, $this->tableName, $this->camelTableName, $this->snakeTableName, $this->url],
                 $content
             ). "\n";
         }
@@ -368,8 +368,8 @@ class CodeMakeCommand extends Command
     private function replaceModelName($stub)
     {
         return str_replace(
-            ['#studlyName#', '#kebabStudlyName#', '#camelStudlyName#', '#snakeStudlyName#', '#titleName#', '#pluralStudlyName#', '#camelPluralStudlyName#', '#snakePluralStudlyName#', '#url#'],
-            [$this->studlyName, $this->kebabStudlyName, $this->camelStudlyName, $this->snakeStudlyName, $this->titleName, $this->pluralStudlyName, $this->camelPluralStudlyName, $this->snakePluralStudlyName, $this->url],
+            ['#modelName#', '#kebabModelName#', '#camelModelName#', '#snakeModelName#', '#titleName#', '#tableName#', '#camelTableName#', '#snakeTableName#', '#url#'],
+            [$this->modelName, $this->kebabModelName, $this->camelModelName, $this->snakeModelName, $this->titleName, $this->tableName, $this->camelTableName, $this->snakeTableName, $this->url],
             $stub
         );
     }

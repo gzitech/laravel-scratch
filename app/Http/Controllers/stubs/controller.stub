@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Contracts\Repositories\#studlyName#Repository;
-use App\Http\Requests\Create#studlyName#Post;
-use App\Http\Requests\Update#studlyName#Post;
+use App\Contracts\Repositories\#modelName#Repository;
+use App\Http\Requests\Create#modelName#Post;
+use App\Http\Requests\Update#modelName#Post;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 
-class #studlyName#Controller extends Controller
+class #modelName#Controller extends Controller
 {
      /**
      * The token repository instance.
      *
-     * @var \Laravel\Spark\Contracts\Repositories\#studlyName#Repository
+     * @var \Laravel\Spark\Contracts\Repositories\#modelName#Repository
      */
-    protected $#snakeStudlyName#;
+    protected $#snakeModelName#;
 
     protected $redirectTo = '/#url#/';
 
@@ -25,9 +25,9 @@ class #studlyName#Controller extends Controller
      *
      * @return void
      */
-    public function __construct(#studlyName#Repository $#camelStudlyName#)
+    public function __construct(#modelName#Repository $#camelModelName#)
     {
-        $this->#camelStudlyName# = $#camelStudlyName#;
+        $this->#camelModelName# = $#camelModelName#;
         $this->middleware('auth');
     }
     
@@ -39,10 +39,10 @@ class #studlyName#Controller extends Controller
     public function index()
     {
         $data = [
-            '#camelPluralStudlyName#'=>$this->#camelStudlyName#->paginate(),
+            '#camelTableName#'=>$this->#camelModelName#->paginate(),
         ];
 
-        return view("#snakeStudlyName#", $data);
+        return view("#snakeModelName#", $data);
     }
 
     /**
@@ -52,7 +52,7 @@ class #studlyName#Controller extends Controller
      */
     public function create()
     {
-        return view("#snakeStudlyName#.create");
+        return view("#snakeModelName#.create");
     }
 
     /**
@@ -61,13 +61,13 @@ class #studlyName#Controller extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Create#studlyName#Post $request)
+    public function store(Create#modelName#Post $request)
     {
         $data = $request->only([
             #controller.store.item#
         ]);
 
-        $#camelStudlyName# = $this->#camelStudlyName#->create($data);
+        $#camelModelName# = $this->#camelModelName#->create($data);
         
         return redirect($this->redirectTo);
     }
@@ -81,10 +81,10 @@ class #studlyName#Controller extends Controller
     public function show($id)
     {
         $data = [
-            '#camelStudlyName#'=>$this->#camelStudlyName#->find($id),
+            '#camelModelName#'=>$this->#camelModelName#->find($id),
         ];
 
-        return view("#snakeStudlyName#.show", $data);
+        return view("#snakeModelName#.show", $data);
     }
 
     /**
@@ -96,10 +96,10 @@ class #studlyName#Controller extends Controller
     public function edit($id)
     {
         $data = [
-            '#camelStudlyName#'=>$this->#camelStudlyName#->find($id),
+            '#camelModelName#'=>$this->#camelModelName#->find($id),
         ];
 
-        return view("#snakeStudlyName#.edit", $data);
+        return view("#snakeModelName#.edit", $data);
     }
 
     /**
@@ -109,13 +109,13 @@ class #studlyName#Controller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Update#studlyName#Post $request, $id)
+    public function update(Update#modelName#Post $request, $id)
     {
         $data = $request->only([
             #controller.store.item#
         ]);
 
-        $this->#camelStudlyName#->update($id, $data);
+        $this->#camelModelName#->update($id, $data);
 
         return $request->ajax() ? ""  : redirect($this->redirectTo);
     }
@@ -128,7 +128,7 @@ class #studlyName#Controller extends Controller
      */
     public function destroy($id)
     {
-        $this->#camelStudlyName#->destroy($id);
+        $this->#camelModelName#->destroy($id);
 
         return request()->ajax() ? ""  : redirect($this->redirectTo);
     }

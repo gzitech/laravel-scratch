@@ -1,7 +1,7 @@
 module.exports = {
 
     props: {
-        #snakeStudlyName#: {
+        #snakeModelName#: {
             type: Object,
             required: true,
         },
@@ -17,7 +17,7 @@ module.exports = {
 
     data() {
         return {
-            #camelStudlyName#EditForm: new SSky.Form({
+            #camelModelName#EditForm: new SSky.Form({
                 #edit.return.item#
             }),
         };
@@ -25,8 +25,8 @@ module.exports = {
 
 
     watch: {
-        #snakeStudlyName#: function (#camelStudlyName#) {
-            this.#camelStudlyName#EditForm.resetStatus();
+        #snakeModelName#: function (#camelModelName#) {
+            this.#camelModelName#EditForm.resetStatus();
             #edit.watch.item#
         }
     },
@@ -34,32 +34,32 @@ module.exports = {
     created() {
 
         if (typeof this.errors === 'object') {
-            this.#camelStudlyName#EditForm.setErrors(this.errors);
+            this.#camelModelName#EditForm.setErrors(this.errors);
         }
     },
 
 
     methods: {
 
-        validate#studlyName#EditForm: function (event) {
+        validate#modelName#EditForm: function (event) {
             event.preventDefault();
 
-            this.#camelStudlyName#EditForm.startProcessing();
+            this.#camelModelName#EditForm.startProcessing();
 
-            if (this.#camelStudlyName#EditForm.validate({
+            if (this.#camelModelName#EditForm.validate({
                 #edit.validate.item#
             })) {
-                var url = '/#url#/' + this.#snakeStudlyName#.id + '/';
+                var url = '/#url#/' + this.#snakeModelName#.id + '/';
 
-                SSky.put(url, this.#camelStudlyName#EditForm)
+                SSky.put(url, this.#camelModelName#EditForm)
                     .then(response => {
-                        var data = this.#camelStudlyName#EditForm.getData();
-                        data.id = this.#snakeStudlyName#.id;
-                        this.$emit('#kebabStudlyName#-updated', data);
-                        this.#camelStudlyName#EditForm.finishProcessing();
+                        var data = this.#camelModelName#EditForm.getData();
+                        data.id = this.#snakeModelName#.id;
+                        this.$emit('#kebabModelName#-updated', data);
+                        this.#camelModelName#EditForm.finishProcessing();
                     });
             } else {
-                this.#camelStudlyName#EditForm.finishProcessing();
+                this.#camelModelName#EditForm.finishProcessing();
             }
         },
     },
