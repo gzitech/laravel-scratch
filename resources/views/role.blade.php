@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         @include('nav.left')
         @vueif
-        <ssky-#kebabModelName#-list inline-template :paginate="{{ $#camelTableName#->toJson() }}">
+        <ssky-role-list inline-template :paginate="{{ $roles->toJson() }}">
             @vuend
             <div class="col-md-10">
                 <div class="card">
@@ -14,8 +14,8 @@
 
                         </div>
                         <div class="nav ml-auto">
-                            <a href="/#url#/create" role="button" class="btn btn-primary btn-sm" @vueif
-                                @click.prevent="show#modelName#CreateForm" @vuend>Create</a>
+                            <a href="/role/create" role="button" class="btn btn-primary btn-sm" @vueif
+                                @click.prevent="showRoleCreateForm" @vuend>Create</a>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -23,40 +23,45 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    #model.table.header#
+                                    <th scope="col">Role Name</th>
+                                    <th scope="col">Role Description</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @vueif
-                                <tr v-for="#camelModelName# in #camelTableName#" :key="#camelModelName#.id">
-                                    <th scope="row">@{{ #camelModelName#.id }}</th>
-                                    #model.table.item.vue#
+                                <tr v-for="role in roles" :key="role.id">
+                                    <th scope="row">@{{ role.id }}</th>
+                                    <td>@{{ role.role_name }}</td>
+
+                                    <td>@{{ role.role_description }}</td>
                                     <td class="text-md-right">
-                                        <a :href="showUrl(#camelModelName#.id)" title="Show"
+                                        <a :href="showUrl(role.id)" title="Show"
                                             class="btn btn-outline-primary"><i
                                                 class="fa fa-user-o"></i></a>
                                         <a href="#edit" title="Edit" class="btn btn-outline-primary"
-                                            @click.prevent="show#modelName#EditForm(#camelModelName#)"><i
+                                            @click.prevent="showRoleEditForm(role)"><i
                                                 class="fa fa-pencil"></i></a>
                                         <a href="#del" title="Destroy" class="btn btn-outline-danger"
-                                            @click.prevent="show#modelName#DestroyConfirm(#camelModelName#)"><i
+                                            @click.prevent="showRoleDestroyConfirm(role)"><i
                                                 class="fa fa-trash-o"></i></a>
                                     </td>
                                 </tr>
                                 @vuend
                                 @noneif
-                                @foreach ($#camelTableName# as $#camelModelName#)
+                                @foreach ($roles as $role)
                                 <tr>
-                                    <th scope="row">{{ $#camelModelName#->id }}</th>
-                                    #model.table.item#
+                                    <th scope="row">{{ $role->id }}</th>
+                                    <td>{{ $role->role_name }}</td>
+
+                                    <td>{{ $role->role_description }}</td>
                                     <td class="text-md-right">
-                                        <a href="/#url#/{{ $#camelModelName#->id }}" title="Show"
+                                        <a href="/role/{{ $role->id }}" title="Show"
                                             class="btn btn-outline-primary"><i
                                                 class="fa fa-user-o"></i></a>
-                                        <a href="/#url#/{{ $#camelModelName#->id }}/edit" title="Edit"
+                                        <a href="/role/{{ $role->id }}/edit" title="Edit"
                                             class="btn btn-outline-primary"><i class="fa fa-pencil"></i></a>
-                                        <a href="/#url#/{{ $#camelModelName#->id }}/destroy"
+                                        <a href="/role/{{ $role->id }}/destroy"
                                             title="Destroy" class="btn btn-outline-danger"><i
                                                 class="fa fa-trash-o"></i></a>
                                     </td>
@@ -66,24 +71,24 @@
                             </tbody>
                         </table>
                     </div>
-                    @if($#camelTableName#->previousPageUrl() || $#camelTableName#->nextPageUrl())
+                    @if($roles->previousPageUrl() || $roles->nextPageUrl())
                     <div class="card-footer d-flex">
                         <div class="nav mr-auto">
 
                         </div>
                         <div class="nav ml-auto">
-                            {{ $#camelTableName#->links() }}
+                            {{ $roles->links() }}
                         </div>
                     </div>
                     @endif
                 </div>
                 @vueif
-                <ssky-#kebabModelName#-create inline-template :old="{}" :errors="{}">
-                    <div class="modal" tabindex="-1" role="dialog" id="#kebabModelName#-create-form">
+                <ssky-role-create inline-template :old="{}" :errors="{}">
+                    <div class="modal" tabindex="-1" role="dialog" id="role-create-form">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
-                                <form method="POST" action="/#url#"
-                                    @submit="validate#modelName#CreateForm">
+                                <form method="POST" action="/role"
+                                    @submit="validateRoleCreateForm">
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title">
@@ -94,11 +99,11 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        @include('#snakeModelName#.create-form')
+                                        @include('role.create-form')
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary"
-                                            :disabled="#camelModelName#CreateForm.busy">{{ __('Save') }}</button>
+                                            :disabled="roleCreateForm.busy">{{ __('Save') }}</button>
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Close</button>
                                     </div>
@@ -106,13 +111,13 @@
                             </div>
                         </div>
                     </div>
-                </ssky-#kebabModelName#-create>
-                <ssky-#kebabModelName#-edit inline-template :#snakeModelName#="#camelModelName#" :old="{}"
-                    :errors="{}" @#kebabModelName#-updated="updated#modelName#">
-                    <div class="modal" tabindex="-1" role="dialog" id="#kebabModelName#-edit-form">
+                </ssky-role-create>
+                <ssky-role-edit inline-template :role="role" :old="{}"
+                    :errors="{}" @role-updated="updatedRole">
+                    <div class="modal" tabindex="-1" role="dialog" id="role-edit-form">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
-                                <form method="POST" action="#update" @submit="validate#modelName#EditForm">
+                                <form method="POST" action="#update" @submit="validateRoleEditForm">
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title">
@@ -123,11 +128,11 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        @include('#snakeModelName#.edit-form')
+                                        @include('role.edit-form')
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary"
-                                            :disabled="#camelModelName#EditForm.busy">{{ __('Update') }}</button>
+                                            :disabled="roleEditForm.busy">{{ __('Update') }}</button>
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Close</button>
                                     </div>
@@ -135,8 +140,8 @@
                             </div>
                         </div>
                     </div>
-                </ssky-#kebabModelName#-edit>
-                <div class="modal" tabindex="-1" role="dialog" id="#kebabModelName#-destroy-confirm">
+                </ssky-role-edit>
+                <div class="modal" tabindex="-1" role="dialog" id="role-destroy-confirm">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <form method="POST" action="#destroy">
@@ -144,14 +149,26 @@
                                 @method('DELETE')
                                 <div class="modal-header">
                                     <h5 class="modal-title">
-                                        <strong>{{ __("Are you sure delete this #camelModelName#?") }}</strong>
+                                        <strong>{{ __("Are you sure delete this role?") }}</strong>
                                     </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    #model.table.confirm.item#
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label text-md-right">{{ __('Role Name') }}</label>
+                                        <div class="col-md-6">
+                                            <div class="form-control">@{{role.role_name}}</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label text-md-right">{{ __('Role Description') }}</label>
+                                        <div class="col-md-6">
+                                            <div class="form-control">@{{role.role_description}}</div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">{{ __('Delete') }}</button>
@@ -164,7 +181,7 @@
                 @vuend
             </div>
             @vueif
-        </ssky-#kebabModelName#-list>
+        </ssky-role-list>
         @vuend
     </div>
 </div>

@@ -144,17 +144,17 @@ class CodeMakeCommand extends Command
         $this->snakeTableName = Str::snake($this->tableName);
         $this->url = str_replace('_', '/', $this->snakeModelName);
 
-        if($this->option('check')) {
-            $this->info("modelName: " . $this->modelName);
-            $this->info("kebabModelName: " . $this->kebabModelName);
-            $this->info("camelModelName: " . $this->camelModelName);
-            $this->info("snakeModelName: " . $this->snakeModelName);
-            $this->info("titleName: " . $this->titleName);
-            $this->info("tableName: " . $this->tableName);
-            $this->info("camelTableName: " . $this->camelTableName);
-            $this->info("snakeTableName: " . $this->snakeTableName);
-            $this->info("url: " . $this->url);
-        }
+        // if($this->option('check')) {
+        //     $this->info("modelName: " . $this->modelName);
+        //     $this->info("kebabModelName: " . $this->kebabModelName);
+        //     $this->info("camelModelName: " . $this->camelModelName);
+        //     $this->info("snakeModelName: " . $this->snakeModelName);
+        //     $this->info("titleName: " . $this->titleName);
+        //     $this->info("tableName: " . $this->tableName);
+        //     $this->info("camelTableName: " . $this->camelTableName);
+        //     $this->info("snakeTableName: " . $this->snakeTableName);
+        //     $this->info("url: " . $this->url);
+        // }
 
         $class = $this->modelNamespace . '\\' . $this->modelName;
 
