@@ -31,10 +31,6 @@
                 <a class="nav-link{{ Request::is('role', 'role/*') ?  ' active' : '' }}" href="/role/"><i
                         class="fa fa-rocket"></i>Role</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link{{ Request::is('right', 'right/*') ?  ' active' : '' }}" href="/right/"><i
-                        class="fa fa-lock"></i>Right</a>
-            </li>
         </ul>
     </aside>
 </div>

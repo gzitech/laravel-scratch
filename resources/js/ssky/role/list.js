@@ -36,6 +36,9 @@ module.exports = {
         showUrl: function (id) {
             return '/role/' + id;
         },
+        rightUrl: function (id) {
+            return '/role/right/' + id;
+        },
         showRoleCreateForm: function () {
             var url = '/role/create';
             history.pushState({}, "", url);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\Repositories\RightRepository;
+use App\Contracts\Repositories\RoleRepository;
 use App\Http\Requests\CreateRightPost;
 use App\Http\Requests\UpdateRightPost;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class RightController extends Controller
      *
      * @var \Laravel\Spark\Contracts\Repositories\RightRepository
      */
-    protected $right;
+    protected $role, $right;
 
     protected $redirectTo = '/right/';
 
@@ -25,8 +26,9 @@ class RightController extends Controller
      *
      * @return void
      */
-    public function __construct(RightRepository $right)
+    public function __construct(RoleRepository $role, RightRepository $right)
     {
+        $this->role = $role;
         $this->right = $right;
         $this->middleware('auth');
     }
@@ -36,9 +38,10 @@ class RightController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($role_id)
     {
         $data = [
+            'role'=>$this->role->find($role_id),
             'rights'=>[],
         ];
 

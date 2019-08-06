@@ -36,12 +36,12 @@
 
                                     <td>@{{ role.role_description }}</td>
                                     <td class="text-md-right">
-                                        <a :href="showUrl(role.id)" title="Show"
-                                            class="btn btn-outline-primary"><i
+                                        <a :href="showUrl(role.id)" title="Show" class="btn btn-outline-primary"><i
                                                 class="fa fa-user-o"></i></a>
+                                        <a :href="rightUrl(role.id)" title="Right" class="btn btn-outline-primary"><i
+                                                class="fa fa-lock"></i></a>
                                         <a href="#edit" title="Edit" class="btn btn-outline-primary"
-                                            @click.prevent="showRoleEditForm(role)"><i
-                                                class="fa fa-pencil"></i></a>
+                                            @click.prevent="showRoleEditForm(role)"><i class="fa fa-pencil"></i></a>
                                         <a href="#del" title="Destroy" class="btn btn-outline-danger"
                                             @click.prevent="showRoleDestroyConfirm(role)"><i
                                                 class="fa fa-trash-o"></i></a>
@@ -56,14 +56,14 @@
 
                                     <td>{{ $role->role_description }}</td>
                                     <td class="text-md-right">
-                                        <a href="/role/{{ $role->id }}" title="Show"
-                                            class="btn btn-outline-primary"><i
+                                        <a href="/role/{{ $role->id }}" title="Show" class="btn btn-outline-primary"><i
                                                 class="fa fa-user-o"></i></a>
+                                        <a href="/role/right/{{ $role->id }}" title="Right"
+                                            class="btn btn-outline-primary"><i class="fa fa-lock"></i></a>
                                         <a href="/role/{{ $role->id }}/edit" title="Edit"
                                             class="btn btn-outline-primary"><i class="fa fa-pencil"></i></a>
-                                        <a href="/role/{{ $role->id }}/destroy"
-                                            title="Destroy" class="btn btn-outline-danger"><i
-                                                class="fa fa-trash-o"></i></a>
+                                        <a href="/role/{{ $role->id }}/destroy" title="Destroy"
+                                            class="btn btn-outline-danger"><i class="fa fa-trash-o"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -87,8 +87,7 @@
                     <div class="modal" tabindex="-1" role="dialog" id="role-create-form">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
-                                <form method="POST" action="/role"
-                                    @submit="validateRoleCreateForm">
+                                <form method="POST" action="/role" @submit="validateRoleCreateForm">
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title">
@@ -112,8 +111,7 @@
                         </div>
                     </div>
                 </ssky-role-create>
-                <ssky-role-edit inline-template :role="role" :old="{}"
-                    :errors="{}" @role-updated="updatedRole">
+                <ssky-role-edit inline-template :role="role" :old="{}" :errors="{}" @role-updated="updatedRole">
                     <div class="modal" tabindex="-1" role="dialog" id="role-edit-form">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
@@ -157,14 +155,16 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="form-group row">
-                                        <label class="col-md-4 col-form-label text-md-right">{{ __('Role Name') }}</label>
+                                        <label
+                                            class="col-md-4 col-form-label text-md-right">{{ __('Role Name') }}</label>
                                         <div class="col-md-6">
                                             <div class="form-control">@{{role.role_name}}</div>
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-md-4 col-form-label text-md-right">{{ __('Role Description') }}</label>
+                                        <label
+                                            class="col-md-4 col-form-label text-md-right">{{ __('Role Description') }}</label>
                                         <div class="col-md-6">
                                             <div class="form-control">@{{role.role_description}}</div>
                                         </div>
