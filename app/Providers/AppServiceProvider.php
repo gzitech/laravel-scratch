@@ -75,6 +75,7 @@ class AppServiceProvider extends ServiceProvider
             'Contracts\Repositories\RbacRepository' => 'Repositories\RbacRepository',
             'Contracts\Repositories\RoleRepository' => 'Repositories\RoleRepository',
             'Contracts\Repositories\UserRepository' => 'Repositories\UserRepository',
+            'Contracts\Repositories\CodeRepository' => 'Repositories\CodeRepository',
         ];
 
         foreach ($services as $key => $value) {

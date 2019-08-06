@@ -161,6 +161,7 @@ class CodeMakeCommand extends Command
         if (class_exists($class)) {
             $obj = new $class();
             $tableName = $obj->getTable();
+
             $columns = Schema::getColumnListing($tableName);
 
             $columns = array_diff($columns, $this->ignoreFieldNames);

@@ -18,4 +18,5 @@ Route::middleware(['verified'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('/user', 'UserController');
     Route::resource('/role', 'RoleController');
+    Route::resource('/code', 'CodeController');
 });

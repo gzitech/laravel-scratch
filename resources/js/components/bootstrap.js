@@ -6,3 +6,5 @@ require('./user/edit');
 require('./role/list');
 require('./role/create');
 require('./role/edit');
+require('./code/list');
+require('./code/create');
