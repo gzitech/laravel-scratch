@@ -7,18 +7,18 @@
         <div class="col-md-10">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/#url#/">#modelName#</a></li>
+                    <li class="breadcrumb-item"><a href="/right/">Right</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Edit</li>
                 </ol>
             </nav>
             <div class="card">
                 <div class="card-body">
-                    @vueif<ssky-#kebabModelName#-edit inline-template :#snakeModelName#="{{ $#camelModelName#->toJson() }}" :old="{{ json_encode(Session::getOldInput()) }}"
+                    @vueif<ssky-right-edit inline-template :right="{{ $right->toJson() }}" :old="{{ json_encode(Session::getOldInput()) }}"
                     :errors="{{ $errors }}">@vuend
-                    <form method="POST" action="/#url#/{{$#camelModelName#->id}}">
+                    <form method="POST" action="/right/{{$right->id}}">
                         @csrf
                         @method('PUT')
-                        @include('#snakeModelName#.edit-form')
+                        @include('right.edit-form')
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
@@ -27,7 +27,7 @@
                             </div>
                         </div>
                     </form>
-                    @vueif</ssky-#kebabModelName#-edit>@vuend
+                    @vueif</ssky-right-edit>@vuend
                 </div>
             </div>
         </div>

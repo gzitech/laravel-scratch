@@ -7,27 +7,25 @@
         <div class="col-md-10">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/#url#/">#modelName#</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Edit</li>
+                    <li class="breadcrumb-item"><a href="/right/">{{__('Right')}}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ __('Create') }}</li>
                 </ol>
             </nav>
             <div class="card">
                 <div class="card-body">
-                    @vueif<ssky-#kebabModelName#-edit inline-template :#snakeModelName#="{{ $#camelModelName#->toJson() }}" :old="{{ json_encode(Session::getOldInput()) }}"
-                    :errors="{{ $errors }}">@vuend
-                    <form method="POST" action="/#url#/{{$#camelModelName#->id}}">
+                    @vueif<ssky-right-create inline-template :old="{{ json_encode(Session::getOldInput()) }}" :errors="{{ $errors }}">@vuend
+                    <form method="POST" action="/right" @submit="validateRightCreateForm">
                         @csrf
-                        @method('PUT')
-                        @include('#snakeModelName#.edit-form')
+                        @include('right.create-form')
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Update') }}
+                                    {{ __('Save') }}
                                 </button>
                             </div>
                         </div>
                     </form>
-                    @vueif</ssky-#kebabModelName#-edit>@vuend
+                    @vueif</ssky-right-create>@vuend
                 </div>
             </div>
         </div>

@@ -19,4 +19,5 @@ Route::middleware(['verified'])->group(function () {
     Route::resource('/user', 'UserController');
     Route::resource('/role', 'RoleController');
     Route::resource('/code', 'CodeController');
+    Route::resource('/right', 'RightController');
 });

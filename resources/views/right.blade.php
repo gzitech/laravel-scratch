@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         @include('nav.left')
         @vueif
-        <ssky-#kebabModelName#-list inline-template :paginate="{{ $#camelTableName#->toJson() }}">
+        <ssky-right-list inline-template :paginate="{}">
             @vuend
             <div class="col-md-10">
                 <div class="card">
@@ -14,8 +14,8 @@
 
                         </div>
                         <div class="nav ml-auto">
-                            <a href="/#url#/create" role="button" class="btn btn-primary btn-sm" @vueif
-                                @click.prevent="show#modelName#CreateForm" @vuend>Create</a>
+                            <a href="/right/create" role="button" class="btn btn-primary btn-sm" @vueif
+                                @click.prevent="showRightCreateForm" @vuend>Create</a>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -23,42 +23,44 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    #model.table.header#
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Value</th>
+                                    <th scope="col">Path</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @vueif
-                                <tr v-for="#camelModelName# in #camelTableName#" :key="#camelModelName#.id">
-                                    <th scope="row">@{{ #camelModelName#.id }}</th>
-                                    #model.table.item.vue#
+                                <tr v-for="right in rights" :key="right.id">
+                                    <th scope="row">@{{ right.id }}</th>
+                                    <td>@{{ right.right_name }}</td>
+                                    <td>@{{ right.right_value }}</td>
+                                    <td>@{{ right.right_path }}</td>
                                     <td class="text-md-right">
-                                        <a :href="showUrl(#camelModelName#.id)" title="Show"
-                                            class="btn btn-outline-primary"><i
+                                        <a :href="showUrl(right.id)" title="Show" class="btn btn-outline-primary"><i
                                                 class="fa fa-user-o"></i></a>
                                         <a href="#edit" title="Edit" class="btn btn-outline-primary"
-                                            @click.prevent="show#modelName#EditForm(#camelModelName#)"><i
-                                                class="fa fa-pencil"></i></a>
+                                            @click.prevent="showRightEditForm(right)"><i class="fa fa-pencil"></i></a>
                                         <a href="#del" title="Destroy" class="btn btn-outline-danger"
-                                            @click.prevent="show#modelName#DestroyConfirm(#camelModelName#)"><i
+                                            @click.prevent="showRightDestroyConfirm(right)"><i
                                                 class="fa fa-trash-o"></i></a>
                                     </td>
                                 </tr>
                                 @vuend
                                 @noneif
-                                @foreach ($#camelTableName# as $#camelModelName#)
+                                @foreach ($rights as $right)
                                 <tr>
-                                    <th scope="row">{{ $#camelModelName#->id }}</th>
-                                    #model.table.item#
+                                    <th scope="row">{{ $right->id }}</th>
+                                    <td>{{ $right->right_name }}</td>
+                                    <td>{{ $right->right_value }}</td>
+                                    <td>{{ $right->right_path }}</td>
                                     <td class="text-md-right">
-                                        <a href="/#url#/{{ $#camelModelName#->id }}" title="Show"
-                                            class="btn btn-outline-primary"><i
-                                                class="fa fa-user-o"></i></a>
-                                        <a href="/#url#/{{ $#camelModelName#->id }}/edit" title="Edit"
+                                        <a href="/right/{{ $right->id }}" title="Show"
+                                            class="btn btn-outline-primary"><i class="fa fa-user-o"></i></a>
+                                        <a href="/right/{{ $right->id }}/edit" title="Edit"
                                             class="btn btn-outline-primary"><i class="fa fa-pencil"></i></a>
-                                        <a href="/#url#/{{ $#camelModelName#->id }}/destroy"
-                                            title="Destroy" class="btn btn-outline-danger"><i
-                                                class="fa fa-trash-o"></i></a>
+                                        <a href="/right/{{ $right->id }}/destroy" title="Destroy"
+                                            class="btn btn-outline-danger"><i class="fa fa-trash-o"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -66,24 +68,13 @@
                             </tbody>
                         </table>
                     </div>
-                    @if($#camelTableName#->previousPageUrl() || $#camelTableName#->nextPageUrl())
-                    <div class="card-footer d-flex">
-                        <div class="nav mr-auto">
-
-                        </div>
-                        <div class="nav ml-auto">
-                            {{ $#camelTableName#->links() }}
-                        </div>
-                    </div>
-                    @endif
                 </div>
                 @vueif
-                <ssky-#kebabModelName#-create inline-template :old="{}" :errors="{}">
-                    <div class="modal" tabindex="-1" role="dialog" id="#kebabModelName#-create-form">
+                <ssky-right-create inline-template :old="{}" :errors="{}">
+                    <div class="modal" tabindex="-1" role="dialog" id="right-create-form">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
-                                <form method="POST" action="/#url#"
-                                    @submit="validate#modelName#CreateForm">
+                                <form method="POST" action="/right" @submit="validateRightCreateForm">
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title">
@@ -94,11 +85,11 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        @include('#snakeModelName#.create-form')
+                                        @include('right.create-form')
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary"
-                                            :disabled="#camelModelName#CreateForm.busy">{{ __('Save') }}</button>
+                                            :disabled="rightCreateForm.busy">{{ __('Save') }}</button>
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Close</button>
                                     </div>
@@ -106,13 +97,12 @@
                             </div>
                         </div>
                     </div>
-                </ssky-#kebabModelName#-create>
-                <ssky-#kebabModelName#-edit inline-template :#snakeModelName#="#camelModelName#" :old="{}"
-                    :errors="{}" @#kebabModelName#-updated="updated#modelName#">
-                    <div class="modal" tabindex="-1" role="dialog" id="#kebabModelName#-edit-form">
+                </ssky-right-create>
+                <ssky-right-edit inline-template :right="right" :old="{}" :errors="{}" @right-updated="updatedRight">
+                    <div class="modal" tabindex="-1" role="dialog" id="right-edit-form">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
-                                <form method="POST" action="#update" @submit="validate#modelName#EditForm">
+                                <form method="POST" action="#update" @submit="validateRightEditForm">
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title">
@@ -123,11 +113,11 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        @include('#snakeModelName#.edit-form')
+                                        @include('right.edit-form')
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary"
-                                            :disabled="#camelModelName#EditForm.busy">{{ __('Update') }}</button>
+                                            :disabled="rightEditForm.busy">{{ __('Update') }}</button>
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Close</button>
                                     </div>
@@ -135,8 +125,8 @@
                             </div>
                         </div>
                     </div>
-                </ssky-#kebabModelName#-edit>
-                <div class="modal" tabindex="-1" role="dialog" id="#kebabModelName#-destroy-confirm">
+                </ssky-right-edit>
+                <div class="modal" tabindex="-1" role="dialog" id="right-destroy-confirm">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <form method="POST" action="#destroy">
@@ -144,14 +134,36 @@
                                 @method('DELETE')
                                 <div class="modal-header">
                                     <h5 class="modal-title">
-                                        <strong>{{ __("Are you sure delete this #camelModelName#?") }}</strong>
+                                        <strong>{{ __("Are you sure delete this right?") }}</strong>
                                     </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    #model.table.confirm.item#
+                                    <div class="form-group row">
+                                        <label
+                                            class="col-md-4 col-form-label text-md-right">{{ __('Right Name') }}</label>
+                                        <div class="col-md-6">
+                                            <div class="form-control">@{{right.right_name}}</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label
+                                            class="col-md-4 col-form-label text-md-right">{{ __('Right Value') }}</label>
+                                        <div class="col-md-6">
+                                            <div class="form-control">@{{right.right_value}}</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label
+                                            class="col-md-4 col-form-label text-md-right">{{ __('Right Path') }}</label>
+                                        <div class="col-md-6">
+                                            <div class="form-control">@{{right.right_path}}</div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">{{ __('Delete') }}</button>
@@ -164,7 +176,7 @@
                 @vuend
             </div>
             @vueif
-        </ssky-#kebabModelName#-list>
+        </ssky-right-list>
         @vuend
     </div>
 </div>
