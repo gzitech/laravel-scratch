@@ -38,7 +38,12 @@ class CodeMakeCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Scaffold code for you base on models';
+    protected $description = 'Create scaffold code base on models';
+
+    protected $baseFiles = [
+        //Code
+        'app/Console/Commands/CodeMakeCommand.php' => 'app/Console/Commands/CodeMakeCommand.php',
+    ];
 
     /**
      * use $this->compileFile() to compile.
@@ -113,6 +118,7 @@ class CodeMakeCommand extends Command
                 $this->generateCode($modelName);
             }
         } else {
+            $this->copyTo($this->baseFiles, $clone);
             $this->copyTo($this->compileFiles, $clone);
             $this->copyTo($this->compileDetailFiles, $clone);
         }
