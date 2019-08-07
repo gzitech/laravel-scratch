@@ -11,6 +11,15 @@
                     <li class="breadcrumb-item active" aria-current="page">{{ $role->role_name }}</li>
                 </ol>
             </nav>
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
             <div class="card">
                 <form method="POST" action="/role/right/{{ $role->id }}" submit="validateRightCreateForm">
                     @csrf
@@ -36,7 +45,7 @@
                                 @foreach ($rights as $right)
                                 <tr>
                                     <th scope="row">
-                                        <input type="checkbox" name="right[]">
+                                        <input type="checkbox" name="right[]" value="{{ $right->right_value }}">
                                     </th>
                                     <td>{{ $right->right_name }}</td>
                                     <td>{{ $right->right_value }}</td>

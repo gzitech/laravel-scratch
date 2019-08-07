@@ -20,4 +20,5 @@ Route::middleware(['verified'])->group(function () {
     Route::resource('/role', 'RoleController');
     Route::resource('/code', 'CodeController');
     Route::get('/role/right/{role}', 'RightController@index');
+    Route::post('/role/right/{role}', 'RightController@update');
 });
