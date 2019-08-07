@@ -42,7 +42,7 @@ class RightController extends Controller
     {
         $data = [
             'role'=>$this->role->find($role_id),
-            'rights'=>[],
+            'rights'=>$this->right->all(),
         ];
 
         return view("right", $data);
@@ -119,7 +119,6 @@ class RightController extends Controller
         $data = $request->only([
             'right_name',
             'right_value',
-            'right_path',
         ]);
 
         // $this->right->update($id, $data);

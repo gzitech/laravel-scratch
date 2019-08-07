@@ -8,6 +8,3 @@ require('./role/create');
 require('./role/edit');
 require('./code/list');
 require('./code/create');
-require('./right/list');
-require('./right/create');
-require('./right/edit');
