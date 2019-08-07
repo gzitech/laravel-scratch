@@ -41,8 +41,98 @@ class CodeMakeCommand extends Command
     protected $description = 'Create scaffold code base on models';
 
     protected $baseFiles = [
-        //Code
+        // command
         'app/Console/Commands/CodeMakeCommand.php' => 'app/Console/Commands/CodeMakeCommand.php',
+        // contracts
+        'app/Contracts/Repositories/RightRepository.php' => 'app/Contracts/Repositories/RightRepository.php',
+        'app/Contracts/Repositories/RoleRepository.php' => 'app/Contracts/Repositories/RoleRepository.php',
+        'app/Contracts/Repositories/UserRepository.php' => 'app/Contracts/Repositories/UserRepository.php',
+        // repositories
+        'app/Repositories/RightRepository.php' => 'app/Repositories/RightRepository.php',
+        'app/Repositories/RoleRepository.php' => 'app/Repositories/RoleRepository.php',
+        'app/Repositories/UserRepository.php' => 'app/Repositories/UserRepository.php',
+        // model
+        'app/Role.php' => 'app/Role.php',
+        'app/User.php' => 'app/User.php',
+        // controller
+        'app/Http/Controllers/RightController.php' => 'app/Http/Controllers/RightController.php',
+        'app/Http/Controllers/RoleController.php' => 'app/Http/Controllers/RoleController.php',
+        'app/Http/Controllers/UserController.php' => 'app/Http/Controllers/UserController.php',
+        // scss
+        'resources/sass/_custom.scss' => 'resources/sass/_custom.scss',
+        'resources/sass/_variables.scss' => 'resources/sass/_variables.scss',
+        'resources/sass/app.scss' => 'resources/sass/app.scss',
+        'resources/sass/components/_buttons.scss' => 'resources/sass/components/_buttons.scss',
+        'resources/sass/components/_cards.scss' => 'resources/sass/components/_cards.scss',
+        'resources/sass/components/_dropdown.scss' => 'resources/sass/components/_dropdown.scss',
+        'resources/sass/components/_metrics.scss' => 'resources/sass/components/_metrics.scss',
+        'resources/sass/components/_modals.scss' => 'resources/sass/components/_modals.scss',
+        'resources/sass/components/_navbar.scss' => 'resources/sass/components/_navbar.scss',
+        'resources/sass/components/_notifications.scss' => 'resources/sass/components/_notifications.scss',
+        'resources/sass/components/_team-member-list.scss' => 'resources/sass/components/_team-member-list.scss',
+        'resources/sass/components/_uploader.scss' => 'resources/sass/components/_uploader.scss',
+        'resources/sass/elements/_forms.scss' => 'resources/sass/elements/_forms.scss',
+        'resources/sass/elements/_icons.scss' => 'resources/sass/elements/_icons.scss',
+        'resources/sass/elements/_tables.scss' => 'resources/sass/elements/_tables.scss',
+        'resources/sass/elements/_text.scss' => 'resources/sass/elements/_text.scss',
+        'resources/sass/elements/_utilities.scss' => 'resources/sass/elements/_utilities.scss',
+        'resources/sass/img/radio-select-default.svg' => 'resources/sass/img/radio-select-default.svg',
+        'resources/sass/img/radio-select-is-selected.svg' => 'resources/sass/img/radio-select-is-selected.svg',
+        // js
+        'resources/js/app.js' => 'resources/js/app.js',
+        'resources/js/bootstrap.js' => 'resources/js/bootstrap.js',
+        'resources/js/components/bootstrap.js' => 'resources/js/components/bootstrap.js',
+        'resources/js/components/right/create.js' => 'resources/js/components/right/create.js',
+        'resources/js/components/right/edit.js' => 'resources/js/components/right/edit.js',
+        'resources/js/components/right/list.js' => 'resources/js/components/right/list.js',
+        'resources/js/components/role/create.js' => 'resources/js/components/role/create.js',
+        'resources/js/components/role/edit.js' => 'resources/js/components/role/edit.js',
+        'resources/js/components/role/list.js' => 'resources/js/components/role/list.js',
+        'resources/js/components/user/create.js' => 'resources/js/components/user/create.js',
+        'resources/js/components/user/edit.js' => 'resources/js/components/user/edit.js',
+        'resources/js/components/user/list.js' => 'resources/js/components/user/list.js',
+        'resources/js/ssky/form/bootstrap.js' => 'resources/js/ssky/form/bootstrap.js',
+        'resources/js/ssky/form/errors.js' => 'resources/js/ssky/form/errors.js',
+        'resources/js/ssky/form/form.js' => 'resources/js/ssky/form/form.js',
+        'resources/js/ssky/form/http.js' => 'resources/js/ssky/form/http.js',
+        'resources/js/ssky/form/rule.js' => 'resources/js/ssky/form/rule.js',
+        'resources/js/ssky/right/create.js' => 'resources/js/ssky/right/create.js',
+        'resources/js/ssky/right/edit.js' => 'resources/js/ssky/right/edit.js',
+        'resources/js/ssky/right/list.js' => 'resources/js/ssky/right/list.js',
+        'resources/js/ssky/role/create.js' => 'resources/js/ssky/role/create.js',
+        'resources/js/ssky/role/edit.js' => 'resources/js/ssky/role/edit.js',
+        'resources/js/ssky/role/list.js' => 'resources/js/ssky/role/list.js',
+        'resources/js/ssky/ssky-bootstrap.js' => 'resources/js/ssky/ssky-bootstrap.js',
+        'resources/js/ssky/ssky.js' => 'resources/js/ssky/ssky.js',
+        'resources/js/ssky/user/create.js' => 'resources/js/ssky/user/create.js',
+        'resources/js/ssky/user/edit.js' => 'resources/js/ssky/user/edit.js',
+        'resources/js/ssky/user/list.js' => 'resources/js/ssky/user/list.js',
+        'resources/js/ssky/vue-bootstrap.js' => 'resources/js/ssky/vue-bootstrap.js',
+        // view
+        'resources/views/layouts/app.blade.php' => 'resources/views/layouts/app.blade.php',
+        'resources/views/nav/guest.blade.php' => 'resources/views/nav/guest.blade.php',
+        'resources/views/nav/left.blade.php' => 'resources/views/nav/left.blade.php',
+        'resources/views/nav/user.blade.php' => 'resources/views/nav/user.blade.php',
+        'resources/views/right/create-form.blade.php' => 'resources/views/right/create-form.blade.php',
+        'resources/views/right/create.blade.php' => 'resources/views/right/create.blade.php',
+        'resources/views/right/edit-form.blade.php' => 'resources/views/right/edit-form.blade.php',
+        'resources/views/right/edit.blade.php' => 'resources/views/right/edit.blade.php',
+        'resources/views/right/show.blade.php' => 'resources/views/right/show.blade.php',
+        'resources/views/right.blade.php' => 'resources/views/right.blade.php',
+        'resources/views/role/create-form.blade.php' => 'resources/views/role/create-form.blade.php',
+        'resources/views/role/create.blade.php' => 'resources/views/role/create.blade.php',
+        'resources/views/role/edit-form.blade.php' => 'resources/views/role/edit-form.blade.php',
+        'resources/views/role/edit.blade.php' => 'resources/views/role/edit.blade.php',
+        'resources/views/role/show.blade.php' => 'resources/views/role/show.blade.php',
+        'resources/views/role.blade.php' => 'resources/views/role.blade.php',
+        'resources/views/user/create-form.blade.php' => 'resources/views/user/create-form.blade.php',
+        'resources/views/user/create.blade.php' => 'resources/views/user/create.blade.php',
+        'resources/views/user/edit-form.blade.php' => 'resources/views/user/edit-form.blade.php',
+        'resources/views/user/edit.blade.php' => 'resources/views/user/edit.blade.php',
+        'resources/views/user/show.blade.php' => 'resources/views/user/show.blade.php',
+        'resources/views/user.blade.php' => 'resources/views/user.blade.php',
+        'webpack.mix.js' => 'webpack.mix.js',
+        'package.json' => 'package.json',
     ];
 
     /**
@@ -390,23 +480,40 @@ class CodeMakeCommand extends Command
             return;
         }
 
-        foreach($compileFiles as $stub=>$compiledFile) {
+        foreach($compileFiles as $filename=>$compiledFile) {
 
-            $stubs = $this->filesystem->files(dirname($stub));
+            if(Str::endsWith($filename, '.stub')) {
+                $stubs = $this->filesystem->files(dirname($filename));
 
-            foreach($stubs as $stub){
-                $rel = $stub->getRelativePathName();
-                $src = base_path($stub);
-                $target = $this->combinePath($targetDir, $stub);
+                foreach($stubs as $stub){
+                    $rel = $stub->getRelativePathName();
+                    $src = base_path($stub);
+                    $target = $this->combinePath($targetDir, $stub);
+
+                    if($this->filesystem->exists($src) && ($this->option('force') || !$this->filesystem->exists($target))) {
+
+                        if (! $this->filesystem->isDirectory($directory = $this->filesystem->dirname($target))) {
+                            $this->filesystem->makeDirectory($directory, 0755, true);
+                        }
+
+                        $this->filesystem->copy($src, $target);
+                        $this->info($stub);
+                    }
+                }
+
+            } else {
+                $src = base_path($filename);
+
+                $target = $this->combinePath($targetDir, $filename);
 
                 if($this->filesystem->exists($src) && ($this->option('force') || !$this->filesystem->exists($target))) {
 
                     if (! $this->filesystem->isDirectory($directory = $this->filesystem->dirname($target))) {
                         $this->filesystem->makeDirectory($directory, 0755, true);
                     }
-    
+                    
                     $this->filesystem->copy($src, $target);
-                    $this->info($stub);
+                    $this->info($filename);
                 }
             }
         }
