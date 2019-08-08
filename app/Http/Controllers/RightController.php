@@ -50,16 +50,16 @@ class RightController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $role_id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $role_id)
     {
         $right = $request->right ?? [];
 
-        $this->role->updateRight($id, $right);
+        $this->role->updateRight($role_id, $right);
 
-        $redirectTo = $this->redirectTo . "$id";
+        $redirectTo = $this->redirectTo . "$role_id";
 
         return $request->ajax() ? ""  : redirect($redirectTo);
     }

@@ -16,17 +16,14 @@
                     <div class="form-group row">
                         <label for="role_name"
                             class="col-md-4 col-form-label text-md-right">{{ __('Role Name') }}</label>
-
                         <div class="col-md-6">
                             <input id="role_name" type="text" class="form-control" name="role_name"
                                 value="{{ $role->role_name }}" disabled>
                         </div>
                     </div>
-
                     <div class="form-group row">
                         <label for="role_description"
                             class="col-md-4 col-form-label text-md-right">{{ __('Role Description') }}</label>
-
                         <div class="col-md-6">
                             <input id="role_description" type="text" class="form-control" name="role_description"
                                 value="{{ $role->role_description }}" disabled>

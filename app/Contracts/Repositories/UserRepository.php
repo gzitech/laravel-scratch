@@ -9,4 +9,5 @@ interface UserRepository
     public function create(array $data);
     public function update($id, array $data);
     public function destroy($id);
+    public function right($right);
 }

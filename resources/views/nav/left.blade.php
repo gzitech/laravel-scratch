@@ -23,14 +23,18 @@
                 <a class="nav-link{{ Request::is('code', 'code/*') ?  ' active' : '' }}" href="/code/"><i
                         class="fa fa-terminal"></i>Code</a>
             </li>
+            @right('user.list')
             <li class="nav-item">
                 <a class="nav-link{{ Request::is('user', 'user/*') ?  ' active' : '' }}" href="/user/"><i
                         class="fa fa-user"></i>User</a>
             </li>
+            @endright
+            @right('role.list')
             <li class="nav-item">
                 <a class="nav-link{{ Request::is('role', 'role/*') ?  ' active' : '' }}" href="/role/"><i
                         class="fa fa-rocket"></i>Role</a>
             </li>
+            @endright
         </ul>
     </aside>
 </div>

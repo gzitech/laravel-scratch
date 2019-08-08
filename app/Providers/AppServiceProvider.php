@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Contracts\Repositories\UserRepository;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,8 +23,10 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(UserRepository $user)
     {
+        $this->user = $user;
+
         Blade::directive('vueif', function() {
             $condition = config('app.frontend') === 'vue' ? 'true' : 'false';
             return "<?php if ($condition) { ?>";
@@ -61,6 +64,10 @@ class AppServiceProvider extends ServiceProvider
 
         Blade::directive('nonend', function () {
             return "<?php } ?>";
+        });
+
+        Blade::if('right', function ($right) {
+            return $this->user->right($right) ;
         });
     }
 

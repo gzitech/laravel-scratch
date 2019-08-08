@@ -62,4 +62,12 @@ class UserRepository implements Contract
     {
         User::destroy($id);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function right($right)
+    {
+        return 1;
+    }
 }
