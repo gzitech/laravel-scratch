@@ -25,5 +25,9 @@ return [
             "list" => 4,
             "update" => 8,
         ],
+        'right' => [
+            "list" => 16,
+            "update" => 32,
+        ],
     ],
 ];

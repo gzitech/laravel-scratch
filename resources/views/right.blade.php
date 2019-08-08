@@ -28,7 +28,7 @@
 
                         </div>
                         <div class="nav ml-auto">
-                            <button type="submit" class="btn btn-primary btn-sm">{{ __('Update')}}</button>
+                        @right('right.update')<button type="submit" class="btn btn-primary btn-sm">{{ __('Update')}}</button>@endright
                         </div>
                     </div>
                     <div class="table-responsive">

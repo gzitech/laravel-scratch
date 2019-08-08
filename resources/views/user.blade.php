@@ -14,8 +14,10 @@
 
                         </div>
                         <div class="nav ml-auto">
+                            @right('user.update')
                             <a href="/user/create" role="button" class="btn btn-primary btn-sm" @vueif
                                 @click.prevent="showUserCreateForm" @vuend>Create</a>
+                            @endright
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -37,15 +39,15 @@
                                     <td>@{{ user.last_name }}</td>
                                     <td>@{{ user.email }}</td>
                                     <td class="text-md-right">
-                                        <a :href="showUrl(user.id)" title="Show"
-                                            class="btn btn-outline-primary"><i
+                                        <a :href="showUrl(user.id)" title="Show" class="btn btn-outline-primary"><i
                                                 class="fa fa-user-o"></i></a>
+                                        @right('user.update')
                                         <a href="#edit" title="Edit" class="btn btn-outline-primary"
-                                            @click.prevent="showUserEditForm(user)"><i
-                                                class="fa fa-pencil"></i></a>
+                                            @click.prevent="showUserEditForm(user)"><i class="fa fa-pencil"></i></a>
                                         <a href="#del" title="Destroy" class="btn btn-outline-danger"
                                             @click.prevent="showUserDestroyConfirm(user)"><i
                                                 class="fa fa-trash-o"></i></a>
+                                        @endright
                                     </td>
                                 </tr>
                                 @vuend
@@ -57,14 +59,14 @@
                                     <td>{{ $user->last_name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td class="text-md-right">
-                                        <a href="/user/{{ $user->id }}" title="Show"
-                                            class="btn btn-outline-primary"><i
+                                        <a href="/user/{{ $user->id }}" title="Show" class="btn btn-outline-primary"><i
                                                 class="fa fa-user-o"></i></a>
+                                        @right('user.update')
                                         <a href="/user/{{ $user->id }}/edit" title="Edit"
                                             class="btn btn-outline-primary"><i class="fa fa-pencil"></i></a>
-                                        <a href="/user/{{ $user->id }}/destroy"
-                                            title="Destroy" class="btn btn-outline-danger"><i
-                                                class="fa fa-trash-o"></i></a>
+                                        <a href="/user/{{ $user->id }}/destroy" title="Destroy"
+                                            class="btn btn-outline-danger"><i class="fa fa-trash-o"></i></a>
+                                        @endright
                                     </td>
                                 </tr>
                                 @endforeach
@@ -83,13 +85,13 @@
                     </div>
                     @endif
                 </div>
+                @right('user.update')
                 @vueif
                 <ssky-user-create inline-template :old="{}" :errors="{}">
                     <div class="modal" tabindex="-1" role="dialog" id="user-create-form">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
-                                <form method="POST" action="{{ route('user.index') }}"
-                                    @submit="validateUserCreateForm">
+                                <form method="POST" action="{{ route('user.index') }}" @submit="validateUserCreateForm">
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title">
@@ -113,8 +115,7 @@
                         </div>
                     </div>
                 </ssky-user-create>
-                <ssky-user-edit inline-template :user="user" :old="{}"
-                    :errors="{}" @user-updated="updatedUser">
+                <ssky-user-edit inline-template :user="user" :old="{}" :errors="{}" @user-updated="updatedUser">
                     <div class="modal" tabindex="-1" role="dialog" id="user-edit-form">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
@@ -158,13 +159,15 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="form-group row">
-                                        <label class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>
+                                        <label
+                                            class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>
                                         <div class="col-md-6">
                                             <div class="form-control">@{{user.first_name}}</div>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-4 col-form-label text-md-right">{{ __('Last Name') }}</label>
+                                        <label
+                                            class="col-md-4 col-form-label text-md-right">{{ __('Last Name') }}</label>
                                         <div class="col-md-6">
                                             <div class="form-control">@{{user.last_name}}</div>
                                         </div>
@@ -185,6 +188,7 @@
                     </div>
                 </div>
                 @vuend
+                @endright
             </div>
             @vueif
         </ssky-user-list>

@@ -41,13 +41,16 @@
                     </div>
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
+                            @right('user.update')
                             <a href="/user/{{ $user->id }}/edit" class="btn btn-primary">
                                 {{ __('Edit') }}
                             </a>
+                            @endright
                         </div>
                     </div>
                 </div>
             </div>
+            @right('right.list')
             <div class="card">
                 <div class="table-responsive">
                     <table class="table">
@@ -75,6 +78,7 @@
                     </table>
                 </div>
             </div>
+            @endright
         </div>
     </div>
 </div>
