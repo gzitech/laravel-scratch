@@ -5,6 +5,8 @@ namespace App\Repositories;
 use App\User;
 use App\Contracts\Repositories\UserRepository as Contract;
 use Carbon\Carbon;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Hash;
 
 class UserRepository implements Contract
 {
@@ -34,7 +36,13 @@ class UserRepository implements Contract
      */
     public function create(array $data)
     {
+        $password = str_random(10);
+        $data['password'] = Hash::make($password);
+
         $user = User::create($data);
+        $user->password = $password;
+
+        event(new Registered($user));
 
         return $user;
     }
