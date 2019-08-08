@@ -45,10 +45,10 @@
                                 @foreach ($rights as $right)
                                 <tr>
                                     <th scope="row">
-                                        <input type="checkbox" name="right[]" value="{{ $right->right_value }}">
+                                        <input type="checkbox" name="right[]" value="{{ $right->value }}" {{ ($role->right & $right->value) ? "checked" : "" }}>
                                     </th>
-                                    <td>{{ $right->right_name }}</td>
-                                    <td>{{ $right->right_value }}</td>
+                                    <td>{{ $right->name }}</td>
+                                    <td>{{ $right->value }}</td>
                                     <td class="text-md-right">
 
                                     </td>

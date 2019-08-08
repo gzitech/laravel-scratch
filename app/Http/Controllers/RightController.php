@@ -17,7 +17,7 @@ class RightController extends Controller
      */
     protected $role, $right;
 
-    protected $redirectTo = '/right/';
+    protected $redirectTo = '/role/';
 
     /**
      * Create a new controller instance.
@@ -55,7 +55,7 @@ class RightController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $right = $request->right;
+        $right = $request->right ?? [];
 
         $this->role->updateRight($id, $right);
 

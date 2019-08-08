@@ -16,8 +16,8 @@ class RightRepository implements Contract
             
             foreach($right as $key=>$val) {
                 $cat = app()->make('stdClass');
-                $cat->right_name = "$obj.$key";
-                $cat->right_value = $val;
+                $cat->name = "$obj.$key";
+                $cat->value = $val;
                 $arr[] = $cat;
             }
         }

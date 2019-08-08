@@ -76,7 +76,7 @@ class RoleRepository implements Contract
         $val = 0;
 
         foreach($rights as $right) {
-            $val += $right;
+            $val = $val | $right;
         }
 
         Role::where('id', $id)->update(['right' => $val]);
