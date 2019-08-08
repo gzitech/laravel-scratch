@@ -92,7 +92,7 @@ class RoleController extends Controller
     public function show($id)
     {
         $this->user->authorize('role.list');
-        
+
         $data = [
             'role'=>$this->role->find($id),
             'rights'=>$this->right->all(),
@@ -136,7 +136,7 @@ class RoleController extends Controller
 
         $this->role->update($id, $data);
 
-        return $request->ajax() ? ""  : redirect($this->redirectTo);
+        return $request->ajax() ? "" : redirect($this->redirectTo);
     }
 
     /**
@@ -151,6 +151,6 @@ class RoleController extends Controller
 
         $this->role->destroy($id);
 
-        return request()->ajax() ? ""  : redirect($this->redirectTo);
+        return request()->ajax() ? "" : redirect($this->redirectTo);
     }
 }

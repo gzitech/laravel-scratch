@@ -16,7 +16,7 @@ class #modelName#Controller extends Controller
      *
      * @var \Laravel\Spark\Contracts\Repositories\#modelName#Repository
      */
-    protected $#snakeModelName#;
+    protected $#camelModelName#;
 
     protected $redirectTo = '/#url#/';
 
@@ -117,7 +117,7 @@ class #modelName#Controller extends Controller
 
         $this->#camelModelName#->update($id, $data);
 
-        return $request->ajax() ? ""  : redirect($this->redirectTo);
+        return $request->ajax() ? "" : redirect($this->redirectTo);
     }
 
     /**
@@ -130,6 +130,6 @@ class #modelName#Controller extends Controller
     {
         $this->#camelModelName#->destroy($id);
 
-        return request()->ajax() ? ""  : redirect($this->redirectTo);
+        return request()->ajax() ? "" : redirect($this->redirectTo);
     }
 }

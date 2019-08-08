@@ -40,6 +40,8 @@ class UserController extends Controller
      */
     public function index()
     {
+        $this->user->authorize('user.list');
+
         $data = [
             'users'=>$this->user->paginate(),
         ];
@@ -54,6 +56,8 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->user->authorize('user.update');
+
         return view("user.create");
     }
 
@@ -65,6 +69,8 @@ class UserController extends Controller
      */
     public function store(CreateUserPost $request)
     {
+        $this->user->authorize('user.update');
+
         $data = $request->only([
             'first_name',
             'last_name',
@@ -84,6 +90,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        $this->user->authorize('user.list');
+
         $data = [
             'user'=>$this->user->find($id),
             'rights'=>$this->right->all(),
@@ -100,6 +108,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $this->user->authorize('user.update');
+
         $data = [
             'user'=>$this->user->find($id),
         ];
@@ -116,6 +126,8 @@ class UserController extends Controller
      */
     public function update(UpdateUserPost $request, $id)
     {
+        $this->user->authorize('user.update');
+
         $data = $request->only([
             'first_name',
             'last_name',
@@ -124,7 +136,7 @@ class UserController extends Controller
 
         $this->user->update($id, $data);
 
-        return $request->ajax() ? ""  : redirect()->route('user.index');
+        return $request->ajax() ? "" : redirect()->route('user.index');
     }
 
     /**
@@ -135,8 +147,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $this->user->authorize('user.update');
+        
         $this->user->destroy($id);
 
-        return request()->ajax() ? ""  : redirect()->route('user.index');
+        return request()->ajax() ? "" : redirect()->route('user.index');
     }
 }
