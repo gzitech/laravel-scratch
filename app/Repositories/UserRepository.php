@@ -7,9 +7,20 @@ use App\Contracts\Repositories\UserRepository as Contract;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 
 class UserRepository implements Contract
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function current()
+    {
+        if (Auth::check()) {
+            return $this->find(Auth::id())->shouldHaveSelfVisibility();
+        }
+    }
 
     /**
      * {@inheritdoc}
@@ -66,8 +77,22 @@ class UserRepository implements Contract
     /**
      * {@inheritdoc}
      */
-    public function right($right)
+    public function checkRight($right)
     {
-        return 1;
+        if (Auth::check()) {
+            $rights = config('rbac.rights');
+            $val = Arr::get($rights, $right);
+            return Auth::user()->right & $val;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function authorize($right)
+    {
+        abort_if(!$this->checkRight($right), 403);
     }
 }

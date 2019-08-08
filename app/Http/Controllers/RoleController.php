@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contracts\Repositories\RightRepository;
 use App\Contracts\Repositories\RoleRepository;
+use App\Contracts\Repositories\UserRepository;
 use App\Http\Requests\CreateRolePost;
 use App\Http\Requests\UpdateRolePost;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class RoleController extends Controller
      *
      * @var \Laravel\Spark\Contracts\Repositories\RoleRepository
      */
-    protected $role, $right;
+    protected $user, $role, $right;
 
     protected $redirectTo = '/role/';
 
@@ -26,8 +27,9 @@ class RoleController extends Controller
      *
      * @return void
      */
-    public function __construct(RoleRepository $role, RightRepository $right)
+    public function __construct(UserRepository $user, RoleRepository $role, RightRepository $right)
     {
+        $this->user = $user;
         $this->role = $role;
         $this->right = $right;
         $this->middleware('auth');
@@ -40,6 +42,8 @@ class RoleController extends Controller
      */
     public function index()
     {
+        $this->user->authorize('role.list');
+
         $data = [
             'roles'=>$this->role->paginate(),
         ];
@@ -54,6 +58,8 @@ class RoleController extends Controller
      */
     public function create()
     {
+        $this->user->authorize('role.update');
+
         return view("role.create");
     }
 
@@ -65,6 +71,8 @@ class RoleController extends Controller
      */
     public function store(CreateRolePost $request)
     {
+        $this->user->authorize('role.update');
+
         $data = $request->only([
             'role_name',
             'role_description',
@@ -83,6 +91,8 @@ class RoleController extends Controller
      */
     public function show($id)
     {
+        $this->user->authorize('role.list');
+        
         $data = [
             'role'=>$this->role->find($id),
             'rights'=>$this->right->all(),
@@ -99,6 +109,8 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
+        $this->user->authorize('role.update');
+
         $data = [
             'role'=>$this->role->find($id),
         ];
@@ -115,6 +127,8 @@ class RoleController extends Controller
      */
     public function update(UpdateRolePost $request, $id)
     {
+        $this->user->authorize('role.update');
+
         $data = $request->only([
             'role_name',
             'role_description',
@@ -133,6 +147,8 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
+        $this->user->authorize('role.update');
+
         $this->role->destroy($id);
 
         return request()->ajax() ? ""  : redirect($this->redirectTo);
