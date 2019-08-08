@@ -59,6 +59,8 @@ class RightController extends Controller
 
         $this->role->updateRight($id, $right);
 
-        return $request->ajax() ? ""  : redirect($this->redirectTo);
+        $redirectTo = $this->redirectTo . "$id";
+
+        return $request->ajax() ? ""  : redirect($redirectTo);
     }
 }

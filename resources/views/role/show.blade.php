@@ -14,7 +14,8 @@
             <div class="card">
                 <div class="card-body">
                     <div class="form-group row">
-                        <label for="role_name" class="col-md-4 col-form-label text-md-right">{{ __('Role Name') }}</label>
+                        <label for="role_name"
+                            class="col-md-4 col-form-label text-md-right">{{ __('Role Name') }}</label>
 
                         <div class="col-md-6">
                             <input id="role_name" type="text" class="form-control" name="role_name"
@@ -23,7 +24,8 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="role_description" class="col-md-4 col-form-label text-md-right">{{ __('Role Description') }}</label>
+                        <label for="role_description"
+                            class="col-md-4 col-form-label text-md-right">{{ __('Role Description') }}</label>
 
                         <div class="col-md-6">
                             <input id="role_description" type="text" class="form-control" name="role_description"
@@ -37,6 +39,33 @@
                             </a>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Permission</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($rights as $right)
+                            <tr>
+                                <th scope="row">
+                                    <input type="checkbox" name="right[]" value="{{ $right->value }}" disabled
+                                        {{ ($role->right & $right->value) ? "checked" : "" }}>
+                                </th>
+                                <td>{{ __($right->name) }}</td>
+                                <td class="text-md-right">
+
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
