@@ -63,7 +63,26 @@ class UserRepository implements Contract
      */
     public function update($id, array $data)
     {
-        User::where('id', $id)->update($data);
+        User::find($id)->update($data);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function updateRight($id) {
+
+        $user = User::find($id);
+
+        $right = 0;
+        
+        $roles = $user->roles;
+
+        foreach($roles as $role) {
+            $right = $right | $role->right;
+        }
+
+        $user->right = $right;
+        $user->save();
     }
 
     /**

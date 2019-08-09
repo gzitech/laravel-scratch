@@ -26,7 +26,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'Master',
             'email' => 'admin@master.com',
             'password' => bcrypt('123455'),
-            'right' => 0,
+            'right' => 63,
             'email_verified_at' => now(),
         ])->roles()->attach([
             $this->role->Owner(),

@@ -22,7 +22,7 @@ class RolesTableSeeder extends Seeder
         $this->role->create([
             'role_name' => 'Owner',
             'role_description' => 'Administrator',
-            'right' => 0,
+            'right' => 63,
         ]);
         
         $this->role->create([
