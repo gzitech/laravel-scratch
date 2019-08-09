@@ -28,7 +28,7 @@ class RolesTableSeeder extends Seeder
         $this->role->create([
             'role_name' => 'Member',
             'role_description' => 'General user',
-            'right' => 0,
+            'right' => 17,
         ]);
 
         $this->role->create([
