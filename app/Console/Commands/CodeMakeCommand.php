@@ -81,7 +81,7 @@ class CodeMakeCommand extends Command
         // js
         'resources/js/app.js' => 'resources/js/app.js',
         'resources/js/bootstrap.js' => 'resources/js/bootstrap.js',
-        'resources/js/components/bootstrap.js' => 'resources/js/components/bootstrap.js',
+        'resources/js/stubs/components/bootstrap.js' => 'resources/js/components/bootstrap.js',
         'resources/js/components/role/create.js' => 'resources/js/components/role/create.js',
         'resources/js/components/role/edit.js' => 'resources/js/components/role/edit.js',
         'resources/js/components/role/list.js' => 'resources/js/components/role/list.js',
@@ -493,7 +493,7 @@ class CodeMakeCommand extends Command
             } else {
                 $src = base_path($filename);
 
-                $target = $this->combinePath($targetDir, $filename);
+                $target = $this->combinePath($targetDir, $compiledFile);
 
                 if($this->filesystem->exists($src) && ($this->option('force') || !$this->filesystem->exists($target))) {
 
