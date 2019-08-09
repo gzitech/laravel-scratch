@@ -5,11 +5,6 @@
     <div class="row justify-content-center">
         @include('nav.left')
         <div class="col-md-10">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item active" aria-current="page">Home</li>
-                </ol>
-            </nav>
             <div class="card">
                 <div class="card-header">Dashboard</div>
 

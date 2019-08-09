@@ -57,6 +57,11 @@ class UserRepository implements Contract
         $user = User::create($data);
 
         if(!empty($password)) {
+
+            $user->roles()->attach([
+                config('rbac.roles')['member']
+            ]);
+            
             $user->password = $password;
             event(new Registered($user));
         }
