@@ -11,28 +11,6 @@ class RoleRepository implements Contract
     /**
      * {@inheritdoc}
      */
-    public function Owner()
-    {
-        return 1;
-    }
-    /**
-     * {@inheritdoc}
-     */
-    public function Member()
-    {
-        return 2;
-    }
-    /**
-     * {@inheritdoc}
-     */
-    public function Guest()
-    {
-        return 3;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function paginate()
     {
         if(config('app.paginate_type') == 'paginate') {

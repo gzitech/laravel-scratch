@@ -1,16 +1,15 @@
 <?php
 
-use App\Contracts\Repositories\RoleRepository;
 use App\Contracts\Repositories\UserRepository;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
 {
     protected $role, $user;
 
-    public function __construct(RoleRepository $role, UserRepository $user)
+    public function __construct(UserRepository $user)
     {
-        $this->role = $role;
         $this->user = $user;
     }
 
@@ -24,12 +23,12 @@ class UsersTableSeeder extends Seeder
         $this->user->create([
             'first_name' => 'Admin',
             'last_name' => 'Master',
-            'email' => 'admin@master.com',
-            'password' => bcrypt('123455'),
+            'email' => 'sander@gzitech.com',
+            'password' => Hash::make('123455'),
             'right' => 63,
             'email_verified_at' => now(),
         ])->roles()->attach([
-            $this->role->Owner(),
-        ]);;
+            config('rbac.roles')['owner']
+        ]);
     }
 }
