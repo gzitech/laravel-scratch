@@ -21,8 +21,8 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $this->user->create([
-            'first_name' => 'Admin',
-            'last_name' => 'Master',
+            'first_name' => 'Sander',
+            'last_name' => 'H',
             'email' => 'sander@gzitech.com',
             'password' => Hash::make('123455'),
             'right' => 63,

@@ -8,6 +8,7 @@ use App\Contracts\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Artisan;
 
 class RightController extends Controller
 {
@@ -64,6 +65,8 @@ class RightController extends Controller
         $right = $request->right ?? [];
 
         $this->role->updateRight($role_id, $right);
+
+        Artisan::queue('right:update', [$role_id]);
 
         $redirectTo = $this->redirectTo . "$role_id";
 

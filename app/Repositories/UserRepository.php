@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\User;
+use App\Role;
 use App\Contracts\Repositories\UserRepository as Contract;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
@@ -57,11 +58,6 @@ class UserRepository implements Contract
         $user = User::create($data);
 
         if(!empty($password)) {
-
-            $user->roles()->attach([
-                config('rbac.roles')['member']
-            ]);
-            
             $user->password = $password;
             event(new Registered($user));
         }
@@ -94,6 +90,30 @@ class UserRepository implements Contract
 
         $user->right = $right;
         $user->save();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function updateRights() {
+        User::chunkById(100, function ($users) {
+            foreach ($users as $user) {
+                $this->updateRight($user->id);
+            }
+        });
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function updateRightsByRoleId($role_id) {
+        $role = Role::find($role_id);
+
+        $role->users()->chunkById(100, function ($users) {
+            foreach ($users as $user) {
+                $this->updateRight($user->id);
+            }
+        });
     }
 
     /**
