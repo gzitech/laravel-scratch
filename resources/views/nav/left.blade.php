@@ -16,8 +16,8 @@
         </h3>
         <ul class="nav flex-column ">
             <li class="nav-item">
-                <a class="nav-link{{ Request::is('token', 'token/*') ?  ' active' : '' }}" href="/token/"><i
-                        class="fa fa-key"></i>Token</a>
+                <a class="nav-link{{ Request::is('setting/api', 'setting/api/*') ?  ' active' : '' }}" href="/setting/api/"><i
+                        class="fa fa-key"></i>API</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link{{ Request::is('code', 'code/*') ?  ' active' : '' }}" href="/code/"><i
