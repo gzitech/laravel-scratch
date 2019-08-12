@@ -16,7 +16,7 @@
                     @vueif<ssky-#kebabModelName#-create inline-template :old="{{ json_encode(Session::getOldInput()) }}" :errors="{{ $errors }}">@vuend
                     <form method="POST" action="/#url#" @submit="validate#modelName#CreateForm">
                         @csrf
-                        @include('#snakeModelName#.create-form')
+                        @include('#url#.create-form')
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

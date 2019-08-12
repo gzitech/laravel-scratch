@@ -129,17 +129,17 @@ class CodeMakeCommand extends Command
      */
     protected $compileFiles = [
         //views
-        'resources/views/stubs/model.stub' => 'resources/views/#snakeModelName#.blade.php',
-        'resources/views/stubs/show.stub' => 'resources/views/#snakeModelName#/show.blade.php',
-        'resources/views/stubs/create.stub' => 'resources/views/#snakeModelName#/create.blade.php',
-        'resources/views/stubs/edit.stub' => 'resources/views/#snakeModelName#/edit.blade.php',
+        'resources/views/stubs/model.stub' => 'resources/views/#url#.blade.php',
+        'resources/views/stubs/show.stub' => 'resources/views/#url#/show.blade.php',
+        'resources/views/stubs/create.stub' => 'resources/views/#url#/create.blade.php',
+        'resources/views/stubs/edit.stub' => 'resources/views/#url#/edit.blade.php',
         //JS
-        'resources/js/stubs/ssky/list.stub' => 'resources/js/ssky/#snakeModelName#/list.js',
-        'resources/js/stubs/ssky/create.stub' => 'resources/js/ssky/#snakeModelName#/create.js',
-        'resources/js/stubs/ssky/edit.stub' => 'resources/js/ssky/#snakeModelName#/edit.js',
-        'resources/js/stubs/components/list.stub' => 'resources/js/components/#snakeModelName#/list.js',
-        'resources/js/stubs/components/create.stub' => 'resources/js/components/#snakeModelName#/create.js',
-        'resources/js/stubs/components/edit.stub' => 'resources/js/components/#snakeModelName#/edit.js',
+        'resources/js/stubs/ssky/list.stub' => 'resources/js/ssky/#url#/list.js',
+        'resources/js/stubs/ssky/create.stub' => 'resources/js/ssky/#url#/create.js',
+        'resources/js/stubs/ssky/edit.stub' => 'resources/js/ssky/#url#/edit.js',
+        'resources/js/stubs/components/list.stub' => 'resources/js/components/#url#/list.js',
+        'resources/js/stubs/components/create.stub' => 'resources/js/components/#url#/create.js',
+        'resources/js/stubs/components/edit.stub' => 'resources/js/components/#url#/edit.js',
         //Controller
         'app/Http/Controllers/stubs/controller.stub' => 'app/Http/Controllers/#modelName#Controller.php',
         //Repository
@@ -155,8 +155,8 @@ class CodeMakeCommand extends Command
      */
     protected $compileDetailFiles = [
         //views
-        'resources/views/stubs/create-form.stub' => 'resources/views/#snakeModelName#/create-form.blade.php',
-        'resources/views/stubs/edit-form.stub' => 'resources/views/#snakeModelName#/edit-form.blade.php',
+        'resources/views/stubs/create-form.stub' => 'resources/views/#url#/create-form.blade.php',
+        'resources/views/stubs/edit-form.stub' => 'resources/views/#url#/edit-form.blade.php',
     ];
 
     protected $ignoreFieldNames = [
@@ -327,9 +327,9 @@ class CodeMakeCommand extends Command
         }
         
         $this->updateComponentBootstrap([
-            "require('./{$this->snakeModelName}/list');",
-            "require('./{$this->snakeModelName}/create');",
-            "require('./{$this->snakeModelName}/edit');",
+            "require('./{$this->url}/list');",
+            "require('./{$this->url}/create');",
+            "require('./{$this->url}/edit');",
         ]);
 
         $this->updateRoute([

@@ -3,9 +3,9 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        @include('nav.left')
+        @include('nav.setting')
         @vueif
-        <ssky-#kebabModelName#-list inline-template :paginate="{{ $#camelTableName#->toJson() }}">
+        <ssky-setting-profile-list inline-template :paginate="{{ $settingProfiles->toJson() }}">
             @vuend
             <div class="col-md-10">
                 <div class="card">
@@ -14,8 +14,8 @@
 
                         </div>
                         <div class="nav ml-auto">
-                            <a href="/#url#/create" role="button" class="btn btn-primary btn-sm" @vueif
-                                @click.prevent="show#modelName#CreateForm" @vuend>Create</a>
+                            <a href="/setting/profile/create" role="button" class="btn btn-primary btn-sm" @vueif
+                                @click.prevent="showSettingProfileCreateForm" @vuend>Create</a>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -23,40 +23,43 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    #model.table.header#
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Description</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @vueif
-                                <tr v-for="#camelModelName# in #camelTableName#" :key="#camelModelName#.id">
-                                    <th scope="row">@{{ #camelModelName#.id }}</th>
-                                    #model.table.item.vue#
+                                <tr v-for="settingProfile in settingProfiles" :key="settingProfile.id">
+                                    <th scope="row">@{{ settingProfile.id }}</th>
+                                    <td>@{{ settingProfile.name }}</td>
+                                    <td>@{{ settingProfile.description }}</td>
                                     <td class="text-md-right">
-                                        <a :href="showUrl(#camelModelName#.id)" title="Show"
+                                        <a :href="showUrl(settingProfile.id)" title="Show"
                                             class="btn btn-outline-primary"><i
                                                 class="fa fa-user-o"></i></a>
                                         <a href="#edit" title="Edit" class="btn btn-outline-primary"
-                                            @click.prevent="show#modelName#EditForm(#camelModelName#)"><i
+                                            @click.prevent="showSettingProfileEditForm(settingProfile)"><i
                                                 class="fa fa-pencil"></i></a>
                                         <a href="#del" title="Destroy" class="btn btn-outline-danger"
-                                            @click.prevent="show#modelName#DestroyConfirm(#camelModelName#)"><i
+                                            @click.prevent="showSettingProfileDestroyConfirm(settingProfile)"><i
                                                 class="fa fa-trash-o"></i></a>
                                     </td>
                                 </tr>
                                 @vuend
                                 @noneif
-                                @foreach ($#camelTableName# as $#camelModelName#)
+                                @foreach ($settingProfiles as $settingProfile)
                                 <tr>
-                                    <th scope="row">{{ $#camelModelName#->id }}</th>
-                                    #model.table.item#
+                                    <th scope="row">{{ $settingProfile->id }}</th>
+                                    <td>{{ $settingProfile->name }}</td>
+                                    <td>{{ $settingProfile->description }}</td>
                                     <td class="text-md-right">
-                                        <a href="/#url#/{{ $#camelModelName#->id }}" title="Show"
+                                        <a href="/setting/profile/{{ $settingProfile->id }}" title="Show"
                                             class="btn btn-outline-primary"><i
                                                 class="fa fa-user-o"></i></a>
-                                        <a href="/#url#/{{ $#camelModelName#->id }}/edit" title="Edit"
+                                        <a href="/setting/profile/{{ $settingProfile->id }}/edit" title="Edit"
                                             class="btn btn-outline-primary"><i class="fa fa-pencil"></i></a>
-                                        <a href="/#url#/{{ $#camelModelName#->id }}/destroy"
+                                        <a href="/setting/profile/{{ $settingProfile->id }}/destroy"
                                             title="Destroy" class="btn btn-outline-danger"><i
                                                 class="fa fa-trash-o"></i></a>
                                     </td>
@@ -66,24 +69,24 @@
                             </tbody>
                         </table>
                     </div>
-                    @if($#camelTableName#->previousPageUrl() || $#camelTableName#->nextPageUrl())
+                    @if($settingProfiles->previousPageUrl() || $settingProfiles->nextPageUrl())
                     <div class="card-footer d-flex">
                         <div class="nav mr-auto">
 
                         </div>
                         <div class="nav ml-auto">
-                            {{ $#camelTableName#->links() }}
+                            {{ $settingProfiles->links() }}
                         </div>
                     </div>
                     @endif
                 </div>
                 @vueif
-                <ssky-#kebabModelName#-create inline-template :old="{}" :errors="{}">
-                    <div class="modal" tabindex="-1" role="dialog" id="#kebabModelName#-create-form">
+                <ssky-setting-profile-create inline-template :old="{}" :errors="{}">
+                    <div class="modal" tabindex="-1" role="dialog" id="setting-profile-create-form">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
-                                <form method="POST" action="/#url#"
-                                    @submit="validate#modelName#CreateForm">
+                                <form method="POST" action="/setting/profile"
+                                    @submit="validateSettingProfileCreateForm">
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title">
@@ -94,11 +97,11 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        @include('#url#.create-form')
+                                        @include('setting/profile.create-form')
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary"
-                                            :disabled="#camelModelName#CreateForm.busy">{{ __('Save') }}</button>
+                                            :disabled="settingProfileCreateForm.busy">{{ __('Save') }}</button>
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Close</button>
                                     </div>
@@ -106,13 +109,13 @@
                             </div>
                         </div>
                     </div>
-                </ssky-#kebabModelName#-create>
-                <ssky-#kebabModelName#-edit inline-template :#snakeModelName#="#camelModelName#" :old="{}"
-                    :errors="{}" @#kebabModelName#-updated="updated#modelName#">
-                    <div class="modal" tabindex="-1" role="dialog" id="#kebabModelName#-edit-form">
+                </ssky-setting-profile-create>
+                <ssky-setting-profile-edit inline-template :setting_profile="settingProfile" :old="{}"
+                    :errors="{}" @setting-profile-updated="updatedSettingProfile">
+                    <div class="modal" tabindex="-1" role="dialog" id="setting-profile-edit-form">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
-                                <form method="POST" action="#update" @submit="validate#modelName#EditForm">
+                                <form method="POST" action="#update" @submit="validateSettingProfileEditForm">
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title">
@@ -123,11 +126,11 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        @include('#url#.edit-form')
+                                        @include('setting/profile.edit-form')
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary"
-                                            :disabled="#camelModelName#EditForm.busy">{{ __('Update') }}</button>
+                                            :disabled="settingProfileEditForm.busy">{{ __('Update') }}</button>
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Close</button>
                                     </div>
@@ -135,8 +138,8 @@
                             </div>
                         </div>
                     </div>
-                </ssky-#kebabModelName#-edit>
-                <div class="modal" tabindex="-1" role="dialog" id="#kebabModelName#-destroy-confirm">
+                </ssky-setting-profile-edit>
+                <div class="modal" tabindex="-1" role="dialog" id="setting-profile-destroy-confirm">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <form method="POST" action="#destroy">
@@ -144,14 +147,25 @@
                                 @method('DELETE')
                                 <div class="modal-header">
                                     <h5 class="modal-title">
-                                        <strong>{{ __("Are you sure delete this #camelModelName#?") }}</strong>
+                                        <strong>{{ __("Are you sure delete this settingProfile?") }}</strong>
                                     </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    #model.table.confirm.item#
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                                        <div class="col-md-6">
+                                            <div class="form-control">@{{settingProfile.name}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label text-md-right">{{ __('Description') }}</label>
+                                        <div class="col-md-6">
+                                            <div class="form-control">@{{settingProfile.description}}</div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">{{ __('Delete') }}</button>
@@ -164,7 +178,7 @@
                 @vuend
             </div>
             @vueif
-        </ssky-#kebabModelName#-list>
+        </ssky-setting-profile-list>
         @vuend
     </div>
 </div>

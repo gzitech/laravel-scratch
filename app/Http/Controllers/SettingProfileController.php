@@ -2,32 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Contracts\Repositories\#modelName#Repository;
-use App\Http\Requests\Create#modelName#Post;
-use App\Http\Requests\Update#modelName#Post;
+use App\Contracts\Repositories\SettingProfileRepository;
+use App\Http\Requests\CreateSettingProfilePost;
+use App\Http\Requests\UpdateSettingProfilePost;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 
-class #modelName#Controller extends Controller
+class SettingProfileController extends Controller
 {
      /**
      * The token repository instance.
      *
-     * @var \Laravel\Spark\Contracts\Repositories\#modelName#Repository
+     * @var \Laravel\Spark\Contracts\Repositories\SettingProfileRepository
      */
-    protected $#camelModelName#;
+    protected $settingProfile;
 
-    protected $redirectTo = '/#url#/';
+    protected $redirectTo = '/setting/profile/';
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(#modelName#Repository $#camelModelName#)
+    public function __construct(SettingProfileRepository $settingProfile)
     {
-        $this->#camelModelName# = $#camelModelName#;
+        $this->settingProfile = $settingProfile;
         $this->middleware('auth');
     }
     
@@ -39,10 +39,10 @@ class #modelName#Controller extends Controller
     public function index()
     {
         $data = [
-            '#camelTableName#'=>$this->#camelModelName#->paginate(),
+            'settingProfiles'=>$this->settingProfile->paginate(),
         ];
 
-        return view("#url#", $data);
+        return view("setting/profile", $data);
     }
 
     /**
@@ -52,7 +52,7 @@ class #modelName#Controller extends Controller
      */
     public function create()
     {
-        return view("#url#.create");
+        return view("setting/profile.create");
     }
 
     /**
@@ -61,13 +61,14 @@ class #modelName#Controller extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Create#modelName#Post $request)
+    public function store(CreateSettingProfilePost $request)
     {
         $data = $request->only([
-            #controller.store.item#
+            'name',
+            'description',
         ]);
 
-        $#camelModelName# = $this->#camelModelName#->create($data);
+        $settingProfile = $this->settingProfile->create($data);
         
         return redirect($this->redirectTo);
     }
@@ -81,10 +82,10 @@ class #modelName#Controller extends Controller
     public function show($id)
     {
         $data = [
-            '#camelModelName#'=>$this->#camelModelName#->find($id),
+            'settingProfile'=>$this->settingProfile->find($id),
         ];
 
-        return view("#url#.show", $data);
+        return view("setting/profile.show", $data);
     }
 
     /**
@@ -96,10 +97,10 @@ class #modelName#Controller extends Controller
     public function edit($id)
     {
         $data = [
-            '#camelModelName#'=>$this->#camelModelName#->find($id),
+            'settingProfile'=>$this->settingProfile->find($id),
         ];
 
-        return view("#url#.edit", $data);
+        return view("setting/profile.edit", $data);
     }
 
     /**
@@ -109,13 +110,14 @@ class #modelName#Controller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Update#modelName#Post $request, $id)
+    public function update(UpdateSettingProfilePost $request, $id)
     {
         $data = $request->only([
-            #controller.store.item#
+            'name',
+            'description',
         ]);
 
-        $this->#camelModelName#->update($id, $data);
+        $this->settingProfile->update($id, $data);
 
         return $request->ajax() ? "" : redirect($this->redirectTo);
     }
@@ -128,7 +130,7 @@ class #modelName#Controller extends Controller
      */
     public function destroy($id)
     {
-        $this->#camelModelName#->destroy($id);
+        $this->settingProfile->destroy($id);
 
         return request()->ajax() ? "" : redirect($this->redirectTo);
     }

@@ -1,4 +1,4 @@
-var base = require('#snakeModelName#/list');
+var base = require('#url#/list');
 
 Vue.component('ssky-#kebabModelName#-list', {
     mixins: [base]
