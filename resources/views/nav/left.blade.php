@@ -15,10 +15,6 @@
             Site
         </h3>
         <ul class="nav flex-column ">
-            <li class="nav-item">
-                <a class="nav-link{{ Request::is('code', 'code/*') ?  ' active' : '' }}" href="/code/"><i
-                        class="fa fa-terminal"></i>Code</a>
-            </li>
             @right('user.list')
             <li class="nav-item">
                 <a class="nav-link{{ Request::is('user', 'user/*') ?  ' active' : '' }}" href="/user/"><i
