@@ -68,7 +68,7 @@
                                     <input type="checkbox" name="right[]" value="{{ $right->value }}" disabled
                                         {{ ($user->right & $right->value) ? "checked" : "" }}>
                                 </th>
-                                <td>{{ __($right->name) }}</td>
+                                <td>{{ __("right." . $right->name) }}</td>
                                 <td class="text-md-right">
 
                                 </td>

@@ -39,6 +39,7 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">Value</th>
                                     <th scope="col"></th>
+                                    <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,9 +50,8 @@
                                     </th>
                                     <td>{{ $right->name }}</td>
                                     <td>{{ $right->value }}</td>
-                                    <td class="text-md-right">
-
-                                    </td>
+                                    <td>{{ __("right." . $right->name) }}</td>
+                                    <td class="text-md-right"></td>
                                 </tr>
                                 @endforeach
                             </tbody>
