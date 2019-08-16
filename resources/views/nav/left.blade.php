@@ -15,6 +15,17 @@
             Site
         </h3>
         <ul class="nav flex-column ">
+            <li class="nav-item">
+                <a class="nav-link{{ Request::is('site', 'site/*') ?  ' active' : '' }}" href="/site/"><i
+                        class="fa fa-th-large"></i>Site</a>
+            </li>
+        </ul>
+    </aside>
+    <aside>
+        <h3 class="nav-heading">
+            Rbac
+        </h3>
+        <ul class="nav flex-column ">
             @right('user.list')
             <li class="nav-item">
                 <a class="nav-link{{ Request::is('user', 'user/*') ?  ' active' : '' }}" href="/user/"><i

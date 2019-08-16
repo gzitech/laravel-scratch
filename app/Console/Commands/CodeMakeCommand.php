@@ -58,6 +58,24 @@ class CodeMakeCommand extends Command
         'app/Http/Controllers/RightController.php' => 'app/Http/Controllers/RightController.php',
         'app/Http/Controllers/RoleController.php' => 'app/Http/Controllers/RoleController.php',
         'app/Http/Controllers/UserController.php' => 'app/Http/Controllers/UserController.php',
+        // AppServiceProvider
+        'app/Providers/AppServiceProvider.php' => 'app/Providers/AppServiceProvider.php',
+        // routes
+        'routes/web.php' => 'routes/web.php',
+        // config
+        'config/database.php' => 'config/database.php',
+        'config/rbac.php' => 'config/rbac.php',
+        'config/app.php' => 'config/app.php',
+        // migrations
+        'database/migrations/2014_10_12_000000_create_users_table.php' => 'database/migrations/2014_10_12_000000_create_users_table.php',
+        'database/migrations/2014_10_12_100000_create_password_resets_table.php' => 'database/migrations/2014_10_12_100000_create_password_resets_table.php',
+        'database/migrations/2019_07_09_030458_create_roles_table.php' => 'database/migrations/2019_07_09_030458_create_roles_table.php',
+        'database/migrations/2019_07_09_030954_create_role_user_table.php' => 'database/migrations/2019_07_09_030954_create_role_user_table.php',
+        'database/migrations/2019_08_12_083659_create_setting_profiles_table.php' => 'database/migrations/2019_08_12_083659_create_setting_profiles_table.php',
+        // seeds
+        'database/seeds/DatabaseSeeder.php' => 'database/seeds/DatabaseSeeder.php',
+        'database/seeds/RolesTableSeeder.php' => 'database/seeds/RolesTableSeeder.php',
+        'database/seeds/UsersTableSeeder.php' => 'database/seeds/UsersTableSeeder.php',
         // scss
         'resources/sass/_custom.scss' => 'resources/sass/_custom.scss',
         'resources/sass/_variables.scss' => 'resources/sass/_variables.scss',
