@@ -5,13 +5,8 @@
     <div class="row justify-content-center">
         @include('nav.setting')
         <div class="col-md-10">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/setting/profile/">SettingProfile</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Edit</li>
-                </ol>
-            </nav>
             <div class="card">
+                <div class="card-header">Contact Information</div>
                 <div class="card-body">
                     <form method="POST" action="/setting/profile/{{$user->id}}">
                         @csrf

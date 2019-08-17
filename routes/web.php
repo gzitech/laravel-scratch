@@ -18,7 +18,6 @@ Route::middleware(['verified'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('/user', 'UserController');
     Route::resource('/role', 'RoleController');
-    Route::resource('/code', 'CodeController');
     Route::get('/role/right/{role}', 'RightController@index');
     Route::post('/role/right/{role}', 'RightController@update');
     Route::resource('/setting/profile', 'Setting\ProfileController');
