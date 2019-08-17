@@ -1,44 +1,40 @@
 <div class="form-group row">
-    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+    <label for="first_name" class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>
 
     <div class="col-md-6">
-        @vueif
-        <input id="name" type="text" class="form-control" name="name" v-model="settingProfileEditForm.name"
-            :class="{'is-invalid': settingProfileEditForm.errors.has('name')}" required autocomplete="name" autofocus>
-        <span class="invalid-feedback" role="alert" v-show="settingProfileEditForm.errors.has('name')">
-            <strong>@{{ settingProfileEditForm.errors.get('name') }}</strong>
-        </span>
-        @vuelse
-        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-            name="name" value="{{ old('name') ?? $settingProfile->name }}" required autocomplete="name"
+        <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror"
+            name="first_name" value="{{ old('first_name') ?? $user->first_name }}" required autocomplete="first_name"
             autofocus>
-        @error('name')
+        @error('first_name')
         <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
         </span>
         @enderror
-        @vuend
     </div>
 </div>
 <div class="form-group row">
-    <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Description') }}</label>
+    <label for="last_name" class="col-md-4 col-form-label text-md-right">{{ __('Last Name') }}</label>
 
     <div class="col-md-6">
-        @vueif
-        <input id="description" type="text" class="form-control" name="description" v-model="settingProfileEditForm.description"
-            :class="{'is-invalid': settingProfileEditForm.errors.has('description')}" required autocomplete="description" autofocus>
-        <span class="invalid-feedback" role="alert" v-show="settingProfileEditForm.errors.has('description')">
-            <strong>@{{ settingProfileEditForm.errors.get('description') }}</strong>
-        </span>
-        @vuelse
-        <input id="description" type="text" class="form-control @error('description') is-invalid @enderror"
-            name="description" value="{{ old('description') ?? $settingProfile->description }}" required autocomplete="description"
-            autofocus>
-        @error('description')
+        <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name"
+            value="{{ old('last_name') ?? $user->last_name }}" required autocomplete="last_name" autofocus>
+        @error('last_name')
         <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
         </span>
         @enderror
-        @vuend
+    </div>
+</div>
+<div class="form-group row">
+    <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label>
+
+    <div class="col-md-6">
+        <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email"
+            value="{{ old('email') ?? $user->email }}" required autocomplete="email" autofocus>
+        @error('email')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
     </div>
 </div>

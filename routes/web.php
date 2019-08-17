@@ -21,5 +21,5 @@ Route::middleware(['verified'])->group(function () {
     Route::resource('/code', 'CodeController');
     Route::get('/role/right/{role}', 'RightController@index');
     Route::post('/role/right/{role}', 'RightController@update');
-    Route::resource('/setting/profile', 'SettingProfileController');
+    Route::resource('/setting/profile', 'Setting\ProfileController');
 });
