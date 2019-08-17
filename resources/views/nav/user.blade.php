@@ -6,7 +6,7 @@
 
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
         <h6 class="dropdown-header">{{__('Settings')}}</h6>
-        <a class="dropdown-item" href="/setting">
+        <a class="dropdown-item" href="/setting/profile">
             <i class="fa fa-fw text-left fa-btn fa-cog"></i> {{__('Your Settings')}}
         </a>
         <div class="dropdown-divider"></div>

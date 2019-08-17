@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Setting;
 
 use App\Http\Controllers\Controller;
 use App\Contracts\Repositories\UserRepository;
-use App\Http\Requests\CreateSettingProfilePost;
-use App\Http\Requests\UpdateSettingProfilePost;
+use App\Http\Requests\UpdateUserPost;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
@@ -40,7 +39,7 @@ class ProfileController extends Controller
     public function index()
     {
         $data = [
-            'user'=>$this->user->find(1),
+            'user'=>$this->user->current(),
         ];
 
         return view("setting/profile", $data);
@@ -53,14 +52,15 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSettingProfilePost $request, $id)
+    public function update(UpdateUserPost $request, $id)
     {
         $data = $request->only([
-            'name',
-            'description',
+            'first_name',
+            'last_name',
+            'email',
         ]);
 
-        $this->settingProfile->update($id, $data);
+        $this->user->update($id, $data);
 
         return $request->ajax() ? "" : redirect($this->redirectTo);
     }

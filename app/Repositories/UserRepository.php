@@ -13,13 +13,20 @@ use Illuminate\Support\Facades\Auth;
 
 class UserRepository implements Contract
 {
+    protected $rights;
+
+    public function __construct()
+    {
+        $this->rights = config('rbac.rights');
+    }
+
     /**
      * {@inheritdoc}
      */
     public function current()
     {
         if (Auth::check()) {
-            return $this->find(Auth::id())->shouldHaveSelfVisibility();
+            return $this->find(Auth::id());
         }
     }
 
@@ -130,8 +137,7 @@ class UserRepository implements Contract
     public function checkRight($right)
     {
         if (Auth::check()) {
-            $rights = config('rbac.rights');
-            $val = Arr::get($rights, $right);
+            $val = Arr::get($this->rights, $right);
             return Auth::user()->right & $val;
         } else {
             return false;
