@@ -20,5 +20,6 @@ Route::middleware(['verified'])->group(function () {
     Route::resource('/role', 'RoleController');
     Route::get('/role/right/{role}', 'RightController@index');
     Route::post('/role/right/{role}', 'RightController@update');
-    Route::resource('/setting/profile', 'Setting\ProfileController');
+    Route::resource('/setting/profile', 'Setting\ProfileController')->only(['index', 'update']);
+    Route::resource('/setting/security', 'Setting\SecurityController')->only(['index', 'update']);
 });

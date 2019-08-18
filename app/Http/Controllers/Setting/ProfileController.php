@@ -60,7 +60,7 @@ class ProfileController extends Controller
             'email',
         ]);
 
-        $this->user->update($id, $data);
+        $this->user->updateProfile($data);
 
         return $request->ajax() ? "" : redirect($this->redirectTo);
     }

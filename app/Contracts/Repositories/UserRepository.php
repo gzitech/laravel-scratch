@@ -9,6 +9,7 @@ interface UserRepository
     public function find($id);
     public function create(array $data);
     public function update($id, array $data);
+    public function updateProfile(array $data);
     public function updateRight($id);
     public function updateRights();
     public function updateRightsByRoleId($role_id);

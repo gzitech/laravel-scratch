@@ -83,6 +83,16 @@ class UserRepository implements Contract
     /**
      * {@inheritdoc}
      */
+    public function updateProfile(array $data)
+    {
+        if (Auth::check()) {
+            User::find(Auth::id())->update($data);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function updateRight($id) {
 
         $user = User::find($id);

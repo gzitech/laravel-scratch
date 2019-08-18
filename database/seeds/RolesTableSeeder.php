@@ -19,22 +19,10 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-        $this->role->create([
-            'role_name' => 'Owner',
-            'role_description' => 'Administrator',
-            'right' => 63,
-        ]);
-        
-        $this->role->create([
-            'role_name' => 'Member',
-            'role_description' => 'General user',
-            'right' => 17,
-        ]);
+        $roles = config('rbac.roles');
 
-        $this->role->create([
-            'role_name' => 'Guest',
-            'role_description' => 'Guest',
-            'right' => 0,
-        ]);
+        foreach($roles as $key=>$role) {
+            $this->role->create($role);
+        }
     }
 }

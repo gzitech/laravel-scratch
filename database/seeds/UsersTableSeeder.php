@@ -25,10 +25,10 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'H',
             'email' => 'sander@gzitech.com',
             'password' => Hash::make('123455'),
-            'right' => 63,
+            'right' => config('rbac.roles')['owner']['right'],
             'email_verified_at' => now(),
         ])->roles()->attach([
-            config('rbac.roles')['owner']
+            config('rbac.roles')['owner']['id']
         ]);
     }
 }

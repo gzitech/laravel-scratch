@@ -12,9 +12,24 @@ return [
     */
 
     'roles' => [
-        'owner' => 1,
-        'member' => 2,
-        'guest' => 3,
+        'owner' => [
+            'id' => 1,
+            'role_name' => 'Owner',
+            'role_description' => 'Administrator',
+            'right' => 63,
+        ],
+        'member' => [
+            'id' => 2,
+            'role_name' => 'Member',
+            'role_description' => 'General user',
+            'right' => 17,
+        ],
+        'guest' => [
+            'id' => 3,
+            'role_name' => 'Guest',
+            'role_description' => 'Guest',
+            'right' => 0,
+        ],
     ],
 
      /*
