@@ -8,7 +8,6 @@ use Carbon\Carbon;
 
 class RoleRepository implements Contract
 {
-    public static $defaultRole = 'member';
     /**
      * {@inheritdoc}
      */
