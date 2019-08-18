@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
 {
-    protected $role, $user;
+    protected $user;
 
     public function __construct(UserRepository $user)
     {
