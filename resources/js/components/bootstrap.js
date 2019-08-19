@@ -9,6 +9,3 @@ require('./role/edit');
 require('./site/list');
 require('./site/create');
 require('./site/edit');
-require('./site/url/list');
-require('./site/url/create');
-require('./site/url/edit');

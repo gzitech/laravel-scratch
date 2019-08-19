@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\Repositories\UserRepository;
 use App\Contracts\Repositories\#modelName#Repository;
 use App\Http\Requests\Create#modelName#Post;
 use App\Http\Requests\Update#modelName#Post;
@@ -16,7 +17,7 @@ class #modelName#Controller extends Controller
      *
      * @var \Laravel\Spark\Contracts\Repositories\#modelName#Repository
      */
-    protected $#camelModelName#;
+    protected $user, $#camelModelName#;
 
     protected $redirectTo = '/#url#/';
 
@@ -25,8 +26,9 @@ class #modelName#Controller extends Controller
      *
      * @return void
      */
-    public function __construct(#modelName#Repository $#camelModelName#)
+    public function __construct(UserRepository $user, #modelName#Repository $#camelModelName#)
     {
+        $this->user = $user;
         $this->#camelModelName# = $#camelModelName#;
         $this->middleware('auth');
     }

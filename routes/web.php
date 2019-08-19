@@ -23,5 +23,4 @@ Route::middleware(['verified'])->group(function () {
     Route::resource('/setting/profile', 'Setting\ProfileController')->only(['index', 'update']);
     Route::resource('/setting/security', 'Setting\SecurityController')->only(['index', 'update']);
     Route::resource('/site', 'SiteController');
-    Route::resource('/site/url', 'SiteUrlController');
 });

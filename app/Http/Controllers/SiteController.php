@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\Repositories\SiteRepository;
+use App\Contracts\Repositories\UserRepository;
 use App\Http\Requests\CreateSitePost;
 use App\Http\Requests\UpdateSitePost;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class SiteController extends Controller
      *
      * @var \Laravel\Spark\Contracts\Repositories\SiteRepository
      */
-    protected $site;
+    protected $user, $site;
 
     protected $redirectTo = '/site/';
 
@@ -25,8 +26,9 @@ class SiteController extends Controller
      *
      * @return void
      */
-    public function __construct(SiteRepository $site)
+    public function __construct(UserRepository $user, SiteRepository $site)
     {
+        $this->user = $user;
         $this->site = $site;
         $this->middleware('auth');
     }
@@ -63,9 +65,7 @@ class SiteController extends Controller
      */
     public function store(CreateSitePost $request)
     {
-        $data = $request->only([
-            'name',
-        ]);
+        $data = $request->only(['name',]);
 
         $site = $this->site->create($data);
         
