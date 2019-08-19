@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-header">Update Password</div>
                 <div class="card-body">
-                    <form method="POST" action="/setting/profile/{{$user->id}}">
+                    <form method="POST" action="/setting/security/{{$user->id}}">
                         @csrf
                         @method('PUT')
                         @include('setting/security.edit-form')

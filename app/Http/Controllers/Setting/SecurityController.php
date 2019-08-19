@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Setting;
 
 use App\Contracts\Repositories\UserRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 
 class SecurityController extends Controller
@@ -43,15 +44,15 @@ class SecurityController extends Controller
     {
         $this->validate($request, [
             'current_password' => 'required',
-            'password' => 'required|confirmed|min:8',
+            'password' => 'required|confirmed|different:current_password|min:8',
+            'password_confirmation' => 'required',
         ]);
 
-        if (! Hash::check($request->current_password, $request->user()->password)) {
-            return response()->json([
-                'errors' => [
-                    'current_password' => [__('The given password does not match our records.')]
-                ]
-            ], 422);
+        if (!Hash::check($request->current_password, $request->user()->password)) {
+            return back()->withErrors(['current_password'=>'The given password does not match our records.']);
+        } else {
+            $this->user->updatePassword($request->password);
+            return $request->ajax() ? "" : redirect($this->redirectTo);
         }
     }
 }

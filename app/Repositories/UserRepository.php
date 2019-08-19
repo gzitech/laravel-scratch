@@ -90,6 +90,15 @@ class UserRepository implements Contract
         }
     }
 
+    public function updatePassword($password)
+    {
+        if (Auth::check()) {
+            $user = User::find(Auth::id());
+            $user->password = Hash::make($password);
+            $user->save();
+        }
+    }
+
     /**
      * {@inheritdoc}
      */
