@@ -44,6 +44,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany('App\Role')->withTimestamps();
     }
 
+    public function sites()
+    {
+        return $this->belongsToMany('App\Site')->withTimestamps();
+    }
+
     /**
      * Send the email verification notification.
      *

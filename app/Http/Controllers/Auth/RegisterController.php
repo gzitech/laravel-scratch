@@ -73,7 +73,8 @@ class RegisterController extends Controller
         ]);
 
         $user->roles()->attach([
-            config('rbac.roles')['member']
+            config('rbac.roles')['member']['id'],
+            config('rbac.roles')['sub_owner']['id']
         ]);
 
         $this->user->updateRight($user->id);

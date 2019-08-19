@@ -23,6 +23,14 @@ class UserRepository implements Contract
     /**
      * {@inheritdoc}
      */
+    public function id()
+    {
+        return Auth::id();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function user()
     {
         if (Auth::check()) {

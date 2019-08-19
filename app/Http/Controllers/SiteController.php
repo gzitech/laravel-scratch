@@ -40,8 +40,10 @@ class SiteController extends Controller
      */
     public function index()
     {
+        $user_id = $this->user->id();
+
         $data = [
-            'sites'=>$this->site->paginate(),
+            'sites'=> $this->user->checkRight('site.list') ? $this->site->paginate() : $this->site->paginateByUserId($user_id),
         ];
 
         return view("site", $data);

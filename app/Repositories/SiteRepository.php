@@ -4,8 +4,10 @@ namespace App\Repositories;
 
 use App\Site;
 use App\SiteUrl;
+use App\User;
 use App\Contracts\Repositories\SiteRepository as Contract;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class SiteRepository implements Contract
 {
@@ -36,6 +38,18 @@ class SiteRepository implements Contract
     /**
      * {@inheritdoc}
      */
+    public function paginateByUserId($user_id)
+    {
+        if(config('app.paginate_type') == 'paginate') {
+            return User::find($user_id)->sites()->paginate(config("app.max_page_size"));
+        } else {
+            return User::find($user_id)->sites()->simplePaginate(config("app.max_page_size"));
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function find($id)
     {
         return Site::find($id);
@@ -58,7 +72,16 @@ class SiteRepository implements Contract
      */
     public function create(array $data)
     {
+
+        if(empty($data['user_id'])) {
+            $data['user_id'] = Auth::id();
+        }
+
         $site = Site::create($data);
+
+        $site->users()->attach([
+            $data['user_id']
+        ]);
 
         return $site;
     }

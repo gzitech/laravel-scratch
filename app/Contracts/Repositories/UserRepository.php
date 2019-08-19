@@ -4,6 +4,7 @@ namespace App\Contracts\Repositories;
 
 interface UserRepository
 {
+    public function id();
     public function user();
     public function paginate();
     public function find($id);
