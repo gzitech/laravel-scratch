@@ -16,7 +16,7 @@ return [
             'id' => 1,
             'role_name' => 'Owner',
             'role_description' => 'Administrator',
-            'right' => 63,
+            'right' => 255,
         ],
         'member' => [
             'id' => 2,
@@ -69,6 +69,10 @@ return [
         'right' => [
             "list" => 16,
             "update" => 32,
+        ],
+        'site' => [
+            "list" => 64,
+            "update" => 128,
         ],
     ],
 ];

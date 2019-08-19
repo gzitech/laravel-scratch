@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSettingProfilesTable extends Migration
+class CreateSitesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateSettingProfilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('setting_profiles', function (Blueprint $table) {
+        Schema::create('sites', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name', 127)->default('');
-            $table->string('description')->default('');
+            $table->unsignedBigInteger('user_id');
+			$table->string('name')->default('');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateSettingProfilesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('setting_profiles');
+        Schema::dropIfExists('sites');
     }
 }

@@ -1,10 +1,12 @@
 <?php
 
 return [
-    'user.list' => 'show users list',
-    'user.update' => 'create user, update user, delete users',
-    'role.list' => 'show roles list',
-    'role.update' => 'create role, update role, delete roles',
-    'right.list' => 'show permissions list',
-    'right.update' => 'create permission, update permission, delete permissions',
+    'user.list' => 'show users',
+    'user.update' => 'edit users',
+    'role.list' => 'show roles',
+    'role.update' => 'edit roles',
+    'right.list' => 'show permissions',
+    'right.update' => 'edit permissions',
+    'site.list' => 'show sites',
+    'site.update' => 'edit sites',
 ];
