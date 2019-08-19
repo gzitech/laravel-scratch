@@ -14,8 +14,10 @@
 
                         </div>
                         <div class="nav ml-auto">
+                            @right('site.update')
                             <a href="/site/create" role="button" class="btn btn-primary btn-sm" @vueif
                                 @click.prevent="showSiteCreateForm" @vuend>Create</a>
+                            @endright
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -33,15 +35,15 @@
                                     <th scope="row">@{{ site.id }}</th>
                                     <td>@{{ site.name }}</td>
                                     <td class="text-md-right">
-                                        <a :href="showUrl(site.id)" title="Show"
-                                            class="btn btn-outline-primary"><i
+                                        <a :href="showUrl(site.id)" title="Show" class="btn btn-outline-primary"><i
                                                 class="fa fa-user-o"></i></a>
+                                        @right('site.update')
                                         <a href="#edit" title="Edit" class="btn btn-outline-primary"
-                                            @click.prevent="showSiteEditForm(site)"><i
-                                                class="fa fa-pencil"></i></a>
+                                            @click.prevent="showSiteEditForm(site)"><i class="fa fa-pencil"></i></a>
                                         <a href="#del" title="Destroy" class="btn btn-outline-danger"
                                             @click.prevent="showSiteDestroyConfirm(site)"><i
                                                 class="fa fa-trash-o"></i></a>
+                                        @endright
                                     </td>
                                 </tr>
                                 @vuend
@@ -51,14 +53,14 @@
                                     <th scope="row">{{ $site->id }}</th>
                                     <td>{{ $site->name }}</td>
                                     <td class="text-md-right">
-                                        <a href="/site/{{ $site->id }}" title="Show"
-                                            class="btn btn-outline-primary"><i
+                                        <a href="/site/{{ $site->id }}" title="Show" class="btn btn-outline-primary"><i
                                                 class="fa fa-user-o"></i></a>
+                                        @right('site.update')
                                         <a href="/site/{{ $site->id }}/edit" title="Edit"
                                             class="btn btn-outline-primary"><i class="fa fa-pencil"></i></a>
-                                        <a href="/site/{{ $site->id }}/destroy"
-                                            title="Destroy" class="btn btn-outline-danger"><i
-                                                class="fa fa-trash-o"></i></a>
+                                        <a href="/site/{{ $site->id }}/destroy" title="Destroy"
+                                            class="btn btn-outline-danger"><i class="fa fa-trash-o"></i></a>
+                                        @endright
                                     </td>
                                 </tr>
                                 @endforeach
@@ -77,13 +79,13 @@
                     </div>
                     @endif
                 </div>
+                @right('site.update')
                 @vueif
                 <ssky-site-create inline-template :old="{}" :errors="{}">
                     <div class="modal" tabindex="-1" role="dialog" id="site-create-form">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
-                                <form method="POST" action="/site"
-                                    @submit="validateSiteCreateForm">
+                                <form method="POST" action="/site" @submit="validateSiteCreateForm">
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title">
@@ -107,8 +109,7 @@
                         </div>
                     </div>
                 </ssky-site-create>
-                <ssky-site-edit inline-template :site="site" :old="{}"
-                    :errors="{}" @site-updated="updatedSite">
+                <ssky-site-edit inline-template :site="site" :old="{}" :errors="{}" @site-updated="updatedSite">
                     <div class="modal" tabindex="-1" role="dialog" id="site-edit-form">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
@@ -167,6 +168,7 @@
                     </div>
                 </div>
                 @vuend
+                @endright
             </div>
             @vueif
         </ssky-site-list>

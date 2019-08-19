@@ -170,6 +170,41 @@ class UserRepository implements Contract
     /**
      * {@inheritdoc}
      */
+    public function checkRights($rights)
+    {
+        if(is_array($rights)) {
+            $rval = true;
+
+            foreach($rights as $right) {
+
+                if(!$this->checkRight($right)) {
+                    $rval = false;
+                    break;
+                }
+            }
+
+            return $rval;
+            
+        } else {
+            $rights = explode('|', $rights);
+
+            $rval = false;
+
+            foreach($rights as $right) {
+
+                if($this->checkRight($right)) {
+                    $rval = true;
+                    break;
+                }
+            }
+
+            return $rval;
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function authorize($right)
     {
         abort_if(!$this->checkRight($right), 403);

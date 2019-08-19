@@ -21,6 +21,7 @@
             </li>
         </ul>
     </aside>
+    @right('user.list|role.list')
     <aside>
         <h3 class="nav-heading">
             Rbac
@@ -40,4 +41,5 @@
             @endright
         </ul>
     </aside>
+    @endright
 </div>

@@ -66,8 +66,8 @@ class AppServiceProvider extends ServiceProvider
             return "<?php } ?>";
         });
 
-        Blade::if('right', function ($right) {
-            return $this->user->checkRight($right) ;
+        Blade::if('right', function ($rights) {
+            return $this->user->checkRights($rights) ;
         });
     }
 

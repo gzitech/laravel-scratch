@@ -17,5 +17,6 @@ interface UserRepository
     public function updateRightsByRoleId($role_id);
     public function destroy($id);
     public function checkRight($right);
+    public function checkRights($rights);
     public function authorize($right);
 }
