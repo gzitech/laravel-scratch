@@ -23,7 +23,7 @@ class UserRepository implements Contract
     /**
      * {@inheritdoc}
      */
-    public function current()
+    public function user()
     {
         if (Auth::check()) {
             return $this->find(Auth::id());
@@ -85,18 +85,14 @@ class UserRepository implements Contract
      */
     public function updateProfile(array $data)
     {
-        if (Auth::check()) {
-            User::find(Auth::id())->update($data);
-        }
+        User::find(Auth::id())->update($data);
     }
 
     public function updatePassword($password)
     {
-        if (Auth::check()) {
-            $user = User::find(Auth::id());
-            $user->password = Hash::make($password);
-            $user->save();
-        }
+        $user = User::find(Auth::id());
+        $user->password = Hash::make($password);
+        $user->save();
     }
 
     /**

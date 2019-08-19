@@ -15,19 +15,25 @@ return [
         'owner' => [
             'id' => 1,
             'role_name' => 'Owner',
-            'role_description' => 'Administrator',
+            'role_description' => 'Administrator of main site',
             'right' => 255,
         ],
         'member' => [
             'id' => 2,
             'role_name' => 'Member',
-            'role_description' => 'General user',
+            'role_description' => 'General user of main site',
             'right' => 17,
         ],
-        'guest' => [
+        'sub_owner' => [
             'id' => 3,
-            'role_name' => 'Guest',
-            'role_description' => 'Guest',
+            'role_name' => 'Owner',
+            'role_description' => 'Administrator of sub site',
+            'right' => 0,
+        ],
+        'sub_member' => [
+            'id' => 4,
+            'role_name' => 'Member',
+            'role_description' => 'General user of sub site',
             'right' => 0,
         ],
     ],
@@ -41,7 +47,7 @@ return [
     |
     */
 
-    'defaultRole' => 'member',
+    'default_role' => 'member',
 
      /*
     |--------------------------------------------------------------------------

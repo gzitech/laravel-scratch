@@ -9,4 +9,9 @@ class Site extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function siteUrls()
+    {
+        return $this->hasMany('App\SiteUrl');
+    }
 }

@@ -4,7 +4,7 @@ namespace App\Contracts\Repositories;
 
 interface UserRepository
 {
-    public function current();
+    public function user();
     public function paginate();
     public function find($id);
     public function create(array $data);

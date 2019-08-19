@@ -27,7 +27,7 @@ class SecurityController extends Controller
     public function index()
     {
         $data = [
-            'user'=>$this->user->current(),
+            'user'=>$this->user->user(),
         ];
 
         return view("setting/security", $data);

@@ -3,11 +3,23 @@
 namespace App\Repositories;
 
 use App\Site;
+use App\SiteUrl;
 use App\Contracts\Repositories\SiteRepository as Contract;
 use Carbon\Carbon;
 
 class SiteRepository implements Contract
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function site($site_id)
+    {
+        if ($site_id > 0) {
+            return $this->find($site_id);
+        } else {
+            return new Site();
+        }
+    }
 
     /**
      * {@inheritdoc}
@@ -27,6 +39,18 @@ class SiteRepository implements Contract
     public function find($id)
     {
         return Site::find($id);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findByDomain($domain)
+    {
+        $data = [
+            'domain'=>$domain,
+        ];
+
+        return SiteUrl::where($data)->first()->site ?? null;
     }
 
     /**
