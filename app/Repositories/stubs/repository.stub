@@ -12,7 +12,7 @@ class #modelName#Repository implements Contract
     /**
      * {@inheritdoc}
      */
-    public function paginate()
+    public function get#tableName#()
     {
         if(config('app.paginate_type') == 'paginate') {
             return #modelName#::paginate(config("app.max_page_size"));

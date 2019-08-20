@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\User;
 use App\Role;
+use App\Site;
 use App\Contracts\Repositories\UserRepository as Contract;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
@@ -56,9 +57,9 @@ class UserRepository implements Contract
     public function getUsersBySiteId($site_id)
     {
         if(config('app.paginate_type') == 'paginate') {
-            return User::paginate(config("app.max_page_size"));
+            return Site::find($site_id)->users()->paginate(config("app.max_page_size"));
         } else {
-            return User::simplePaginate(config("app.max_page_size"));
+            return Site::find($site_id)->users()->simplePaginate(config("app.max_page_size"));
         }
     }
 

@@ -41,7 +41,7 @@ class #modelName#Controller extends Controller
     public function index()
     {
         $data = [
-            '#camelTableName#'=>$this->#camelModelName#->paginate(),
+            '#camelTableName#'=>$this->#camelModelName#->get#tableName#(),
         ];
 
         return view("#url#", $data);
