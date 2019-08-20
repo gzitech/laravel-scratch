@@ -10,7 +10,7 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="ssky-app" {{ config('app.frontend') !== 'none' ? 'v-cloak': '' }}>
+    <div id="ssky-app" {{ config('app.frontend') === 'vue' ? 'v-cloak': '' }}>
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -39,10 +39,11 @@
             @yield('content')
         </main>
     </div>
-    @vueif
+    @vue
     <script src="{{ mix('js/app.js') }}"></script>
-    @vuelse
+    @endvue
+    @none
     <script src="{{ mix('js/none.js') }}"></script>
-    @vuend
+    @endnone
 </body>
 </html>

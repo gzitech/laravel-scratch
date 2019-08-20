@@ -27,47 +27,20 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->user = $user;
 
-        Blade::directive('vueif', function() {
-            $condition = config('app.frontend') === 'vue' ? 'true' : 'false';
-            return "<?php if ($condition) { ?>";
+        Blade::if('vue', function () {
+            return config('app.frontend') === 'vue';
         });
 
-        Blade::directive('vuelse', function () {
-            return "<?php } else { ?>";
+        Blade::if('react', function () {
+            return config('app.frontend') === 'react';
         });
 
-        Blade::directive('vuend', function () {
-            return "<?php } ?>";
-        });
-
-        Blade::directive('reactif', function() {
-            $condition = config('app.frontend') === 'react' ? 'true' : 'false';
-            return "<?php if ($condition) { ?>";
-        });
-
-        Blade::directive('reactelse', function () {
-            return "<?php } else { ?>";
-        });
-
-        Blade::directive('reactend', function () {
-            return "<?php } ?>";
-        });
-
-        Blade::directive('noneif', function() {
-            $condition = config('app.frontend') === 'none' ? 'true' : 'false';
-            return "<?php if ($condition) { ?>";
-        });
-
-        Blade::directive('nonelse', function () {
-            return "<?php } else { ?>";
-        });
-
-        Blade::directive('nonend', function () {
-            return "<?php } ?>";
+        Blade::if('none', function () {
+            return config('app.frontend') === 'none';
         });
 
         Blade::if('right', function ($rights) {
-            return $this->user->checkRights($rights) ;
+            return $this->user->checkRights($rights);
         });
     }
 

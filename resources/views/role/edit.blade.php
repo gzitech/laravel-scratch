@@ -13,8 +13,8 @@
             </nav>
             <div class="card">
                 <div class="card-body">
-                    @vueif<ssky-role-edit inline-template :role="{{ $role->toJson() }}" :old="{{ json_encode(Session::getOldInput()) }}"
-                    :errors="{{ $errors }}">@vuend
+                    @vue<ssky-role-edit inline-template :role="{{ $role->toJson() }}" :old="{{ json_encode(Session::getOldInput()) }}"
+                    :errors="{{ $errors }}">@endvue
                     <form method="POST" action="/role/{{$role->id}}">
                         @csrf
                         @method('PUT')
@@ -27,7 +27,7 @@
                             </div>
                         </div>
                     </form>
-                    @vueif</ssky-role-edit>@vuend
+                    @vue</ssky-role-edit>@endvue
                 </div>
             </div>
         </div>

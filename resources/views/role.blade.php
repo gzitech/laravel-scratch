@@ -4,9 +4,9 @@
 <div class="container">
     <div class="row justify-content-center">
         @include('nav.left')
-        @vueif
+        @vue
         <ssky-role-list inline-template :paginate="{{ $roles->toJson() }}">
-            @vuend
+            @endvue
             <div class="col-md-10">
                 <div class="card">
                     <div class="card-header d-flex">
@@ -15,8 +15,8 @@
                         </div>
                         <div class="nav ml-auto">
                             @right('role.update')
-                            <a href="/role/create" role="button" class="btn btn-primary btn-sm" @vueif
-                                @click.prevent="showRoleCreateForm" @vuend>Create</a>
+                            <a href="/role/create" role="button" class="btn btn-primary btn-sm" @vue
+                                @click.prevent="showRoleCreateForm" @endvue>Create</a>
                             @endright
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @vueif
+                                @vue
                                 <tr v-for="role in roles" :key="role.id">
                                     <th scope="row">@{{ role.id }}</th>
                                     <td>@{{ role.role_name }}</td>
@@ -53,8 +53,8 @@
                                         @endright
                                     </td>
                                 </tr>
-                                @vuend
-                                @noneif
+                                @endvue
+                                @none
                                 @foreach ($roles as $role)
                                 <tr>
                                     <th scope="row">{{ $role->id }}</th>
@@ -77,7 +77,7 @@
                                     </td>
                                 </tr>
                                 @endforeach
-                                @nonend
+                                @endnone
                             </tbody>
                         </table>
                     </div>
@@ -93,7 +93,7 @@
                     @endif
                 </div>
                 @right('role.update')
-                @vueif
+                @vue
                 <ssky-role-create inline-template :old="{}" :errors="{}">
                     <div class="modal" tabindex="-1" role="dialog" id="role-create-form">
                         <div class="modal-dialog modal-lg" role="document">
@@ -189,12 +189,12 @@
                         </div>
                     </div>
                 </div>
-                @vuend
+                @endvue
                 @endright
             </div>
-            @vueif
+            @vue
         </ssky-role-list>
-        @vuend
+        @endvue
     </div>
 </div>
 @endsection

@@ -4,9 +4,9 @@
 <div class="container">
     <div class="row justify-content-center">
         @include('nav.left')
-        @vueif
+        @vue
         <ssky-site-list inline-template :paginate="{{ $sites->toJson() }}">
-            @vuend
+            @endvue
             <div class="col-md-10">
                 <div class="card">
                     <div class="card-header d-flex">
@@ -15,8 +15,8 @@
                         </div>
                         <div class="nav ml-auto">
                             @right('site.update')
-                            <a href="/site/create" role="button" class="btn btn-primary btn-sm" @vueif
-                                @click.prevent="showSiteCreateForm" @vuend>Create</a>
+                            <a href="/site/create" role="button" class="btn btn-primary btn-sm" @vue
+                                @click.prevent="showSiteCreateForm" @endvue>Create</a>
                             @endright
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @vueif
+                                @vue
                                 <tr v-for="site in sites" :key="site.id">
                                     <th scope="row">@{{ site.id }}</th>
                                     <td><a :href="siteUrl(site, '{{ Config::get('site.default_domain') }}')">@{{ site.name }}</a></td>
@@ -44,8 +44,8 @@
                                         @endright
                                     </td>
                                 </tr>
-                                @vuend
-                                @noneif
+                                @endvue
+                                @none
                                 @foreach ($sites as $site)
                                 <tr>
                                     <th scope="row">{{ $site->id }}</th>
@@ -60,7 +60,7 @@
                                     </td>
                                 </tr>
                                 @endforeach
-                                @nonend
+                                @endnone
                             </tbody>
                         </table>
                     </div>
@@ -76,7 +76,7 @@
                     @endif
                 </div>
                 @right('site.update')
-                @vueif
+                @vue
                 <ssky-site-create inline-template :old="{}" :errors="{}">
                     <div class="modal" tabindex="-1" role="dialog" id="site-create-form">
                         <div class="modal-dialog modal-lg" role="document">
@@ -135,12 +135,12 @@
                         </div>
                     </div>
                 </div>
-                @vuend
+                @endvue
                 @endright
             </div>
-            @vueif
+            @vue
         </ssky-site-list>
-        @vuend
+        @endvue
     </div>
 </div>
 @endsection

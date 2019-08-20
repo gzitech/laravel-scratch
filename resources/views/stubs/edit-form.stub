@@ -2,13 +2,14 @@
     <label for="#ColumnName#" class="col-md-4 col-form-label text-md-right">{{ __('#ColumnTitle#') }}</label>
 
     <div class="col-md-6">
-        @vueif
+        @vue
         <input id="#ColumnName#" type="text" class="form-control" name="#ColumnName#" v-model="#camelModelName#EditForm.#ColumnName#"
             :class="{'is-invalid': #camelModelName#EditForm.errors.has('#ColumnName#')}" required autocomplete="#ColumnName#" autofocus>
         <span class="invalid-feedback" role="alert" v-show="#camelModelName#EditForm.errors.has('#ColumnName#')">
             <strong>@{{ #camelModelName#EditForm.errors.get('#ColumnName#') }}</strong>
         </span>
-        @vuelse
+        @endvue
+        @none
         <input id="#ColumnName#" type="text" class="form-control @error('#ColumnName#') is-invalid @enderror"
             name="#ColumnName#" value="{{ old('#ColumnName#') ?? $#camelModelName#->#ColumnName# }}" required autocomplete="#ColumnName#"
             autofocus>
@@ -17,6 +18,6 @@
             <strong>{{ $message }}</strong>
         </span>
         @enderror
-        @vuend
+        @endnone
     </div>
 </div>

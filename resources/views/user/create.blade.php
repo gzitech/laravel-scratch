@@ -13,7 +13,7 @@
             </nav>
             <div class="card">
                 <div class="card-body">
-                    @vueif<ssky-user-create inline-template :old="{{ json_encode(Session::getOldInput()) }}" :errors="{{ $errors }}">@vuend
+                    @vue<ssky-user-create inline-template :old="{{ json_encode(Session::getOldInput()) }}" :errors="{{ $errors }}">@endvue
                     <form method="POST" action="{{ route('user.index') }}" @submit="validateUserCreateForm">
                         @csrf
                         @include('user.create-form')
@@ -25,7 +25,7 @@
                             </div>
                         </div>
                     </form>
-                    @vueif</ssky-user-create>@vuend
+                    @vue</ssky-user-create>@endvue
                 </div>
             </div>
         </div>

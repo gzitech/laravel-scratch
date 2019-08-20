@@ -13,7 +13,7 @@
             </nav>
             <div class="card">
                 <div class="card-body">
-                    @vueif<ssky-role-create inline-template :old="{{ json_encode(Session::getOldInput()) }}" :errors="{{ $errors }}">@vuend
+                    @vue<ssky-role-create inline-template :old="{{ json_encode(Session::getOldInput()) }}" :errors="{{ $errors }}">@endvue
                     <form method="POST" action="/role" @submit="validateRoleCreateForm">
                         @csrf
                         @include('role.create-form')
@@ -25,7 +25,7 @@
                             </div>
                         </div>
                     </form>
-                    @vueif</ssky-role-create>@vuend
+                    @vue</ssky-role-create>@endvue
                 </div>
             </div>
         </div>

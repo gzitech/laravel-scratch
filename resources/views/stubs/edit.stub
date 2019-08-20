@@ -13,8 +13,8 @@
             </nav>
             <div class="card">
                 <div class="card-body">
-                    @vueif<ssky-#kebabModelName#-edit inline-template :#snakeModelName#="{{ $#camelModelName#->toJson() }}" :old="{{ json_encode(Session::getOldInput()) }}"
-                    :errors="{{ $errors }}">@vuend
+                    @vue<ssky-#kebabModelName#-edit inline-template :#snakeModelName#="{{ $#camelModelName#->toJson() }}" :old="{{ json_encode(Session::getOldInput()) }}"
+                    :errors="{{ $errors }}">@endvue
                     <form method="POST" action="/#url#/{{$#camelModelName#->id}}">
                         @csrf
                         @method('PUT')
@@ -27,7 +27,7 @@
                             </div>
                         </div>
                     </form>
-                    @vueif</ssky-#kebabModelName#-edit>@vuend
+                    @vue</ssky-#kebabModelName#-edit>@endvue
                 </div>
             </div>
         </div>

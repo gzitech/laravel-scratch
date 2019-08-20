@@ -13,8 +13,8 @@
             </nav>
             <div class="card">
                 <div class="card-body">
-                    @vueif<ssky-user-edit inline-template :user="{{ $user->toJson() }}" :old="{{ json_encode(Session::getOldInput()) }}"
-                    :errors="{{ $errors }}">@vuend
+                    @vue<ssky-user-edit inline-template :user="{{ $user->toJson() }}" :old="{{ json_encode(Session::getOldInput()) }}"
+                    :errors="{{ $errors }}">@endvue
                     <form method="POST" action="{{ route('user.index') }}/{{$user->id}}">
                         @csrf
                         @method('PUT')
@@ -27,7 +27,7 @@
                             </div>
                         </div>
                     </form>
-                    @vueif</ssky-user-edit>@vuend
+                    @vue</ssky-user-edit>@endvue
                 </div>
             </div>
         </div>

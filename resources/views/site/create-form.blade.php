@@ -2,7 +2,7 @@
     <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Site Name') }}</label>
 
     <div class="col-md-6">
-        @vueif
+        @vue
         <div class="input-group">
             <input id="name" type="text" class="form-control" name="name" v-model="siteCreateForm.name"
                 :class="{'is-invalid': siteCreateForm.errors.has('name')}" required autocomplete="name" autofocus>
@@ -13,7 +13,8 @@
         <span class="invalid-feedback" role="alert" v-show="siteCreateForm.errors.has('name')">
             <strong>@{{ siteCreateForm.errors.get('name') }}</strong>
         </span>
-        @vuelse
+        @endvue
+        @none
         <div class="input-group">
             <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name"
                 value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -26,6 +27,6 @@
             <strong>{{ $message }}</strong>
         </span>
         @enderror
-        @vuend
+        @endnone
     </div>
 </div>

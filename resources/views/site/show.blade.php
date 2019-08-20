@@ -35,8 +35,8 @@
                     </div>
                     <div class="nav ml-auto">
                         @right('site.update')
-                        <a href="/user/create" role="button" class="btn btn-primary btn-sm" @vueif
-                            @click.prevent="showUserCreateForm" @vuend>{{ __('Add Users to Site') }}</a>
+                        <a href="/user/create" role="button" class="btn btn-primary btn-sm" @vue
+                            @click.prevent="showUserCreateForm" @endvue>{{ __('Add Users to Site') }}</a>
                         @endright
                     </div>
                 </div>

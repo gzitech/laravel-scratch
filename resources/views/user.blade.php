@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         @include('nav.left')
-    @vueif<ssky-user-list inline-template :paginate="{{ $users->toJson() }}">@vuend
+    @vue<ssky-user-list inline-template :paginate="{{ $users->toJson() }}">@endvue
             <div class="col-md-10">
                 <div class="card">
                     <div class="card-header d-flex">
@@ -13,8 +13,8 @@
                         </div>
                         <div class="nav ml-auto">
                             @right('user.update')
-                            <a href="/user/create" role="button" class="btn btn-primary btn-sm" @vueif
-                                @click.prevent="showUserCreateForm" @vuend>Create</a>
+                            <a href="/user/create" role="button" class="btn btn-primary btn-sm" @vue
+                                @click.prevent="showUserCreateForm" @endvue>Create</a>
                             @endright
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @vueif
+                                @vue
                                 <tr v-for="user in users" :key="user.id">
                                     <th scope="row">@{{ user.id }}</th>
                                     <td>@{{ user.first_name }}</td>
@@ -48,8 +48,8 @@
                                         @endright
                                     </td>
                                 </tr>
-                                @vuend
-                                @noneif
+                                @endvue
+                                @none
                                 @foreach ($users as $user)
                                 <tr>
                                     <th scope="row">{{ $user->id }}</th>
@@ -68,7 +68,7 @@
                                     </td>
                                 </tr>
                                 @endforeach
-                                @nonend
+                                @endnone
                             </tbody>
                         </table>
                     </div>
@@ -84,7 +84,7 @@
                     @endif
                 </div>
                 @right('user.update')
-                @vueif
+                @vue
                 <ssky-user-create inline-template :old="{}" :errors="{}">
                     <div class="modal" tabindex="-1" role="dialog" id="user-create-form">
                         <div class="modal-dialog modal-lg" role="document">
@@ -185,10 +185,10 @@
                         </div>
                     </div>
                 </div>
-                @vuend
+                @endvue
                 @endright
             </div>
-    @vueif</ssky-user-list>@vuend
+    @vue</ssky-user-list>@endvue
     </div>
 </div>
 @endsection
