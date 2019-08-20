@@ -15,7 +15,7 @@
                         </div>
                         <div class="nav ml-auto">
                             <a href="/#url#/create" role="button" class="btn btn-primary btn-sm" @vueif
-                                @click.prevent="show#modelName#CreateForm" @vuend>Create</a>
+                                @click.prevent="show#modelName#CreateForm" @vuend>{{ __('Create') }}</a>
                         </div>
                     </div>
                     <div class="table-responsive">

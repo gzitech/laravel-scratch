@@ -29,31 +29,56 @@
                 </div>
             </div>
             <div class="card">
+                <div class="card-header d-flex">
+                    <div class="nav mr-auto">
+                        Users
+                    </div>
+                    <div class="nav ml-auto">
+                        @right('site.update')
+                        <a href="/user/create" role="button" class="btn btn-primary btn-sm" @vueif
+                            @click.prevent="showUserCreateForm" @vuend>{{ __('Add Users to Site') }}</a>
+                        @endright
+                    </div>
+                </div>
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Permission</th>
+                                <th scope="col">First Name</th>
+                                <th scope="col">Last Name</th>
+                                <th scope="col">Email</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($users as $user)
                             <tr>
-                                <th scope="row">
-                                    <input type="checkbox" name="id[]" value="{{ $user->id }}" disabled
-                                        >
-                                </th>
+                                <th scope="row">{{ $user->id }}</th>
                                 <td>{{ $user->first_name }}</td>
+                                <td>{{ $user->last_name }}</td>
+                                <td>{{ $user->email }}</td>
                                 <td class="text-md-right">
-
+                                    @right('site.update')
+                                    <a href="/user/{{ $user->id }}/destroy" title="Destroy"
+                                        class="btn btn-outline-danger"><i class="fa fa-trash-o"></i></a>
+                                    @endright
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
+                @if($users->previousPageUrl() || $users->nextPageUrl())
+                <div class="card-footer d-flex">
+                    <div class="nav mr-auto">
+
+                    </div>
+                    <div class="nav ml-auto">
+                        {{ $users->links() }}
+                    </div>
+                </div>
+                @endif
             </div>
         </div>
     </div>
