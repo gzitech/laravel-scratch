@@ -41,7 +41,19 @@ class UserRepository implements Contract
     /**
      * {@inheritdoc}
      */
-    public function paginate()
+    public function getUsers()
+    {
+        if(config('app.paginate_type') == 'paginate') {
+            return User::paginate(config("app.max_page_size"));
+        } else {
+            return User::simplePaginate(config("app.max_page_size"));
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUsersBySiteId($site_id)
     {
         if(config('app.paginate_type') == 'paginate') {
             return User::paginate(config("app.max_page_size"));

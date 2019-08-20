@@ -33,13 +33,11 @@
                                 @vueif
                                 <tr v-for="site in sites" :key="site.id">
                                     <th scope="row">@{{ site.id }}</th>
-                                    <td>@{{ site.name }}</td>
+                                    <td><a :href="siteUrl(site, '{{ Config::get('site.default_domain') }}')">@{{ site.name }}</a></td>
                                     <td class="text-md-right">
                                         <a :href="showUrl(site.id)" title="Show" class="btn btn-outline-primary"><i
                                                 class="fa fa-user-o"></i></a>
                                         @right('site.update')
-                                        <a href="#edit" title="Edit" class="btn btn-outline-primary"
-                                            @click.prevent="showSiteEditForm(site)"><i class="fa fa-pencil"></i></a>
                                         <a href="#del" title="Destroy" class="btn btn-outline-danger"
                                             @click.prevent="showSiteDestroyConfirm(site)"><i
                                                 class="fa fa-trash-o"></i></a>
@@ -51,13 +49,11 @@
                                 @foreach ($sites as $site)
                                 <tr>
                                     <th scope="row">{{ $site->id }}</th>
-                                    <td>{{ $site->name }}</td>
+                                    <td><a href="//{{ $site->name }}.{{ Config::get('site.default_domain') }}">{{ $site->name }}</a></td>
                                     <td class="text-md-right">
                                         <a href="/site/{{ $site->id }}" title="Show" class="btn btn-outline-primary"><i
                                                 class="fa fa-user-o"></i></a>
                                         @right('site.update')
-                                        <a href="/site/{{ $site->id }}/edit" title="Edit"
-                                            class="btn btn-outline-primary"><i class="fa fa-pencil"></i></a>
                                         <a href="/site/{{ $site->id }}/destroy" title="Destroy"
                                             class="btn btn-outline-danger"><i class="fa fa-trash-o"></i></a>
                                         @endright
@@ -109,34 +105,6 @@
                         </div>
                     </div>
                 </ssky-site-create>
-                <ssky-site-edit inline-template :site="site" :old="{}" :errors="{}" @site-updated="updatedSite">
-                    <div class="modal" tabindex="-1" role="dialog" id="site-edit-form">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <form method="POST" action="#update" @submit="validateSiteEditForm">
-                                    @csrf
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">
-                                            {{ __('Edit') }}
-                                        </h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        @include('site.edit-form')
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary"
-                                            :disabled="siteEditForm.busy">{{ __('Update') }}</button>
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Close</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </ssky-site-edit>
                 <div class="modal" tabindex="-1" role="dialog" id="site-destroy-confirm">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">

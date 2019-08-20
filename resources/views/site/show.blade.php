@@ -14,20 +14,45 @@
             <div class="card">
                 <div class="card-body">
                     <div class="form-group row">
-                        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Site Name') }}</label>
 
                         <div class="col-md-6">
-                            <input id="name" type="text" class="form-control" name="name"
-                                value="{{ $site->name }}" disabled>
+                            <div class="input-group">
+                                <input id="name" type="text" class="form-control" name="name" value="{{ $site->name }}"
+                                    disabled>
+                                <div class="input-group-append">
+                                    <div class="input-group-text">.{{ Config::get('site.default_domain') }}</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group row mb-0">
-                        <div class="col-md-6 offset-md-4">
-                            <a href="/site/{{ $site->id }}/edit" class="btn btn-primary">
-                                {{ __('Edit') }}
-                            </a>
-                        </div>
-                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Permission</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($users as $user)
+                            <tr>
+                                <th scope="row">
+                                    <input type="checkbox" name="id[]" value="{{ $user->id }}" disabled
+                                        >
+                                </th>
+                                <td>{{ $user->first_name }}</td>
+                                <td class="text-md-right">
+
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

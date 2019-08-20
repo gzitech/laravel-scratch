@@ -4,9 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         @include('nav.left')
-        @vueif
-        <ssky-user-list inline-template :paginate="{{ $users->toJson() }}">
-            @vuend
+    @vueif<ssky-user-list inline-template :paginate="{{ $users->toJson() }}">@vuend
             <div class="col-md-10">
                 <div class="card">
                     <div class="card-header d-flex">
@@ -190,9 +188,7 @@
                 @vuend
                 @endright
             </div>
-            @vueif
-        </ssky-user-list>
-        @vuend
+    @vueif</ssky-user-list>@vuend
     </div>
 </div>
 @endsection

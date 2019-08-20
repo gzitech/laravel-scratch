@@ -4,7 +4,7 @@ namespace App\Contracts\Repositories;
 
 interface RoleRepository
 {
-    public function paginate();
+    public function getRoles();
     public function find($id);
     public function create(array $data);
     public function update($id, array $data);

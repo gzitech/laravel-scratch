@@ -43,7 +43,7 @@ class UserController extends Controller
         $this->user->authorize('user.list');
 
         $data = [
-            'users'=>$this->user->paginate(),
+            'users'=>$this->user->getUsers(),
         ];
 
         return view("user", $data);

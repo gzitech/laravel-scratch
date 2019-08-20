@@ -26,7 +26,7 @@ class SiteRepository implements Contract
     /**
      * {@inheritdoc}
      */
-    public function paginate()
+    public function getSites()
     {
         if(config('app.paginate_type') == 'paginate') {
             return Site::paginate(config("app.max_page_size"));
@@ -38,7 +38,7 @@ class SiteRepository implements Contract
     /**
      * {@inheritdoc}
      */
-    public function paginateByUserId($user_id)
+    public function getSitesByUserId($user_id)
     {
         if(config('app.paginate_type') == 'paginate') {
             return User::find($user_id)->sites()->paginate(config("app.max_page_size"));

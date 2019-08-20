@@ -12,7 +12,7 @@ class SiteUrlRepository implements Contract
     /**
      * {@inheritdoc}
      */
-    public function paginate()
+    public function getSiteUrls()
     {
         if(config('app.paginate_type') == 'paginate') {
             return SiteUrl::paginate(config("app.max_page_size"));

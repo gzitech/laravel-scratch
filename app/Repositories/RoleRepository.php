@@ -11,7 +11,7 @@ class RoleRepository implements Contract
     /**
      * {@inheritdoc}
      */
-    public function paginate()
+    public function getRoles()
     {
         if(config('app.paginate_type') == 'paginate') {
             return Role::paginate(config("app.max_page_size"));

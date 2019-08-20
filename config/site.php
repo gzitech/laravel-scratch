@@ -12,7 +12,7 @@ return [
     */
 
     'domains' => [
-        "127.0.0.1",
+        "dev.scratch",
     ],
 
     /*
@@ -24,5 +24,5 @@ return [
     |
     */
 
-    'default_domain' => '127.0.0.1',
+    'default_domain' => 'dev.scratch:8000',
 ];

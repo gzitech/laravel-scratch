@@ -36,16 +36,13 @@ module.exports = {
         showUrl: function (id) {
             return '/site/' + id;
         },
+        siteUrl: function (site, domain) {
+            return '//' + site.name + '.' + domain;
+        },
         showSiteCreateForm: function () {
             var url = '/site/create';
             history.pushState({}, "", url);
             siteCreateFormDialog.modal('show');
-        },
-        showSiteEditForm: function (site) {
-            var url = '/site/' + site.id + '/edit';
-            history.pushState({}, "", url);
-            this.site = site;
-            siteEditFormDialog.modal('show');
         },
         showSiteDestroyConfirm: function (site) {
             var url = '/site/' + site.id + '/';
@@ -54,14 +51,6 @@ module.exports = {
             siteDestroyConfirm.find('form').attr('action', url);
             siteDestroyConfirm.modal('show');
         },
-        updatedSite: function (site) {
-            u = this.sites.find(u => u.id === site.id);
-            if (u) {
-                u.name = site.name;
-            }
-
-            siteEditFormDialog.modal('hide');
-        }
     },
 
 

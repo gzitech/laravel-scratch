@@ -6,7 +6,8 @@ interface UserRepository
 {
     public function id();
     public function user();
-    public function paginate();
+    public function getUsers();
+    public function getUsersBySiteId($site_id);
     public function find($id);
     public function create(array $data);
     public function update($id, array $data);

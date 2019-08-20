@@ -43,7 +43,7 @@ class SiteController extends Controller
         $user_id = $this->user->id();
 
         $data = [
-            'sites'=> $this->user->checkRight('site.list') ? $this->site->paginate() : $this->site->paginateByUserId($user_id),
+            'sites'=> $this->user->checkRight('site.list') ? $this->site->getSites() : $this->site->getSitesByUserId($user_id),
         ];
 
         return view("site", $data);
@@ -84,44 +84,12 @@ class SiteController extends Controller
     {
         $data = [
             'site'=>$this->site->find($id),
+            'users'=>$this->user->getUsersBySiteId($id),
         ];
 
         return view("site.show", $data);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $data = [
-            'site'=>$this->site->find($id),
-        ];
-
-        return view("site.edit", $data);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateSitePost $request, $id)
-    {
-        $data = $request->only([
-            'name',
-        ]);
-
-        $this->site->update($id, $data);
-
-        return $request->ajax() ? "" : redirect($this->redirectTo);
-    }
-
+    
     /**
      * Remove the specified resource from storage.
      *
