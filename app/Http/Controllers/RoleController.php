@@ -95,6 +95,7 @@ class RoleController extends Controller
 
         $data = [
             'role'=>$this->role->find($id),
+            'users'=>$this->user->getUsersByRoleId($id),
             'rights'=>$this->right->all(),
         ];
 

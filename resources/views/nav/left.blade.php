@@ -36,7 +36,7 @@
             @right('role.list')
             <li class="nav-item">
                 <a class="nav-link{{ Request::is('role', 'role/*') ?  ' active' : '' }}" href="/role/"><i
-                        class="fa fa-rocket"></i>Role</a>
+                        class="fa fa-users"></i>Role</a>
             </li>
             @endright
         </ul>

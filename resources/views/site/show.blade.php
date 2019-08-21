@@ -8,7 +8,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/site/">Site</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Show</li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ $site->name }}</li>
                 </ol>
             </nav>
             <div class="card">
@@ -34,10 +34,6 @@
                         Users
                     </div>
                     <div class="nav ml-auto">
-                        @right('site.update')
-                        <a href="/user/create" role="button" class="btn btn-primary btn-sm" @vue
-                            @click.prevent="showUserCreateForm" @endvue>{{ __('Add Users to Site') }}</a>
-                        @endright
                     </div>
                 </div>
                 <div class="table-responsive">
@@ -59,10 +55,6 @@
                                 <td>{{ $user->last_name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td class="text-md-right">
-                                    @right('site.update')
-                                    <a href="/user/{{ $user->id }}/destroy" title="Destroy"
-                                        class="btn btn-outline-danger"><i class="fa fa-trash-o"></i></a>
-                                    @endright
                                 </td>
                             </tr>
                             @endforeach

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\Repositories\RightRepository;
+use App\Contracts\Repositories\RoleRepository;
 use App\Contracts\Repositories\UserRepository;
 use App\Http\Requests\CreateUserPost;
 use App\Http\Requests\UpdateUserPost;
@@ -26,9 +27,10 @@ class UserController extends Controller
      *
      * @return void
      */
-    public function __construct(UserRepository $user, RightRepository $right)
+    public function __construct(UserRepository $user, RoleRepository $role, RightRepository $right)
     {
         $this->user = $user;
+        $this->role = $role;
         $this->right = $right;
         $this->middleware('auth');
     }
@@ -101,6 +103,7 @@ class UserController extends Controller
         $user = $this->user->find($id);
         $data = [
             'user'=>$user,
+            'roles'=>$this->role->getRolesByUser($user),
             'userRight'=>$this->user->getRight($user),
             'rights'=>$this->right->all(),
         ];

@@ -8,7 +8,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/user/">User</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Show</li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ $user->first_name }} {{ $user->last_name }}</li>
                 </ol>
             </nav>
             <div class="card">
@@ -49,6 +49,48 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="card">
+                <div class="card-header d-flex">
+                    <div class="nav mr-auto">
+                        Roles
+                    </div>
+                    <div class="nav ml-auto">
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Role Name</th>
+                                <th scope="col">Role Description</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($roles as $role)
+                            <tr>
+                                <th scope="row">{{ $role->id }}</th>
+                                <td>{{ $role->role_name }}</td>
+                                <td>{{ $role->role_description }}</td>
+                                <td class="text-md-right">
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                @if($roles->previousPageUrl() || $roles->nextPageUrl())
+                <div class="card-footer d-flex">
+                    <div class="nav mr-auto">
+
+                    </div>
+                    <div class="nav ml-auto">
+                        {{ $roles->links() }}
+                    </div>
+                </div>
+                @endif
             </div>
             @right('right.list')
             <div class="card">

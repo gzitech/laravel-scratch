@@ -75,6 +75,45 @@ class UserRepository implements Contract
     /**
      * {@inheritdoc}
      */
+    public function getUsersByRoleId($role_id)
+    {
+        if(config('app.paginate_type') == 'paginate') {
+            return Role::find($role_id)->users()->paginate(config("app.max_page_size"));
+        } else {
+            return Role::find($role_id)->users()->simplePaginate(config("app.max_page_size"));
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRightById($id) {
+
+        $user = User::find($id);
+
+        return $this->getRight($user);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRight(User $user) {
+        $right = 0;
+        
+        $site = $this->site();
+
+        $roles = $user->roles()->where('site_id', $site->id)->get();
+
+        foreach($roles as $role) {
+            $right = $right | $role->right;
+        }
+
+        return $right | $user->right;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function find($id)
     {
         return User::find($id);
@@ -123,33 +162,6 @@ class UserRepository implements Contract
         $user = User::find(Auth::id());
         $user->password = Hash::make($password);
         $user->save();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getRightById($id) {
-
-        $user = User::find($id);
-
-        return $this->getRight($user);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getRight(User $user) {
-        $right = 0;
-        
-        $site = $this->site();
-
-        $roles = $user->roles()->where('site_id', $site->id)->get();
-
-        foreach($roles as $role) {
-            $right = $right | $role->right;
-        }
-
-        return $right | $user->right;
     }
 
     /**

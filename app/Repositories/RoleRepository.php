@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Role;
+use App\User;
 use App\Contracts\Repositories\RoleRepository as Contract;
 use Carbon\Carbon;
 
@@ -17,6 +18,28 @@ class RoleRepository implements Contract
             return Role::where('site_id', $site_id)->paginate(config("app.max_page_size"));
         } else {
             return Role::where('site_id', $site_id)->simplePaginate(config("app.max_page_size"));
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRolesByUserId($user_id)
+    {
+        $user = $this->find($user_id);
+        
+        return $this->getRolesByUser($user);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRolesByUser(User $user)
+    {
+        if(config('app.paginate_type') == 'paginate') {
+            return $user->roles()->paginate(config("app.max_page_size"));
+        } else {
+            return $user->roles()->simplePaginate(config("app.max_page_size"));
         }
     }
 
