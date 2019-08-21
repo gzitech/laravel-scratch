@@ -98,8 +98,10 @@ class UserController extends Controller
     {
         $this->user->authorize('user.list');
 
+        $user = $this->user->find($id);
         $data = [
-            'user'=>$this->user->find($id),
+            'user'=>$user,
+            'userRight'=>$this->user->getRight($user),
             'rights'=>$this->right->all(),
         ];
 

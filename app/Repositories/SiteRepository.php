@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Site;
 use App\SiteUrl;
 use App\User;
+use App\Role;
 use App\Contracts\Repositories\SiteRepository as Contract;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -82,9 +83,21 @@ class SiteRepository implements Contract
 
         $site = Site::create($data);
 
+        $siteUrl = SiteUrl::create([
+            'site_id' => $site->id,
+            'domain' => $site->name . "." . config('site.default_domain'),
+        ]);
+
         $site->users()->attach([
             $data['user_id']
         ]);
+
+        $roles = config('rbac.sub_site_roles');
+
+        foreach($roles as $key=>$role) {
+            $role['site_id'] = $site->id;
+            Role::create($role);
+        }
 
         return $site;
     }

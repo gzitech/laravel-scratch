@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class SiteUrl extends Model
 {
     protected $fillable = [
-        'domain',
+        'site_id', 'domain',
     ];
 
     public function site()

@@ -121,9 +121,9 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="form-group row">
-                                        <label class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                                        <label class="col-md-4 col-form-label text-md-right">{{ __('Site Name') }}</label>
                                         <div class="col-md-6">
-                                            <div class="form-control">@{{site.name}}</div>
+                                            <div class="form-control">@{{site.name}}.{{ config('site.default_domain') }}</div>
                                         </div>
                                     </div>
                                 </div>

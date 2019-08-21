@@ -56,6 +56,8 @@ class SiteController extends Controller
      */
     public function create()
     {
+        $this->user->authorize('site.update');
+
         return view("site.create");
     }
 
@@ -67,6 +69,8 @@ class SiteController extends Controller
      */
     public function store(CreateSitePost $request)
     {
+        $this->user->authorize('site.update');
+
         $data = $request->only(['name',]);
 
         $site = $this->site->create($data);
@@ -82,6 +86,8 @@ class SiteController extends Controller
      */
     public function show($id)
     {
+        $this->user->authorize('site.update');
+
         $data = [
             'site'=>$this->site->find($id),
             'users'=>$this->user->getUsersBySiteId($id),
@@ -98,6 +104,8 @@ class SiteController extends Controller
      */
     public function destroy($id)
     {
+        $this->user->authorize('site.update');
+
         $this->site->destroy($id);
 
         return request()->ajax() ? "" : redirect($this->redirectTo);

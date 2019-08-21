@@ -45,7 +45,7 @@ class RoleController extends Controller
         $this->user->authorize('role.list');
 
         $data = [
-            'roles'=>$this->role->getRoles(),
+            'roles'=>$this->role->getRoles($this->user->site()->id),
         ];
 
         return view("role", $data);

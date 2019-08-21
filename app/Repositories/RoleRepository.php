@@ -11,12 +11,12 @@ class RoleRepository implements Contract
     /**
      * {@inheritdoc}
      */
-    public function getRoles()
+    public function getRoles($site_id)
     {
         if(config('app.paginate_type') == 'paginate') {
-            return Role::paginate(config("app.max_page_size"));
+            return Role::where('site_id', $site_id)->paginate(config("app.max_page_size"));
         } else {
-            return Role::simplePaginate(config("app.max_page_size"));
+            return Role::where('site_id', $site_id)->simplePaginate(config("app.max_page_size"));
         }
     }
 

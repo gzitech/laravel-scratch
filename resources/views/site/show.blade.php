@@ -21,7 +21,7 @@
                                 <input id="name" type="text" class="form-control" name="name" value="{{ $site->name }}"
                                     disabled>
                                 <div class="input-group-append">
-                                    <div class="input-group-text">.{{ Config::get('site.default_domain') }}</div>
+                                    <div class="input-group-text">.{{ config('site.default_domain') }}</div>
                                 </div>
                             </div>
                         </div>
