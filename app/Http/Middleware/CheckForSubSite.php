@@ -29,15 +29,15 @@ class CheckForSubSite
 
         $domain = preg_replace('#^www\.(.+\.)#i', '$1', $host);
 
-        $viewKey = 'ssky_cur_site';
+        $viewKey = config('site.cache_cur_site_id');
 
         if(in_array($domain, $this->domains)) {
             $site = $this->site->site(0);
             app()->instance('App\Site', $site);
-            \Illuminate\Support\Facades\View::share($viewKey, $site);
+            \Illuminate\Support\Facades\View::share($viewKey, $site->id);
 
         } else {
-            $cacheKey = 'ssky_sub_site_' . $domain;
+            $cacheKey = config('site.cache_sub_site_key') . $domain;
 
             $site = Cache::get($cacheKey, null);
 
@@ -51,7 +51,7 @@ class CheckForSubSite
 
             if($site !== null && $site->id > 0) {
                 app()->instance('App\Site', $site);
-                \Illuminate\Support\Facades\View::share($viewKey, $site);
+                \Illuminate\Support\Facades\View::share($viewKey, $site->id);
             } else {
                 abort(403);
             }

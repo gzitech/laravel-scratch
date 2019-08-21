@@ -21,11 +21,11 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $this->user->create([
-            'first_name' => 'Sander',
-            'last_name' => 'H',
-            'email' => 'sander@gzitech.com',
+            'first_name' => 'Admin',
+            'last_name' => 'Master',
+            'email' => 'admin@gzitech.com',
             'password' => Hash::make('123455'),
-            'right' => config('rbac.roles')['owner']['right'],
+            'right' => 0,
             'email_verified_at' => now(),
         ])->roles()->attach([
             config('rbac.roles')['owner']['id']

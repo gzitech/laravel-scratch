@@ -2,10 +2,13 @@
 
 namespace App\Contracts\Repositories;
 
+use App\User;
+
 interface UserRepository
 {
     public function id();
     public function user();
+    public function site();
     public function getUsers();
     public function getUsersBySiteId($site_id);
     public function find($id);
@@ -13,9 +16,8 @@ interface UserRepository
     public function update($id, array $data);
     public function updateProfile(array $data);
     public function updatePassword($password);
-    public function updateRight($id);
-    public function updateRights();
-    public function updateRightsByRoleId($role_id);
+    public function getRightById($id);
+    public function getRight(User $user);
     public function destroy($id);
     public function checkRight($right);
     public function checkRights($rights);

@@ -8,9 +8,10 @@ use App\Site;
 use App\Contracts\Repositories\UserRepository as Contract;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
 
 class UserRepository implements Contract
 {
@@ -37,6 +38,14 @@ class UserRepository implements Contract
         if (Auth::check()) {
             return $this->find(Auth::id());
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function site()
+    {
+        return resolve('App\Site');
     }
 
     /**
@@ -119,44 +128,28 @@ class UserRepository implements Contract
     /**
      * {@inheritdoc}
      */
-    public function updateRight($id) {
+    public function getRightById($id) {
 
         $user = User::find($id);
 
+        return $this->getRight($user);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRight(User $user) {
         $right = 0;
         
-        $roles = $user->roles;
+        $site = $this->site();
+
+        $roles = $user->roles()->where('site_id', $site->id)->get();
 
         foreach($roles as $role) {
             $right = $right | $role->right;
         }
 
-        $user->right = $right;
-        $user->save();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function updateRights() {
-        User::chunkById(100, function ($users) {
-            foreach ($users as $user) {
-                $this->updateRight($user->id);
-            }
-        });
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function updateRightsByRoleId($role_id) {
-        $role = Role::find($role_id);
-
-        $role->users()->chunkById(100, function ($users) {
-            foreach ($users as $user) {
-                $this->updateRight($user->id);
-            }
-        });
+        return $right | $user->right;
     }
 
     /**
@@ -173,8 +166,21 @@ class UserRepository implements Contract
     public function checkRight($right)
     {
         if (Auth::check()) {
+
+            $site = $this->site();
+            $user = Auth::user();
+
+            $cacheKey = config('site.cache_site_user_right_key') . $site->id . "_" . $user->id;
+
+            $userRight = Cache::get($cacheKey, -1);
+
+            if($userRight < 0) {
+                $userRight = $this->getRight($user);
+                Cache::put($cacheKey, $userRight, now()->addMinutes(12));
+            }
+            
             $val = Arr::get($this->rights, $right);
-            return Auth::user()->right & $val;
+            return $userRight & $val;
         } else {
             return false;
         }

@@ -19,7 +19,10 @@ class SiteRepository implements Contract
         if ($site_id > 0) {
             return $this->find($site_id);
         } else {
-            return new Site();
+            $site = new Site();
+            $site->id = 0;
+            $site->name = config('app.name');
+            return $site;
         }
     }
 

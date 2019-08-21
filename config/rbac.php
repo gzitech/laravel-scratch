@@ -4,7 +4,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | roles
+    | main site roles
     |--------------------------------------------------------------------------
     |
     | 
@@ -15,25 +15,35 @@ return [
         'owner' => [
             'id' => 1,
             'role_name' => 'Owner',
-            'role_description' => 'Administrator of main site',
+            'role_description' => 'Administrator',
             'right' => 255,
         ],
         'member' => [
             'id' => 2,
             'role_name' => 'Member',
-            'role_description' => 'General user of main site',
+            'role_description' => 'General user',
             'right' => 128,
         ],
-        'sub_owner' => [
-            'id' => 3,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | sub site roles
+    |--------------------------------------------------------------------------
+    |
+    | 
+    |
+    */
+
+    'sub_site_roles' => [
+        'owner' => [
             'role_name' => 'Owner',
-            'role_description' => 'Administrator of sub site',
+            'role_description' => 'Administrator',
             'right' => 0,
         ],
-        'sub_member' => [
-            'id' => 4,
+        'member' => [
             'role_name' => 'Member',
-            'role_description' => 'General user of sub site',
+            'role_description' => 'General user',
             'right' => 0,
         ],
     ],
