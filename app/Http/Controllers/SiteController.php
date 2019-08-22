@@ -38,15 +38,20 @@ class SiteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->user->authorize('site.all|site.self');
 
-        $user_id = $this->user->id();
+        $key = $request->key;
 
-        $data = [
-            'sites'=> $this->user->checkRight('site.all') ? $this->site->getSites() : $this->site->getSitesByUserId($user_id),
-        ];
+        $data = [];
+
+        if($this->user->checkRight('site.all')) {
+            $data['sites'] = $this->site->getSites($key);
+        } else {
+            $user_id = $this->user->id();
+            $data['sites'] = $this->site->getSitesByUserId($user_id, $key);
+        }
 
         return view("site", $data);
     }

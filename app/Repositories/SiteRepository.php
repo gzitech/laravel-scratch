@@ -30,24 +30,24 @@ class SiteRepository implements Contract
     /**
      * {@inheritdoc}
      */
-    public function getSites()
+    public function getSites($key)
     {
         if(config('app.paginate_type') == 'paginate') {
-            return Site::paginate(config("app.max_page_size"));
+            return Site::where('name', 'LIKE', "%{$key}%")->paginate(config("app.max_page_size"));
         } else {
-            return Site::simplePaginate(config("app.max_page_size"));
+            return Site::where('name', 'LIKE', "%{$key}%")->simplePaginate(config("app.max_page_size"));
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getSitesByUserId($user_id)
+    public function getSitesByUserId($user_id, $key)
     {
         if(config('app.paginate_type') == 'paginate') {
-            return User::find($user_id)->sites()->paginate(config("app.max_page_size"));
+            return User::find($user_id)->sites()->where('name', 'LIKE', "%{$key}%")->paginate(config("app.max_page_size"));
         } else {
-            return User::find($user_id)->sites()->simplePaginate(config("app.max_page_size"));
+            return User::find($user_id)->sites()->where('name', 'LIKE', "%{$key}%")->simplePaginate(config("app.max_page_size"));
         }
     }
 
