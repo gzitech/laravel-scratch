@@ -51,24 +51,24 @@ class UserRepository implements Contract
     /**
      * {@inheritdoc}
      */
-    public function getUsers()
+    public function getUsers($key)
     {
         if(config('app.paginate_type') == 'paginate') {
-            return User::paginate(config("app.max_page_size"));
+            return User::where('first_name', 'LIKE', "%{$key}%")->orWhere('last_name', 'LIKE', "%{$key}%")->orWhere('email', 'LIKE', "%{$key}%")->paginate(config("app.max_page_size"));
         } else {
-            return User::simplePaginate(config("app.max_page_size"));
+            return User::where('first_name', 'LIKE', "%{$key}%")->orWhere('last_name', 'LIKE', "%{$key}%")->orWhere('email', 'LIKE', "%{$key}%")->simplePaginate(config("app.max_page_size"));
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getUsersBySiteId($site_id)
+    public function getUsersBySiteId($site_id, $key)
     {
         if(config('app.paginate_type') == 'paginate') {
-            return Site::find($site_id)->users()->paginate(config("app.max_page_size"));
+            return Site::find($site_id)->users()->where('first_name', 'LIKE', "%{$key}%")->orWhere('last_name', 'LIKE', "%{$key}%")->orWhere('email', 'LIKE', "%{$key}%")->paginate(config("app.max_page_size"));
         } else {
-            return Site::find($site_id)->users()->simplePaginate(config("app.max_page_size"));
+            return Site::find($site_id)->users()->where('first_name', 'LIKE', "%{$key}%")->orWhere('last_name', 'LIKE', "%{$key}%")->orWhere('email', 'LIKE', "%{$key}%")->simplePaginate(config("app.max_page_size"));
         }
     }
 

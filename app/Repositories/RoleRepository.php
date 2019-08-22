@@ -12,29 +12,29 @@ class RoleRepository implements Contract
     /**
      * {@inheritdoc}
      */
-    public function getRoles($site_id)
+    public function getRoles($site_id, $key)
     {
         if(config('app.paginate_type') == 'paginate') {
-            return Role::where('site_id', $site_id)->paginate(config("app.max_page_size"));
+            return Role::where([['site_id', $site_id], ['role_name', 'LIKE', "%{$key}%"]])->paginate(config("app.max_page_size"));
         } else {
-            return Role::where('site_id', $site_id)->simplePaginate(config("app.max_page_size"));
+            return Role::where([['site_id', $site_id], ['role_name', 'LIKE', "%{$key}%"]])->simplePaginate(config("app.max_page_size"));
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getRolesByUserId($user_id)
+    public function getRolesByUserId($user_id, $key)
     {
         $user = $this->find($user_id);
         
-        return $this->getRolesByUser($user);
+        return $this->getRolesByUser($user, $key);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getRolesByUser(User $user)
+    public function getRolesByUser(User $user, $key)
     {
         if(config('app.paginate_type') == 'paginate') {
             return $user->roles()->paginate(config("app.max_page_size"));

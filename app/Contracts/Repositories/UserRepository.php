@@ -9,8 +9,8 @@ interface UserRepository
     public function id();
     public function user();
     public function site();
-    public function getUsers();
-    public function getUsersBySiteId($site_id);
+    public function getUsers($key);
+    public function getUsersBySiteId($site_id, $key);
     public function getUsersByRoleId($role_id);
     public function getRightById($id);
     public function getRight(User $user);

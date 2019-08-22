@@ -38,12 +38,14 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->user->authorize('user.all');
 
+        $key = $request->key;
+
         $data = [
-            'users'=>$this->user->getUsers(),
+            'users'=>$this->user->getUsers($key),
         ];
 
         return view("user", $data);
