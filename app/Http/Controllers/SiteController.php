@@ -43,7 +43,7 @@ class SiteController extends Controller
         $user_id = $this->user->id();
 
         $data = [
-            'sites'=> $this->user->checkRight('site.list') ? $this->site->getSites() : $this->site->getSitesByUserId($user_id),
+            'sites'=> $this->user->checkRight('site.all') ? $this->site->getSites() : $this->site->getSitesByUserId($user_id),
         ];
 
         return view("site", $data);
@@ -56,7 +56,7 @@ class SiteController extends Controller
      */
     public function create()
     {
-        $this->user->authorize('site.update');
+        $this->user->authorize('site.edit');
 
         return view("site.create");
     }
@@ -69,7 +69,7 @@ class SiteController extends Controller
      */
     public function store(CreateSitePost $request)
     {
-        $this->user->authorize('site.update');
+        $this->user->authorize('site.edit');
 
         $data = $request->only(['name',]);
 
@@ -86,7 +86,7 @@ class SiteController extends Controller
      */
     public function show($id)
     {
-        $this->user->authorize('site.update');
+        $this->user->authorize('site.edit');
 
         $data = [
             'site'=>$this->site->find($id),
@@ -104,7 +104,7 @@ class SiteController extends Controller
      */
     public function destroy($id)
     {
-        $this->user->authorize('site.update');
+        $this->user->authorize('site.edit');
 
         $this->site->destroy($id);
 

@@ -42,7 +42,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $this->user->authorize('user.list');
+        $this->user->authorize('user.all');
 
         $data = [
             'users'=>$this->user->getUsers(),
@@ -58,7 +58,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $this->user->authorize('user.update');
+        $this->user->authorize('user.edit');
 
         return view("user.create");
     }
@@ -71,7 +71,7 @@ class UserController extends Controller
      */
     public function store(CreateUserPost $request)
     {
-        $this->user->authorize('user.update');
+        $this->user->authorize('user.edit');
 
         $data = $request->only([
             'first_name',
@@ -98,7 +98,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $this->user->authorize('user.list');
+        $this->user->authorize('user.edit');
 
         $user = $this->user->find($id);
         $data = [
@@ -119,7 +119,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $this->user->authorize('user.update');
+        $this->user->authorize('user.edit');
 
         $data = [
             'user'=>$this->user->find($id),
@@ -137,7 +137,7 @@ class UserController extends Controller
      */
     public function update(UpdateUserPost $request, $id)
     {
-        $this->user->authorize('user.update');
+        $this->user->authorize('user.edit');
 
         $data = $request->only([
             'first_name',
@@ -158,7 +158,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $this->user->authorize('user.update');
+        $this->user->authorize('user.edit');
         
         $this->user->destroy($id);
 

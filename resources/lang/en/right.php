@@ -1,12 +1,13 @@
 <?php
 
 return [
-    'user.list' => 'show users',
-    'user.update' => 'edit users',
-    'role.list' => 'show roles',
-    'role.update' => 'edit roles',
-    'right.list' => 'show permissions',
-    'right.update' => 'edit permissions',
-    'site.list' => 'show sites',
-    'site.update' => 'edit sites',
+    'user.all' => 'show users',
+    'user.edit' => 'edit users',
+    'role.all' => 'show roles',
+    'role.edit' => 'edit roles',
+    'right.all' => 'show permissions',
+    'right.edit' => 'edit permissions',
+    'site.all' => 'show sites',
+    'site.self' => 'show your sites',
+    'site.edit' => 'edit sites',
 ];

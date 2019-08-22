@@ -41,7 +41,7 @@ class RightController extends Controller
      */
     public function index($role_id)
     {
-        $this->user->authorize('right.update');
+        $this->user->authorize('right.edit');
 
         $data = [
             'role'=>$this->role->find($role_id),
@@ -60,7 +60,7 @@ class RightController extends Controller
      */
     public function update(Request $request, $role_id)
     {
-        $this->user->authorize('right.update');
+        $this->user->authorize('right.edit');
 
         $right = $request->right ?? [];
 

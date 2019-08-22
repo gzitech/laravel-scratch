@@ -16,7 +16,7 @@ return [
             'id' => 1,
             'role_name' => 'Owner',
             'role_description' => 'Administrator',
-            'right' => 255,
+            'right' => 511,
         ],
         'member' => [
             'id' => 2,
@@ -57,27 +57,29 @@ return [
     | max item value: 4611686018427387904
     | max sum value: 9223372036854775807
     |
-    | List        list
-    | Update      create,update,delete
+    | all         list all
+    | self        list items belong to user
+    | edit        create,edit,update,delete
     |
     */
 
     'rights' => [
         'user' => [
-            "list" => 1,
-            "update" => 2,
+            "all" => 1,
+            "edit" => 2,
         ],
         'role' => [
-            "list" => 4,
-            "update" => 8,
+            "all" => 4,
+            "edit" => 8,
         ],
         'right' => [
-            "list" => 16,
-            "update" => 32,
+            "all" => 16,
+            "edit" => 32,
         ],
         'site' => [
-            "list" => 64,
-            "update" => 128,
+            "all" => 64,
+            "self" => 128,
+            "edit" => 256,
         ],
     ],
 ];

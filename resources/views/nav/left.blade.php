@@ -10,30 +10,34 @@
             </li>
         </ul>
     </aside>
+    @right('site.all|site.self')
     <aside>
         <h3 class="nav-heading">
             Site
         </h3>
         <ul class="nav flex-column ">
+            @right('site.all|site.self')
             <li class="nav-item">
                 <a class="nav-link{{ Request::is('site', 'site/*') ?  ' active' : '' }}" href="/site/"><i
                         class="fa fa-th-large"></i>Site</a>
             </li>
+            @endright
         </ul>
     </aside>
-    @right('user.list|role.list')
+    @endright
+    @right('user.all|role.all')
     <aside>
         <h3 class="nav-heading">
             Rbac
         </h3>
         <ul class="nav flex-column ">
-            @right('user.list')
+            @right('user.all')
             <li class="nav-item">
                 <a class="nav-link{{ Request::is('user', 'user/*') ?  ' active' : '' }}" href="/user/"><i
                         class="fa fa-user"></i>User</a>
             </li>
             @endright
-            @right('role.list')
+            @right('role.all')
             <li class="nav-item">
                 <a class="nav-link{{ Request::is('role', 'role/*') ?  ' active' : '' }}" href="/role/"><i
                         class="fa fa-users"></i>Role</a>

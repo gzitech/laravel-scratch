@@ -42,7 +42,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $this->user->authorize('role.list');
+        $this->user->authorize('role.all');
 
         $data = [
             'roles'=>$this->role->getRoles($this->user->site()->id),
@@ -58,7 +58,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $this->user->authorize('role.update');
+        $this->user->authorize('role.edit');
 
         return view("role.create");
     }
@@ -71,7 +71,7 @@ class RoleController extends Controller
      */
     public function store(CreateRolePost $request)
     {
-        $this->user->authorize('role.update');
+        $this->user->authorize('role.edit');
 
         $data = $request->only([
             'role_name',
@@ -91,7 +91,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        $this->user->authorize('role.list');
+        $this->user->authorize('role.edit');
 
         $data = [
             'role'=>$this->role->find($id),
@@ -110,7 +110,7 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        $this->user->authorize('role.update');
+        $this->user->authorize('role.edit');
 
         $data = [
             'role'=>$this->role->find($id),
@@ -128,7 +128,7 @@ class RoleController extends Controller
      */
     public function update(UpdateRolePost $request, $id)
     {
-        $this->user->authorize('role.update');
+        $this->user->authorize('role.edit');
 
         $data = $request->only([
             'role_name',
@@ -148,7 +148,7 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        $this->user->authorize('role.update');
+        $this->user->authorize('role.edit');
 
         $this->role->destroy($id);
 

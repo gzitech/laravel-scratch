@@ -11,16 +11,21 @@ role-based access control (RBAC)
 ```php
 'rights' => [
         'user' => [
-            "list" => 1,
-            "update" => 2,
+            "all" => 1,
+            "edit" => 2,
         ],
         'role' => [
-            "list" => 4,
-            "update" => 8,
+            "all" => 4,
+            "edit" => 8,
         ],
         'right' => [
-            "list" => 16,
-            "update" => 32,
+            "all" => 16,
+            "edit" => 32,
+        ],
+        'site' => [
+            "all" => 64,
+            "self" => 128,
+            "edit" => 256,
         ],
     ],
 ```
@@ -30,7 +35,7 @@ role-based access control (RBAC)
 ```php
     public function index()
     {
-        $this->user->authorize('user.list');
+        $this->user->authorize('user.all');
 
         $data = [
             'users'=>$this->user->paginate(),
@@ -44,13 +49,13 @@ role-based access control (RBAC)
 
 ```html
         <ul class="nav flex-column ">
-            @right('user.list')
+            @right('user.all')
             <li class="nav-item">
                 <a class="nav-link{{ Request::is('user', 'user/*') ?  ' active' : '' }}" href="/user/"><i
                         class="fa fa-user"></i>User</a>
             </li>
             @endright
-            @right('role.list')
+            @right('role.all')
             <li class="nav-item">
                 <a class="nav-link{{ Request::is('role', 'role/*') ?  ' active' : '' }}" href="/role/"><i
                         class="fa fa-rocket"></i>Role</a>

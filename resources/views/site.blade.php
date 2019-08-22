@@ -14,7 +14,7 @@
 
                         </div>
                         <div class="nav ml-auto">
-                            @right('site.update')
+                            @right('site.edit')
                             <a href="/site/create" role="button" class="btn btn-primary btn-sm" @vue
                                 @click.prevent="showSiteCreateForm" @endvue>Create</a>
                             @endright
@@ -37,7 +37,7 @@
                                     <td class="text-md-right">
                                         <a :href="showUrl(site.id)" title="Show" class="btn btn-outline-primary"><i
                                                 class="fa fa-user-o"></i></a>
-                                        @right('site.update')
+                                        @right('site.edit')
                                         <a href="#del" title="Destroy" class="btn btn-outline-danger"
                                             @click.prevent="showSiteDestroyConfirm(site)"><i
                                                 class="fa fa-trash-o"></i></a>
@@ -53,7 +53,7 @@
                                     <td class="text-md-right">
                                         <a href="/site/{{ $site->id }}" title="Show" class="btn btn-outline-primary"><i
                                                 class="fa fa-user-o"></i></a>
-                                        @right('site.update')
+                                        @right('site.edit')
                                         <a href="/site/{{ $site->id }}/destroy" title="Destroy"
                                             class="btn btn-outline-danger"><i class="fa fa-trash-o"></i></a>
                                         @endright
@@ -75,7 +75,7 @@
                     </div>
                     @endif
                 </div>
-                @right('site.update')
+                @right('site.edit')
                 @vue
                 <ssky-site-create inline-template :old="{}" :errors="{}">
                     <div class="modal" tabindex="-1" role="dialog" id="site-create-form">

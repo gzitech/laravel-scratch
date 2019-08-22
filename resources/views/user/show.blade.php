@@ -41,7 +41,7 @@
                     </div>
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
-                            @right('user.update')
+                            @right('user.edit')
                             <a href="/user/{{ $user->id }}/edit" class="btn btn-primary">
                                 {{ __('Edit') }}
                             </a>
@@ -92,7 +92,7 @@
                 </div>
                 @endif
             </div>
-            @right('right.list')
+            @right('right.all')
             <div class="card">
                 <div class="table-responsive">
                     <table class="table">

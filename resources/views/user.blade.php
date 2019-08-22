@@ -4,15 +4,14 @@
 <div class="container">
     <div class="row justify-content-center">
         @include('nav.left')
-    @vue<ssky-user-list inline-template :paginate="{{ $users->toJson() }}">@endvue
+        @vue<ssky-user-list inline-template :paginate="{{ $users->toJson() }}">@endvue
             <div class="col-md-10">
                 <div class="card">
                     <div class="card-header d-flex">
                         <div class="nav mr-auto">
-
                         </div>
                         <div class="nav ml-auto">
-                            @right('user.update')
+                            @right('user.edit')
                             <a href="/user/create" role="button" class="btn btn-primary btn-sm" @vue
                                 @click.prevent="showUserCreateForm" @endvue>Create</a>
                             @endright
@@ -39,7 +38,7 @@
                                     <td class="text-md-right">
                                         <a :href="showUrl(user.id)" title="Show" class="btn btn-outline-primary"><i
                                                 class="fa fa-user-o"></i></a>
-                                        @right('user.update')
+                                        @right('user.edit')
                                         <a href="#edit" title="Edit" class="btn btn-outline-primary"
                                             @click.prevent="showUserEditForm(user)"><i class="fa fa-pencil"></i></a>
                                         <a href="#del" title="Destroy" class="btn btn-outline-danger"
@@ -59,7 +58,7 @@
                                     <td class="text-md-right">
                                         <a href="/user/{{ $user->id }}" title="Show" class="btn btn-outline-primary"><i
                                                 class="fa fa-user-o"></i></a>
-                                        @right('user.update')
+                                        @right('user.edit')
                                         <a href="/user/{{ $user->id }}/edit" title="Edit"
                                             class="btn btn-outline-primary"><i class="fa fa-pencil"></i></a>
                                         <a href="/user/{{ $user->id }}/destroy" title="Destroy"
@@ -83,7 +82,7 @@
                     </div>
                     @endif
                 </div>
-                @right('user.update')
+                @right('user.edit')
                 @vue
                 <ssky-user-create inline-template :old="{}" :errors="{}">
                     <div class="modal" tabindex="-1" role="dialog" id="user-create-form">
@@ -188,7 +187,7 @@
                 @endvue
                 @endright
             </div>
-    @vue</ssky-user-list>@endvue
+            @vue</ssky-user-list>@endvue
     </div>
 </div>
 @endsection

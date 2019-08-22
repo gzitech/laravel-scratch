@@ -14,7 +14,7 @@
 
                         </div>
                         <div class="nav ml-auto">
-                            @right('role.update')
+                            @right('role.edit')
                             <a href="/role/create" role="button" class="btn btn-primary btn-sm" @vue
                                 @click.prevent="showRoleCreateForm" @endvue>Create</a>
                             @endright
@@ -40,11 +40,11 @@
                                     <td class="text-md-right">
                                         <a :href="showUrl(role.id)" title="Show" class="btn btn-outline-primary"><i
                                                 class="fa fa-user-o"></i></a>
-                                        @right('right.update')
+                                        @right('right.edit')
                                         <a :href="rightUrl(role.id)" title="Right" class="btn btn-outline-primary"><i
                                                 class="fa fa-lock"></i></a>
                                         @endright
-                                        @right('role.update')
+                                        @right('role.edit')
                                         <a href="#edit" title="Edit" class="btn btn-outline-primary"
                                             @click.prevent="showRoleEditForm(role)"><i class="fa fa-pencil"></i></a>
                                         <a href="#del" title="Destroy" class="btn btn-outline-danger"
@@ -64,11 +64,11 @@
                                     <td class="text-md-right">
                                         <a href="/role/{{ $role->id }}" title="Show" class="btn btn-outline-primary"><i
                                                 class="fa fa-user-o"></i></a>
-                                        @right('right.update')
+                                        @right('right.edit')
                                         <a href="/role/right/{{ $role->id }}" title="Right"
                                             class="btn btn-outline-primary"><i class="fa fa-lock"></i></a>
                                         @endright
-                                        @right('role.update')
+                                        @right('role.edit')
                                         <a href="/role/{{ $role->id }}/edit" title="Edit"
                                             class="btn btn-outline-primary"><i class="fa fa-pencil"></i></a>
                                         <a href="/role/{{ $role->id }}/destroy" title="Destroy"
@@ -92,7 +92,7 @@
                     </div>
                     @endif
                 </div>
-                @right('role.update')
+                @right('role.edit')
                 @vue
                 <ssky-role-create inline-template :old="{}" :errors="{}">
                     <div class="modal" tabindex="-1" role="dialog" id="role-create-form">
