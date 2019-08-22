@@ -1,9 +1,5 @@
-<form>
+<form method="GET" action="{{url()->current()}}">
     <div class="input-group">
-        <input type="search" class="form-control py-2 border" name="key" value="{{ old('key') }}"
-            required autocomplete="key">
-        <div class="input-group-append">
-            <div class="input-group-text bg-transparent"><i class="fa fa-search"></i></div>
-        </div>
+        <input type="search" class="form-control ssky-search" placeholder="&#xf002; Search">
     </div>
 </form>

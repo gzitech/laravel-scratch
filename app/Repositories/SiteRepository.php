@@ -68,7 +68,7 @@ class SiteRepository implements Contract
             'domain'=>$domain,
         ];
 
-        return SiteUrl::where($data)->first()->site ?? null;
+        return SiteUrl::where($data)->first() ?? null;
     }
 
     /**
