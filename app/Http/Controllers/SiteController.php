@@ -40,6 +40,8 @@ class SiteController extends Controller
      */
     public function index()
     {
+        $this->user->authorize('site.all|site.self');
+
         $user_id = $this->user->id();
 
         $data = [

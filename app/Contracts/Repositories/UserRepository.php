@@ -14,6 +14,7 @@ interface UserRepository
     public function getUsersByRoleId($role_id);
     public function getRightById($id);
     public function getRight(User $user);
+    public function getRights();
     public function find($id);
     public function create(array $data);
     public function update($id, array $data);

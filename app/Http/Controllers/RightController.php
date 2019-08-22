@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Contracts\Repositories\RightRepository;
 use App\Contracts\Repositories\RoleRepository;
 use App\Contracts\Repositories\UserRepository;
 use Illuminate\Http\Request;
@@ -26,11 +25,10 @@ class RightController extends Controller
      *
      * @return void
      */
-    public function __construct(UserRepository $user, RoleRepository $role, RightRepository $right)
+    public function __construct(UserRepository $user, RoleRepository $role)
     {
         $this->user = $user;
         $this->role = $role;
-        $this->right = $right;
         $this->middleware('auth');
     }
     
@@ -45,7 +43,7 @@ class RightController extends Controller
 
         $data = [
             'role'=>$this->role->find($role_id),
-            'rights'=>$this->right->all(),
+            'rights'=>$this->user->getRights(),
         ];
 
         return view("right", $data);

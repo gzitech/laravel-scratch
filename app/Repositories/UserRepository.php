@@ -111,6 +111,24 @@ class UserRepository implements Contract
         return $right | $user->right;
     }
 
+    public function getRights() {
+        $rights = config('rbac.rights');
+
+        $arr = array();
+
+        foreach ($rights as $obj=>$right) {
+            
+            foreach($right as $key=>$val) {
+                $cat = app()->make('stdClass');
+                $cat->name = "$obj.$key";
+                $cat->value = $val;
+                $arr[] = $cat;
+            }
+        }
+
+        return $arr;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -238,6 +256,6 @@ class UserRepository implements Contract
      */
     public function authorize($right)
     {
-        abort_if(!$this->checkRight($right), 403);
+        abort_if(!$this->checkRights($right), 403);
     }
 }

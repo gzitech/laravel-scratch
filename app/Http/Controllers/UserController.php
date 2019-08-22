@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Contracts\Repositories\RightRepository;
 use App\Contracts\Repositories\RoleRepository;
 use App\Contracts\Repositories\UserRepository;
 use App\Http\Requests\CreateUserPost;
@@ -18,7 +17,7 @@ class UserController extends Controller
      *
      * @var \Laravel\Spark\Contracts\Repositories\UserRepository
      */
-    protected $user, $right;
+    protected $user;
 
     protected $redirectTo = '/user/';
 
@@ -27,11 +26,10 @@ class UserController extends Controller
      *
      * @return void
      */
-    public function __construct(UserRepository $user, RoleRepository $role, RightRepository $right)
+    public function __construct(UserRepository $user, RoleRepository $role)
     {
         $this->user = $user;
         $this->role = $role;
-        $this->right = $right;
         $this->middleware('auth');
     }
     
@@ -105,7 +103,7 @@ class UserController extends Controller
             'user'=>$user,
             'roles'=>$this->role->getRolesByUser($user),
             'userRight'=>$this->user->getRight($user),
-            'rights'=>$this->right->all(),
+            'rights'=>$this->user->getRights(),
         ];
 
         return view("user.show", $data);
