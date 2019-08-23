@@ -25,7 +25,7 @@ return [
     |
     */
 
-    'default_domain' => 'dev.scratch:8000',
+    'default_domain' => env('SITE_DEFAULT_DOMAIN', '127.0.0.1'),
 
     /*
     |--------------------------------------------------------------------------
