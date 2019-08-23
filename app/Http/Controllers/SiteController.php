@@ -91,13 +91,15 @@ class SiteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $this->user->authorize('site.edit');
 
+        $key = $request->key;
+
         $data = [
             'site'=>$this->site->find($id),
-            'users'=>$this->user->getUsersBySiteId($id),
+            'users'=>$this->user->getUsersBySiteId($id, $key),
         ];
 
         return view("site.show", $data);

@@ -96,14 +96,16 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $this->user->authorize('user.edit');
+
+        $key = $request->key;
 
         $user = $this->user->find($id);
         $data = [
             'user'=>$user,
-            'roles'=>$this->role->getRolesByUser($user),
+            'roles'=>$this->role->getRolesByUser($user, $key),
             'userRight'=>$this->user->getRight($user),
             'rights'=>$this->user->getRights(),
         ];
