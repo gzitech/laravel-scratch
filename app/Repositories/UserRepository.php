@@ -35,9 +35,7 @@ class UserRepository implements Contract
      */
     public function user()
     {
-        if (Auth::check()) {
-            return $this->find(Auth::id());
-        }
+        return $this->find(Auth::id());
     }
 
     /**
@@ -53,11 +51,11 @@ class UserRepository implements Contract
      */
     public function getUsers($key)
     {
-        if(config('app.paginate_type') == 'paginate') {
-            return User::where('first_name', 'LIKE', "%{$key}%")->orWhere('last_name', 'LIKE', "%{$key}%")->orWhere('email', 'LIKE', "%{$key}%")->paginate(config("app.max_page_size"));
-        } else {
-            return User::where('first_name', 'LIKE', "%{$key}%")->orWhere('last_name', 'LIKE', "%{$key}%")->orWhere('email', 'LIKE', "%{$key}%")->simplePaginate(config("app.max_page_size"));
-        }
+        $query = User::where(function($query) use($key) {
+            $query->where('first_name', 'LIKE', "%{$key}%")->orWhere('last_name', 'LIKE', "%{$key}%")->orWhere('email', 'LIKE', "%{$key}%");
+        });
+
+        return $this->paginate($query);
     }
 
     /**
@@ -65,11 +63,11 @@ class UserRepository implements Contract
      */
     public function getUsersBySiteId($site_id, $key)
     {
-        if(config('app.paginate_type') == 'paginate') {
-            return Site::find($site_id)->users()->where('first_name', 'LIKE', "%{$key}%")->orWhere('last_name', 'LIKE', "%{$key}%")->orWhere('email', 'LIKE', "%{$key}%")->paginate(config("app.max_page_size"));
-        } else {
-            return Site::find($site_id)->users()->where('first_name', 'LIKE', "%{$key}%")->orWhere('last_name', 'LIKE', "%{$key}%")->orWhere('email', 'LIKE', "%{$key}%")->simplePaginate(config("app.max_page_size"));
-        }
+        $query = Site::find($site_id)->users()->where(function($query) use($key) {
+            $query->where('first_name', 'LIKE', "%{$key}%")->orWhere('last_name', 'LIKE', "%{$key}%")->orWhere('email', 'LIKE', "%{$key}%");
+        });
+
+        return $this->paginate($query);
     }
 
     /**
@@ -77,11 +75,7 @@ class UserRepository implements Contract
      */
     public function getUsersByRoleId($role_id)
     {
-        if(config('app.paginate_type') == 'paginate') {
-            return Role::find($role_id)->users()->paginate(config("app.max_page_size"));
-        } else {
-            return Role::find($role_id)->users()->simplePaginate(config("app.max_page_size"));
-        }
+        return $this->paginate(Role::find($role_id)->users());
     }
 
     /**
@@ -257,5 +251,17 @@ class UserRepository implements Contract
     public function authorize($right)
     {
         abort_if(!$this->checkRights($right), 403);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    private function paginate($query)
+    {
+        if(config('app.paginate_type') == 'paginate') {
+            return $query->paginate(config("app.max_page_size"));
+        } else {
+            return $query->simplePaginate(config("app.max_page_size"));
+        }
     }
 }

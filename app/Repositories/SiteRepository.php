@@ -32,11 +32,7 @@ class SiteRepository implements Contract
      */
     public function getSites($key)
     {
-        if(config('app.paginate_type') == 'paginate') {
-            return Site::where('name', 'LIKE', "%{$key}%")->paginate(config("app.max_page_size"));
-        } else {
-            return Site::where('name', 'LIKE', "%{$key}%")->simplePaginate(config("app.max_page_size"));
-        }
+        return $this->paginate(Site::where('name', 'LIKE', "%{$key}%"));
     }
 
     /**
@@ -44,11 +40,7 @@ class SiteRepository implements Contract
      */
     public function getSitesByUserId($user_id, $key)
     {
-        if(config('app.paginate_type') == 'paginate') {
-            return User::find($user_id)->sites()->where('name', 'LIKE', "%{$key}%")->paginate(config("app.max_page_size"));
-        } else {
-            return User::find($user_id)->sites()->where('name', 'LIKE', "%{$key}%")->simplePaginate(config("app.max_page_size"));
-        }
+        return $this->paginate(User::find($user_id)->sites()->where('name', 'LIKE', "%{$key}%"));
     }
 
     /**
@@ -116,5 +108,17 @@ class SiteRepository implements Contract
     public function destroy($id)
     {
         Site::destroy($id);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    private function paginate($query)
+    {
+        if(config('app.paginate_type') == 'paginate') {
+            return $query->paginate(config("app.max_page_size"));
+        } else {
+            return $query->simplePaginate(config("app.max_page_size"));
+        }
     }
 }

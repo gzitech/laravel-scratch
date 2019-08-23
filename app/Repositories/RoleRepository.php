@@ -14,11 +14,9 @@ class RoleRepository implements Contract
      */
     public function getRoles($site_id, $key)
     {
-        if(config('app.paginate_type') == 'paginate') {
-            return Role::where([['site_id', $site_id], ['role_name', 'LIKE', "%{$key}%"]])->paginate(config("app.max_page_size"));
-        } else {
-            return Role::where([['site_id', $site_id], ['role_name', 'LIKE', "%{$key}%"]])->simplePaginate(config("app.max_page_size"));
-        }
+        $query = Role::where([['site_id', $site_id], ['role_name', 'LIKE', "%{$key}%"]]);
+
+        return $this->paginate($query);
     }
 
     /**
@@ -36,11 +34,7 @@ class RoleRepository implements Contract
      */
     public function getRolesByUser(User $user, $key)
     {
-        if(config('app.paginate_type') == 'paginate') {
-            return $user->roles()->paginate(config("app.max_page_size"));
-        } else {
-            return $user->roles()->simplePaginate(config("app.max_page_size"));
-        }
+        return $this->paginate($user->roles());
     }
 
     /**
@@ -89,5 +83,17 @@ class RoleRepository implements Contract
     public function destroy($id)
     {
         Role::destroy($id);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    private function paginate($query)
+    {
+        if(config('app.paginate_type') == 'paginate') {
+            return $query->paginate(config("app.max_page_size"));
+        } else {
+            return $query->simplePaginate(config("app.max_page_size"));
+        }
     }
 }
