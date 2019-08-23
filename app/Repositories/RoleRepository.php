@@ -16,7 +16,7 @@ class RoleRepository implements Contract
     {
         $query = Role::where([['site_id', $site_id], ['role_name', 'LIKE', "%{$key}%"]]);
 
-        return $this->paginate($query);
+        return $this->paginate($query, $key);
     }
 
     /**
@@ -37,8 +37,8 @@ class RoleRepository implements Contract
         $query = $user->roles()->where(function($query) use($key) {
             $query->where('role_name', 'LIKE', "%{$key}%")->orWhere('role_description', 'LIKE', "%{$key}%");
         });
-        
-        return $this->paginate($query);
+
+        return $this->paginate($query, $key);
     }
 
     /**
@@ -92,12 +92,12 @@ class RoleRepository implements Contract
     /**
      * {@inheritdoc}
      */
-    private function paginate($query)
+    private function paginate($query, $key)
     {
         if(config('app.paginate_type') == 'paginate') {
-            return $query->paginate(config("app.max_page_size"));
+            return $query->paginate(config("app.max_page_size"))->appends(['key' => $key]);
         } else {
-            return $query->simplePaginate(config("app.max_page_size"));
+            return $query->simplePaginate(config("app.max_page_size"))->appends(['key' => $key]);
         }
     }
 }
