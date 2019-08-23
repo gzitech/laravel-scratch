@@ -20,6 +20,7 @@ interface UserRepository
     public function update($id, array $data);
     public function updateProfile(array $data);
     public function updatePassword($password);
+    public function clearRightByRoleId($role_id);
     public function destroy($id);
     public function checkRight($right);
     public function checkRights($rights);

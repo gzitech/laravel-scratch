@@ -63,8 +63,7 @@ class RightController extends Controller
         $right = $request->right ?? [];
 
         $this->role->updateRight($role_id, $right);
-
-        // Artisan::queue('right:update', [$role_id]);
+        $this->user->clearRightByRoleId($role_id);
 
         $redirectTo = $this->redirectTo . "$role_id";
 

@@ -176,6 +176,21 @@ class UserRepository implements Contract
         $user->save();
     }
 
+    public function clearRightByRoleId($role_id) {
+
+        $site = $this->site();
+
+        $role = Role::find($role_id);
+
+        $role->users()->chunkById(64, function ($users) use($site) {
+            foreach ($users as $user) {
+                $cacheKey = config('site.cache_site_user_right_key') . $site->id . "_" . $user->id;
+                Cache::forget($cacheKey);
+            }
+        });
+
+    }
+
     /**
      * {@inheritdoc}
      */
