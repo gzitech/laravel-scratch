@@ -89,13 +89,16 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $this->user->authorize('role.edit');
 
+        $role = $this->role->find($id);
+        $key = $request->key;
+
         $data = [
-            'role'=>$this->role->find($id),
-            'users'=>$this->user->getUsersByRoleId($id),
+            'role'=>$role,
+            'users'=>$this->user->getUsersByRole($role, $key),
             'rights'=>$this->user->getRights(),
         ];
 

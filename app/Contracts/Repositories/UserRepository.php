@@ -3,6 +3,7 @@
 namespace App\Contracts\Repositories;
 
 use App\User;
+use App\Role;
 
 interface UserRepository
 {
@@ -11,7 +12,8 @@ interface UserRepository
     public function site();
     public function getUsers($key);
     public function getUsersBySiteId($site_id, $key);
-    public function getUsersByRoleId($role_id);
+    public function getUsersByRoleId($role_id, $key);
+    public function getUsersByRole(Role $role, $key);
     public function getRightById($id);
     public function getRight(User $user);
     public function getRights();

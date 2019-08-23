@@ -34,7 +34,11 @@ class RoleRepository implements Contract
      */
     public function getRolesByUser(User $user, $key)
     {
-        return $this->paginate($user->roles());
+        $query = $user->roles()->where(function($query) use($key) {
+            $query->where('role_name', 'LIKE', "%{$key}%")->orWhere('role_description', 'LIKE', "%{$key}%");
+        });
+        
+        return $this->paginate($query);
     }
 
     /**

@@ -16,7 +16,7 @@ class RightController extends Controller
      *
      * @var \Laravel\Spark\Contracts\Repositories\RightRepository
      */
-    protected $user, $role, $right;
+    protected $user, $role;
 
     protected $redirectTo = '/role/';
 

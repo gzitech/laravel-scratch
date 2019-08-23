@@ -73,9 +73,21 @@ class UserRepository implements Contract
     /**
      * {@inheritdoc}
      */
-    public function getUsersByRoleId($role_id)
+    public function getUsersByRoleId($role_id, $key)
     {
-        return $this->paginate(Role::find($role_id)->users());
+        return $this->getUsersByRole(Role::find($role_id), $key);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUsersByRole(Role $role, $key)
+    {
+        $query = $role->users()->where(function($query) use($key) {
+            $query->where('first_name', 'LIKE', "%{$key}%")->orWhere('last_name', 'LIKE', "%{$key}%")->orWhere('email', 'LIKE', "%{$key}%");
+        });
+
+        return $this->paginate($query);
     }
 
     /**
@@ -176,6 +188,9 @@ class UserRepository implements Contract
         $user->save();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function clearRightByRoleId($role_id) {
 
         $site = $this->site();
