@@ -64,8 +64,9 @@ role-based access control (RBAC)
         </ul>
 ```
 
-## Multi Site (In development)
+## Multi Site
 
+user can create sites base on right and subscription limit.
 
 ## Subscription (In development)
 
