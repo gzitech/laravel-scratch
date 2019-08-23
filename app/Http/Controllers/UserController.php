@@ -84,8 +84,6 @@ class UserController extends Controller
         $user->roles()->attach([
             config('rbac.roles')['member']
         ]);
-
-        $this->user->updateRight($user->id);
         
         return redirect($this->redirectTo);
     }

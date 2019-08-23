@@ -76,8 +76,6 @@ class RegisterController extends Controller
             config('rbac.roles')['member']['id'],
         ]);
 
-        $this->user->updateRight($user->id);
-
         return $user;
     }
 }
