@@ -13,6 +13,7 @@ return [
 
     'domains' => [
         "dev.scratch",
+        "scratch.fastconfirm.com"
     ],
 
     /*
