@@ -39,11 +39,10 @@
             @yield('content')
         </main>
     </div>
-    @vue
-    <script src="{{ mix('js/app.js') }}"></script>
-    @endvue
     @none
     <script src="{{ mix('js/none.js') }}"></script>
+    @elsenone
+    <script src="{{ mix('js/app.js') }}"></script>
     @endnone
 </body>
 </html>
