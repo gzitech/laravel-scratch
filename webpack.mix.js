@@ -19,8 +19,6 @@ mix
     .webpackConfig({
         resolve: {
             modules: [
-                path.resolve(__dirname, 'resources/js/none'),
-                path.resolve(__dirname, 'resources/js/vue'),
                 path.resolve(__dirname, 'resources/js/react'),
                 'node_modules'
             ]

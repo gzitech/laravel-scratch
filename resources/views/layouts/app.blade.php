@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <div id="ssky-app" {{ config('app.frontend') !== 'none' ? 'v-cloak': '' }}>
+    <div id="ssky-app">
         @none
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
