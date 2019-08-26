@@ -19,11 +19,9 @@ mix
     .webpackConfig({
         resolve: {
             modules: [
-                path.resolve(__dirname, 'resources/js/ssky'),
+                path.resolve(__dirname, 'resources/js/react'),
                 'node_modules'
-            ],
-            alias: {
-                'vue$': mix.inProduction() ? 'vue/dist/vue.min' : 'vue/dist/vue.js'
-            }
+            ]
         }
     });
+

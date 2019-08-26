@@ -13,7 +13,6 @@
             </nav>
             <div class="card">
                 <div class="card-body">
-                    @vue<ssky-#kebabModelName#-create inline-template :old="{{ json_encode(Session::getOldInput()) }}" :errors="{{ $errors }}">@endvue
                     <form method="POST" action="/#url#" @submit="validate#modelName#CreateForm">
                         @csrf
                         @include('#url#.create-form')
@@ -25,7 +24,6 @@
                             </div>
                         </div>
                     </form>
-                    @vue</ssky-#kebabModelName#-create>@endvue
                 </div>
             </div>
         </div>
