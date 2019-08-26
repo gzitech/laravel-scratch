@@ -82,7 +82,7 @@ class UserController extends Controller
         $user = $this->user->create($data);
 
         $user->roles()->attach([
-            config('rbac.roles')['member']
+            config('rbac.roles')['member']['id']
         ]);
         
         return redirect($this->redirectTo);
