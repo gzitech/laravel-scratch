@@ -35,7 +35,7 @@ class UserRepository implements Contract
      */
     public function user()
     {
-        return $this->find(Auth::id());
+        return Auth::user();
     }
 
     /**
@@ -43,7 +43,7 @@ class UserRepository implements Contract
      */
     public function site()
     {
-        return resolve('App\Site');
+        return app('App\Site');
     }
 
     /**
@@ -117,6 +117,9 @@ class UserRepository implements Contract
         return $right | $user->right;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getRights() {
         $rights = config('rbac.rights');
 
@@ -170,7 +173,7 @@ class UserRepository implements Contract
      */
     public function update($id, array $data)
     {
-        User::find($id)->update($data);
+        User::where('id', $id)->update($data);
     }
 
     /**
@@ -178,14 +181,16 @@ class UserRepository implements Contract
      */
     public function updateProfile(array $data)
     {
-        User::find(Auth::id())->update($data);
+        $this->update($this->id(), $data);
     }
 
     public function updatePassword($password)
     {
-        $user = User::find(Auth::id());
-        $user->password = Hash::make($password);
-        $user->save();
+        $data = [
+            'password' => Hash::make($password),
+        ];
+        
+        $this->update($this->id(), $data);
     }
 
     /**
@@ -222,7 +227,7 @@ class UserRepository implements Contract
         if (Auth::check()) {
 
             $site = $this->site();
-            $user = Auth::user();
+            $user = $this->user();
 
             $cacheKey = config('site.cache_site_user_right_key') . $site->id . "_" . $user->id;
 

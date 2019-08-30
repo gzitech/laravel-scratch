@@ -228,7 +228,8 @@ return [
 
     ],
 
-    'frontend' => env('FRONTEND') ?? 'vue',
+    // frontend: none vue react ...
+    'frontend' => env('FRONTEND') ?? 'none',
     'max_page_size' => env('MAX_PAGE_SIZE') ?? 20,
     'paginate_type' => env('PAGINATE_TYPE') ?? 'simplePaginate',
 
