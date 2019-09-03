@@ -75,6 +75,12 @@ class CodeMakeCommand extends Command
         'app/Http/Controllers/SiteController.php' => 'app/Http/Controllers/SiteController.php',
         'app/Http/Controllers/SiteUrlController.php' => 'app/Http/Controllers/SiteUrlController.php',
         'app/Http/Controllers/UserController.php' => 'app/Http/Controllers/UserController.php',
+        // Requests
+        'app/Http/Requests/CreateRolePost.php' => 'app/Http/Requests/CreateRolePost.php',
+        'app/Http/Requests/CreateSitePost.php' => 'app/Http/Requests/CreateSitePost.php',
+        'app/Http/Requests/CreateUserPost.php' => 'app/Http/Requests/CreateUserPost.php',
+        'app/Http/Requests/UpdateRolePost.php' => 'app/Http/Requests/UpdateRolePost.php',
+        'app/Http/Requests/UpdateUserPost.php' => 'app/Http/Requests/UpdateUserPost.php',
         // AppServiceProvider
         'app/Providers/AppServiceProvider.php' => 'app/Providers/AppServiceProvider.php',
         // routes
