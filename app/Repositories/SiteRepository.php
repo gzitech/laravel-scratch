@@ -60,7 +60,7 @@ class SiteRepository implements Contract
             'domain'=>$domain,
         ];
 
-        return SiteUrl::where($data)->first() ?? null;
+        return SiteUrl::where($data)->first()-site ?? null;
     }
 
     /**
@@ -92,7 +92,7 @@ class SiteRepository implements Contract
 
             if($key === 'owner') {
                 $site->owner_id = $rval->id;
-                
+
                 $rval->users()->attach([
                     $data['user_id']
                 ]);

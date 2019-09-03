@@ -43,6 +43,8 @@ class CodeMakeCommand extends Command
     protected $baseFiles = [
         // command
         'app/Console/Commands/CodeMakeCommand.php' => 'app/Console/Commands/CodeMakeCommand.php',
+        // Notifications
+        'app/Notifications/VerifyEmail.php' => 'app/Notifications/VerifyEmail.php',
         // contracts
         'app/Contracts/Repositories/RoleRepository.php' => 'app/Contracts/Repositories/RoleRepository.php',
         'app/Contracts/Repositories/SiteRepository.php' => 'app/Contracts/Repositories/SiteRepository.php',
