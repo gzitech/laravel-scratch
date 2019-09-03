@@ -80,7 +80,7 @@ class SiteController extends Controller
 
         $data = $request->only(['name',]);
 
-        $site = $this->site->create($data);
+        $site = $this->site->create($this->user->id(), $data);
         
         return redirect($this->redirectTo);
     }

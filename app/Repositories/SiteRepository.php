@@ -66,11 +66,11 @@ class SiteRepository implements Contract
     /**
      * {@inheritdoc}
      */
-    public function create(array $data)
+    public function create($user_id, array $data)
     {
 
         if(empty($data['user_id'])) {
-            $data['user_id'] = Auth::id();
+            $data['user_id'] = $user_id;
         }
 
         $site = Site::create($data);
@@ -88,8 +88,21 @@ class SiteRepository implements Contract
 
         foreach($roles as $key=>$role) {
             $role['site_id'] = $site->id;
-            Role::create($role);
+            $rval = Role::create($role);
+
+            if($key === 'owner') {
+                $site->owner_id = $rval->id;
+                
+                $rval->users()->attach([
+                    $data['user_id']
+                ]);
+            } elseif($key === 'member') {
+                $site->member_id = $rval->id;
+                $site->default_role_id = $rval->id;
+            }
         }
+
+        $site->save();
 
         return $site;
     }

@@ -15,9 +15,11 @@ class CreateSitesTable extends Migration
     {
         Schema::create('sites', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-			$table->string('name')->default('');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('user_id')->comment('who created the site');
+            $table->string('name')->default('');
+            $table->unsignedBigInteger('owner_id')->default(0)->comment('site owner id');
+            $table->unsignedBigInteger('member_id')->default(0)->comment('site member id');
+            $table->unsignedBigInteger('default_role_id')->default(0)->comment('user signup will assign to this role');
             $table->softDeletes();
             $table->timestamps();
         });
