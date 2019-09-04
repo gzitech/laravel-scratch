@@ -77,7 +77,7 @@ class SiteRepository implements Contract
         ];
 
         $site = Cache::remember($cacheKey, $this->cacheSeconds, function () use ($data) {
-            return SiteUrl::where($data)->first()->site;
+            return SiteUrl::where($data)->first()->site ?? null;
         });
 
         return $site;
@@ -133,6 +133,7 @@ class SiteRepository implements Contract
     public function update($id, array $data)
     {
         Site::where('id', $id)->update($data);
+        Cache::forget($this->cachePrefix . $id);
     }
 
     /**
@@ -141,6 +142,7 @@ class SiteRepository implements Contract
     public function destroy($id)
     {
         Site::destroy($id);
+        Cache::forget($this->cachePrefix . $id);
     }
 
     /**
