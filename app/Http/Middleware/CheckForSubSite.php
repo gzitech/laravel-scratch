@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App\Contracts\Repositories\SiteRepository;
-use Illuminate\Support\Facades\Cache;
 
 class CheckForSubSite
 {

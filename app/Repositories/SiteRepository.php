@@ -8,10 +8,18 @@ use App\User;
 use App\Role;
 use App\Contracts\Repositories\SiteRepository as Contract;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class SiteRepository implements Contract
 {
+    private $cachePrefix, $cacheSeconds;
+
+    public function __construct()
+    {
+        $this->cachePrefix = "site.cache.";
+        $this->cacheSeconds = 600;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -48,7 +56,13 @@ class SiteRepository implements Contract
      */
     public function find($id)
     {
-        return Site::find($id);
+        $cacheKey = $this->cachePrefix . $id;
+
+        $site = Cache::remember($cacheKey, $this->cacheSeconds, function () use ($id) {
+            return Site::find($id);
+        });
+
+        return $site;
     }
 
     /**
@@ -56,22 +70,15 @@ class SiteRepository implements Contract
      */
     public function getSiteByDomain($domain)
     {
-        $cacheKey = 'site.cache.' . $domain;
+        $cacheKey = $this->cachePrefix . $domain;
 
-        $site = Cache::get($cacheKey, null);
+        $data = [
+            'domain'=>$domain,
+        ];
 
-        if($site === null) {
-
-            $data = [
-                'domain'=>$domain,
-            ];
-
-            $site = SiteUrl::where($data)->first()->site;
-
-            if($site !== null) {
-                Cache::put($cacheKey, $site);
-            }
-        }
+        $site = Cache::remember($cacheKey, $this->cacheSeconds, function () use ($data) {
+            return SiteUrl::where($data)->first()->site;
+        });
 
         return $site;
     }
