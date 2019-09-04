@@ -22,21 +22,21 @@ class RoleRepository implements Contract
     /**
      * {@inheritdoc}
      */
-    public function getRolesByUserId($user_id, $key)
+    public function getRolesByUserId($site_id, $user_id, $key)
     {
-        $user = $this->find($user_id);
+        $user = User::find($user_id);
         
-        return $this->getRolesByUser($user, $key);
+        return $this->getRolesByUser($site_id, $user, $key);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getRolesByUser(User $user, $key)
+    public function getRolesByUser($site_id, User $user, $key)
     {
-        $query = $user->roles()->where(function($query) use($key) {
+        $query = $user->roles()->where([['site_id', $site_id], [function($query) use($key) {
             $query->where('role_name', 'LIKE', "%{$key}%")->orWhere('role_description', 'LIKE', "%{$key}%");
-        });
+        }]]);
 
         return $this->paginate($query, $key);
     }
