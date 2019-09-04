@@ -7,8 +7,6 @@ use App\Contracts\Repositories\UserRepository;
 use App\Http\Requests\CreateRolePost;
 use App\Http\Requests\UpdateRolePost;
 use Illuminate\Http\Request;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Hash;
 
 class RoleController extends Controller
 {

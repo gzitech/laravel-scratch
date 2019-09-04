@@ -10,6 +10,7 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+yarn.lock
 
 public/js/app.js
 public/js/none.js
