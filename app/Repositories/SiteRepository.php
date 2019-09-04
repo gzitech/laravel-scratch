@@ -54,13 +54,26 @@ class SiteRepository implements Contract
     /**
      * {@inheritdoc}
      */
-    public function findByDomain($domain)
+    public function getSiteByDomain($domain)
     {
-        $data = [
-            'domain'=>$domain,
-        ];
+        $cacheKey = 'site.cache.' . $domain;
 
-        return SiteUrl::where($data)->first()->site ?? null;
+        $site = Cache::get($cacheKey, null);
+
+        if($site === null) {
+
+            $data = [
+                'domain'=>$domain,
+            ];
+
+            $site = SiteUrl::where($data)->first()->site;
+
+            if($site !== null) {
+                Cache::put($cacheKey, $site);
+            }
+        }
+
+        return $site;
     }
 
     /**
