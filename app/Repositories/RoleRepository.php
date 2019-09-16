@@ -70,13 +70,15 @@ class RoleRepository implements Contract
     /**
      * {@inheritdoc}
      */
-    public function updateRight($id, array $rights)
+    public function updateRight($id, $userRight, array $rights)
     {
         $val = 0;
 
         foreach($rights as $right) {
             $val = $val | $right;
         }
+
+        $val = $val & $userRight;
 
         Role::where('id', $id)->update(['right' => $val]);
     }

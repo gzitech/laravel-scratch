@@ -15,11 +15,13 @@ use Illuminate\Support\Arr;
 
 class UserRepository implements Contract
 {
-    protected $rights;
+    protected $rights, $cachePrefix, $cacheSeconds;
 
     public function __construct()
     {
         $this->rights = config('rbac.rights');
+        $this->cachePrefix = "user.cache.";
+        $this->cacheSeconds = 600;
     }
 
     /**
@@ -51,11 +53,9 @@ class UserRepository implements Contract
      */
     public function getUsers($key)
     {
-        $query = User::where(function($query) use($key) {
-            $query->where('first_name', 'LIKE', "%{$key}%")->orWhere('last_name', 'LIKE', "%{$key}%")->orWhere('email', 'LIKE', "%{$key}%");
-        });
+        $site_id = $this->site()->id;
 
-        return $this->paginate($query, $key);
+        return $this->getUsersBySiteId($site_id, $key);
     }
 
     /**
@@ -63,9 +63,15 @@ class UserRepository implements Contract
      */
     public function getUsersBySiteId($site_id, $key)
     {
-        $query = Site::find($site_id)->users()->where(function($query) use($key) {
-            $query->where('first_name', 'LIKE', "%{$key}%")->orWhere('last_name', 'LIKE', "%{$key}%")->orWhere('email', 'LIKE', "%{$key}%");
-        });
+        if($site_id > 0) {
+            $query = Site::find($site_id)->users()->where(function($query) use($key) {
+                $query->where('first_name', 'LIKE', "%{$key}%")->orWhere('last_name', 'LIKE', "%{$key}%")->orWhere('email', 'LIKE', "%{$key}%");
+            });
+        } else {
+            $query = User::where(function($query) use($key) {
+                $query->where('first_name', 'LIKE', "%{$key}%")->orWhere('last_name', 'LIKE', "%{$key}%")->orWhere('email', 'LIKE', "%{$key}%");
+            });
+        }
 
         return $this->paginate($query, $key);
     }
@@ -75,7 +81,11 @@ class UserRepository implements Contract
      */
     public function getUsersByRoleId($role_id, $key)
     {
-        return $this->getUsersByRole(Role::find($role_id), $key);
+        $site_id = $this->site()->id;
+
+        $role = Role::where([['id', $role_id], ['site_id', $site_id]]);
+        
+        return $this->getUsersByRole($role, $key);
     }
 
     /**
@@ -93,17 +103,27 @@ class UserRepository implements Contract
     /**
      * {@inheritdoc}
      */
-    public function getRightById($id) {
+    public function getRight() {
 
-        $user = User::find($id);
+        $user = $this->user();
 
-        return $this->getRight($user);
+        return $this->getRightByUser($user);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getRight(User $user) {
+    public function getRightByUserId($id) {
+
+        $user = User::find($id);
+
+        return $this->getRightByUser($user);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRightByUser(User $user) {
         $right = 0;
         
         $site = $this->site();
@@ -120,7 +140,7 @@ class UserRepository implements Contract
     /**
      * {@inheritdoc}
      */
-    public function getRights() {
+    public function getConfigRights() {
         $rights = config('rbac.rights');
 
         $arr = array();
@@ -204,7 +224,7 @@ class UserRepository implements Contract
 
         $role->users()->chunkById(64, function ($users) use($site) {
             foreach ($users as $user) {
-                $cacheKey = config('site.cache_site_user_right_key') . $site->id . "_" . $user->id;
+                $cacheKey = $this->cachePrefix . $site->id . "." . $user->id;
                 Cache::forget($cacheKey);
             }
         });
@@ -229,14 +249,11 @@ class UserRepository implements Contract
             $site = $this->site();
             $user = $this->user();
 
-            $cacheKey = config('site.cache_site_user_right_key') . $site->id . "_" . $user->id;
+            $cacheKey = $this->cachePrefix . $site->id . "." . $user->id;
 
-            $userRight = Cache::get($cacheKey, -1);
-
-            if($userRight < 0) {
-                $userRight = $this->getRight($user);
-                Cache::put($cacheKey, $userRight, now()->addMinutes(12));
-            }
+            $userRight = Cache::remember($cacheKey, $this->cacheSeconds, function () use ($user) {
+                return $this->getRightByUser($user);
+            });
             
             $val = Arr::get($this->rights, $right);
             return $userRight & $val;
@@ -283,9 +300,9 @@ class UserRepository implements Contract
     /**
      * {@inheritdoc}
      */
-    public function authorize($right)
+    public function authorize($rights)
     {
-        abort_if(!$this->checkRights($right), 403);
+        abort_if(!$this->checkRights($rights), 403);
     }
 
     /**

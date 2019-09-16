@@ -4,6 +4,7 @@ namespace App\Contracts\Repositories;
 
 use App\User;
 use App\Role;
+use App\Site;
 
 interface UserRepository
 {
@@ -14,9 +15,10 @@ interface UserRepository
     public function getUsersBySiteId($site_id, $key);
     public function getUsersByRoleId($role_id, $key);
     public function getUsersByRole(Role $role, $key);
-    public function getRightById($id);
-    public function getRight(User $user);
-    public function getRights();
+    public function getRight();
+    public function getRightByUserId($id);
+    public function getRightByUser(User $user);
+    public function getConfigRights();
     public function find($id);
     public function create(array $data);
     public function update($id, array $data);
@@ -26,5 +28,5 @@ interface UserRepository
     public function destroy($id);
     public function checkRight($right);
     public function checkRights($rights);
-    public function authorize($right);
+    public function authorize($rights);
 }

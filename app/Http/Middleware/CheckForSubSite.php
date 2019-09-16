@@ -38,7 +38,7 @@ class CheckForSubSite
             if($site !== null && $site->id > 0) {
                 app()->instance('App\Site', $site);
             } else {
-                abort(403);
+                abort(404);
             }
         }
 

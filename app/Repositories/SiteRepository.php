@@ -111,13 +111,13 @@ class SiteRepository implements Contract
             $rval = Role::create($role);
 
             if($key === 'owner') {
-                $site->owner_id = $rval->id;
+                $site->owner_role_id = $rval->id;
 
                 $rval->users()->attach([
                     $data['user_id']
                 ]);
             } elseif($key === 'member') {
-                $site->member_id = $rval->id;
+                $site->member_role_id = $rval->id;
                 $site->default_role_id = $rval->id;
             }
         }
