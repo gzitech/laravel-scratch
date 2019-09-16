@@ -54,7 +54,7 @@
                                     <td>{{ __("right." . $right->name) }}</td>
                                     <td class="text-md-right"></td>
                                 </tr>
-                                @endsite
+                                @endright
                                 @endforeach
                             </tbody>
                         </table>

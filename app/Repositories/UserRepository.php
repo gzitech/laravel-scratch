@@ -73,7 +73,7 @@ class UserRepository implements Contract
             });
         }
 
-        return $this->paginate($query, $key);
+        return paginate($query, $key);
     }
 
     /**
@@ -97,7 +97,7 @@ class UserRepository implements Contract
             $query->where('first_name', 'LIKE', "%{$key}%")->orWhere('last_name', 'LIKE', "%{$key}%")->orWhere('email', 'LIKE', "%{$key}%");
         });
 
-        return $this->paginate($query, $key);
+        return paginate($query, $key);
     }
 
     /**
@@ -303,17 +303,5 @@ class UserRepository implements Contract
     public function authorize($rights)
     {
         abort_if(!$this->checkRights($rights), 403);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    private function paginate($query, $key)
-    {
-        if(config('app.paginate_type') == 'paginate') {
-            return $query->paginate(config("app.max_page_size"))->appends(['key' => $key]);
-        } else {
-            return $query->simplePaginate(config("app.max_page_size"))->appends(['key' => $key]);
-        }
     }
 }

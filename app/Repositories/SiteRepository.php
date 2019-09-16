@@ -40,7 +40,7 @@ class SiteRepository implements Contract
      */
     public function getSites($key)
     {
-        return $this->paginate(Site::where('name', 'LIKE', "%{$key}%"), $key);
+        return paginate(Site::where('name', 'LIKE', "%{$key}%"), $key);
     }
 
     /**
@@ -48,7 +48,7 @@ class SiteRepository implements Contract
      */
     public function getSitesByUserId($user_id, $key)
     {
-        return $this->paginate(User::find($user_id)->sites()->where('name', 'LIKE', "%{$key}%"), $key);
+        return paginate(User::find($user_id)->sites()->where('name', 'LIKE', "%{$key}%"), $key);
     }
 
     /**
@@ -143,17 +143,5 @@ class SiteRepository implements Contract
     {
         Site::destroy($id);
         Cache::forget($this->cachePrefix . $id);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    private function paginate($query, $key)
-    {
-        if(config('app.paginate_type') == 'paginate') {
-            return $query->paginate(config("app.max_page_size"))->appends(['key' => $key]);
-        } else {
-            return $query->simplePaginate(config("app.max_page_size"))->appends(['key' => $key]);
-        }
     }
 }
