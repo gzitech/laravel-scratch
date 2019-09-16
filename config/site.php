@@ -25,14 +25,5 @@ return [
     |
     */
 
-    'default_domain' => env('SITE_DEFAULT_DOMAIN', '127.0.0.1'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | cache_site_user_right_key
-    |--------------------------------------------------------------------------
-    |
-    */
-
-    'cache_site_user_right_key' => 'ssky_site_user_right_',
+    'default_domain' => env('SITE_DEFAULT_DOMAIN', 'fastconfirm.com'),
 ];

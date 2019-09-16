@@ -44,6 +44,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($rights as $right)
+                                @right($right->name)
                                 <tr>
                                     <th scope="row">
                                         <input type="checkbox" name="right[]" value="{{ $right->value }}" {{ ($role->right & $right->value) ? "checked" : "" }}>
@@ -53,6 +54,7 @@
                                     <td>{{ __("right." . $right->name) }}</td>
                                     <td class="text-md-right"></td>
                                 </tr>
+                                @endsite
                                 @endforeach
                             </tbody>
                         </table>

@@ -98,6 +98,7 @@
                         </thead>
                         <tbody>
                             @foreach ($rights as $right)
+                            @right($right->name)
                             <tr>
                                 <th scope="row">
                                     <input type="checkbox" name="right[]" value="{{ $right->value }}" disabled
@@ -108,6 +109,7 @@
 
                                 </td>
                             </tr>
+                            @endright
                             @endforeach
                         </tbody>
                     </table>
