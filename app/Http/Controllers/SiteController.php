@@ -49,7 +49,7 @@ class SiteController extends Controller
         if($this->user->checkRight('site.all')) {
             $data['sites'] = $this->site->getSites($key);
         } else {
-            $user_id = $this->user->id();
+            $user_id = user_id();
             $data['sites'] = $this->site->getSitesByUserId($user_id, $key);
         }
 
@@ -80,7 +80,7 @@ class SiteController extends Controller
 
         $data = $request->only(['name',]);
 
-        $site = $this->site->create($this->user->id(), $data);
+        $site = $this->site->create(user_id(), $data);
         
         return redirect($this->redirectTo);
     }

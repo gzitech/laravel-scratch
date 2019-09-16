@@ -23,15 +23,7 @@ class UserRepository implements Contract
         $this->cachePrefix = "user.cache.";
         $this->cacheSeconds = 600;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function id()
-    {
-        return Auth::id();
-    }
-
+    
     /**
      * {@inheritdoc}
      */
@@ -185,7 +177,7 @@ class UserRepository implements Contract
      */
     public function updateProfile(array $data)
     {
-        $this->update($this->id(), $data);
+        $this->update(user_id(), $data);
     }
 
     public function updatePassword($password)
@@ -194,7 +186,7 @@ class UserRepository implements Contract
             'password' => Hash::make($password),
         ];
         
-        $this->update($this->id(), $data);
+        $this->update(user_id(), $data);
     }
 
     /**

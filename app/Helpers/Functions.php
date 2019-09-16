@@ -21,3 +21,9 @@ if (! function_exists('user')) {
         return Auth::user();
     }
 }
+
+if (! function_exists('user_id')) {
+    function user_id() {
+        return Auth::id();
+    }
+}
