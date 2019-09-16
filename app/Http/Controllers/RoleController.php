@@ -7,6 +7,8 @@ use App\Contracts\Repositories\UserRepository;
 use App\Http\Requests\CreateRolePost;
 use App\Http\Requests\UpdateRolePost;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Hash;
 
 class RoleController extends Controller
 {
@@ -99,7 +101,7 @@ class RoleController extends Controller
         $data = [
             'role'=>$role,
             'users'=>$this->user->getUsersByRole($role, $key),
-            'rights'=>$this->user->getRights(),
+            'rights'=>$this->user->getConfigRights(),
         ];
 
         return view("role.show", $data);

@@ -106,8 +106,8 @@ class UserController extends Controller
         $data = [
             'user'=>$user,
             'roles'=>$this->role->getRolesByUser($site->id, $user, $key),
-            'userRight'=>$this->user->getRight($user),
-            'rights'=>$this->user->getRights(),
+            'userRight'=>$this->user->getRightByUser($user),
+            'rights'=>$this->user->getConfigRights(),
         ];
 
         return view("user.show", $data);

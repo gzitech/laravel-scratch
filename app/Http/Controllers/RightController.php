@@ -43,7 +43,7 @@ class RightController extends Controller
 
         $data = [
             'role'=>$this->role->find($role_id),
-            'rights'=>$this->user->getRights(),
+            'rights'=>$this->user->getConfigRights(),
         ];
 
         return view("right", $data);
@@ -62,7 +62,8 @@ class RightController extends Controller
 
         $right = $request->right ?? [];
 
-        $this->role->updateRight($role_id, $right);
+        $userRight = $this->user->getRight();
+        $this->role->updateRight($role_id, $userRight, $right);
         $this->user->clearRightByRoleId($role_id);
 
         $redirectTo = $this->redirectTo . "$role_id";
