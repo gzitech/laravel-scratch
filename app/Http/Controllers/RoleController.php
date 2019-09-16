@@ -42,7 +42,7 @@ class RoleController extends Controller
     {
         $this->user->authorize('role.all');
 
-        $site = $this->user->site();
+        $site = site();
 
         $key = $request->key;
 

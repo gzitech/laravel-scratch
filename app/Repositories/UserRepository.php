@@ -43,17 +43,9 @@ class UserRepository implements Contract
     /**
      * {@inheritdoc}
      */
-    public function site()
-    {
-        return app('App\Site');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getUsers($key)
     {
-        $site_id = $this->site()->id;
+        $site_id = site()->id;
 
         return $this->getUsersBySiteId($site_id, $key);
     }
@@ -81,7 +73,7 @@ class UserRepository implements Contract
      */
     public function getUsersByRoleId($role_id, $key)
     {
-        $site_id = $this->site()->id;
+        $site_id = site()->id;
 
         $role = Role::where([['id', $role_id], ['site_id', $site_id]]);
         
@@ -126,7 +118,7 @@ class UserRepository implements Contract
     public function getRightByUser(User $user) {
         $right = 0;
         
-        $site = $this->site();
+        $site = site();
 
         $roles = $user->roles()->where('site_id', $site->id)->get();
 
@@ -218,7 +210,7 @@ class UserRepository implements Contract
      */
     public function clearRightByRoleId($role_id) {
 
-        $site = $this->site();
+        $site = site();
 
         $role = Role::find($role_id);
 
@@ -246,7 +238,7 @@ class UserRepository implements Contract
     {
         if (Auth::check()) {
 
-            $site = $this->site();
+            $site = site();
             $user = $this->user();
 
             $cacheKey = $this->cachePrefix . $site->id . "." . $user->id;

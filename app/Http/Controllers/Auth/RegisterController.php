@@ -76,7 +76,7 @@ class RegisterController extends Controller
             config('rbac.roles')['member']['id'],
         ]);
 
-        $site = $this->user->site();
+        $site = site();
 
         if($site->id > 0) {
             $user->sites()->attach([

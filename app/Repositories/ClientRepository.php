@@ -16,26 +16,26 @@ class ClientRepository implements Contract
     }
 
     public function get($url) {
-        return $this->ping("GET", $url, array());
+        return $this->sendData("GET", $url, array());
     }
 
     public function post($url, Array $data) {
-
+        return $this->sendData("POST", $url, $data);
     }
 
     public function put($url, Array $data) {
-
+        return $this->sendData("PUT", $url, $data);
     }
 
     public function patch($url, Array $data) {
-
+        return $this->sendData("PATCH", $url, $data);
     }
 
     public function delete($url, Array $data) {
-
+        return $this->sendData("DELETE", $url, $data);
     }
 
-    private function ping(string $method, string $url, Array $data)
+    private function sendData(string $method, string $url, Array $data)
     {
         $ch = curl_init();
 

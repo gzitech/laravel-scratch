@@ -101,7 +101,7 @@ class UserController extends Controller
         $key = $request->key;
 
         $user = $this->user->find($id);
-        $site = $this->user->site();
+        $site = site();
 
         $data = [
             'user'=>$user,
