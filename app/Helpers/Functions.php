@@ -15,3 +15,9 @@ if (! function_exists('site')) {
         return app('App\Site');
     }
 }
+
+if (! function_exists('user')) {
+    function user() {
+        return Auth::user();
+    }
+}

@@ -39,7 +39,7 @@ class ProfileController extends Controller
     public function index()
     {
         $data = [
-            'user'=>$this->user->user(),
+            'user'=>user(),
         ];
 
         return view("setting/profile", $data);

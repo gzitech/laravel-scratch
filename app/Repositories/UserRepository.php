@@ -35,14 +35,6 @@ class UserRepository implements Contract
     /**
      * {@inheritdoc}
      */
-    public function user()
-    {
-        return Auth::user();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getUsers($key)
     {
         $site_id = site()->id;
@@ -97,7 +89,7 @@ class UserRepository implements Contract
      */
     public function getRight() {
 
-        $user = $this->user();
+        $user = user();
 
         return $this->getRightByUser($user);
     }
@@ -239,7 +231,7 @@ class UserRepository implements Contract
         if (Auth::check()) {
 
             $site = site();
-            $user = $this->user();
+            $user = user();
 
             $cacheKey = $this->cachePrefix . $site->id . "." . $user->id;
 
