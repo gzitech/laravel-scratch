@@ -1,0 +1,53 @@
+version: "3"
+services:
+
+    redis:
+      image: redis:alpine
+      container_name: scratch-redis
+      restart: always
+      ports:
+        - "6379:6379"
+
+    database:
+      image: mysql:5.7
+      container_name: scratch-mysql
+      volumes:
+        - data:/var/lib/mysql
+      restart: always
+      environment:
+        - MYSQL_ROOT_PASSWORD=OHKtv3I#/g
+        - MYSQL_DATABASE=scratch
+        - MYSQL_USER=scratch
+        - MYSQL_PASSWORD=PC@Ncd9wa
+      ports:
+        - "3306:3306"
+
+    php-fpm:
+      build:
+        context: ./docker/php-fpm
+      image: afxcn/php-fpm
+      container_name: scratch-php-fpm
+      depends_on:
+        - database
+        - redis
+      working_dir: /app
+      volumes:
+        - .:/app
+      restart: always
+
+    web:
+      image: nginx:alpine
+      container_name: scratch-web
+      depends_on:
+        - php-fpm
+      working_dir: /app
+      volumes:
+          - .:/app
+          - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+          - ./docker/nginx/conf.d/:/etc/nginx/conf.d
+      restart: always
+      ports:
+       - "80:80"
+
+volumes:
+  data:

@@ -19,6 +19,6 @@ public/mix-manifest.json
 .editorconfig
 .gitattributes
 .styleci.yml
-
+dump.rdb
 development.bash
 production.bash
