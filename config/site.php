@@ -12,8 +12,7 @@ return [
     */
 
     'domains' => [
-        "dev.scratch",
-        "scratch.fastconfirm.com"
+        "dev.scratch"
     ],
 
     /*
@@ -25,5 +24,5 @@ return [
     |
     */
 
-    'default_domain' => env('SITE_DEFAULT_DOMAIN', 'fastconfirm.com'),
+    'default_domain' => env('SITE_DEFAULT_DOMAIN', 'scratch'),
 ];
