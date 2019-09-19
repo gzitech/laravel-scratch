@@ -6,7 +6,7 @@ services:
       container_name: scratch-redis
       restart: always
       ports:
-        - "6379:6379"
+        - "6379"
 
     database:
       image: mysql:5.7
@@ -20,7 +20,7 @@ services:
         - MYSQL_USER=scratch
         - MYSQL_PASSWORD=PC@Ncd9wa
       ports:
-        - "3306:3306"
+        - "3306"
 
     php-fpm:
       build:
