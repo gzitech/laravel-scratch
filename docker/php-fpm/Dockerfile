@@ -3,8 +3,9 @@ COPY ./composer.phar /usr/bin/composer
 
 ENV PHPREDIS_VERSION 5.0.2
 
-RUN apk update && mkdir -p /usr/src/php/ext/redis \
+RUN mkdir -p /usr/src/php/ext/redis \
     && curl -L https://github.com/phpredis/phpredis/archive/$PHPREDIS_VERSION.tar.gz | tar xvz -C /usr/src/php/ext/redis --strip 1 \
     && echo 'redis' >> /usr/src/php-available-exts \
-    && docker-php-ext-install pdo_mysql redis \
+    && apk add --update --no-cache libintl icu-dev libxml2-dev libzip-dev freetype-dev libjpeg-turbo-dev libmcrypt-dev libpng-dev \
+    && docker-php-ext-install intl zip soap mysqli pdo pdo_mysql redis gd \
     && rm -rf /usr/src/php/ext/redis

@@ -8,7 +8,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
-class ScaffoldCommand extends Command
+class CodeScaffoldCommand extends Command
 {
     private $modelPath, $modelNamespace;
     private $modelName, $snakeModelName, $tableName, $snakeTableName;
@@ -24,11 +24,10 @@ class ScaffoldCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'ssky:scaffold
+    protected $signature = 'code:scaffold
     {model-name? : Specify an model class}
-    {--clone= : Copy stubs to other directory}
-    {--p|model-path=app : Specify model directory}
-    {--s|model-namespace=App : Specify model namespace}
+    {--m|model-path=app : Specify model directory}
+    {--n|model-namespace=App : Specify model namespace}
     {--c|check : Only show you what will create without write}
     {--d|delete : Delete all files base on rules}
     {--f|force : Overwrite existing code by default}';
@@ -40,9 +39,6 @@ class ScaffoldCommand extends Command
      */
     protected $description = 'Create scaffold code base on models';
 
-    /**
-     * use $this->compileFile() to compile.
-     */
     protected $compileFiles = [
         //views
         'resources/views/stubs/model.stub' => 'resources/views/#url#.blade.php',
@@ -59,9 +55,6 @@ class ScaffoldCommand extends Command
         'app/Http/Requests/stubs/update.stub' => 'app/Http/Requests/Update#modelName#Post.php',
     ];
 
-    /**
-     * use $this->compileDetailFile() to compile.
-     */
     protected $compileDetailFiles = [
         //views
         'resources/views/stubs/create-form.stub' => 'resources/views/#url#/create-form.blade.php',
@@ -69,7 +62,7 @@ class ScaffoldCommand extends Command
     ];
 
     protected $ignoreFieldNames = [
-        'id', 'user_id', 'mass_message_id', 'email_verified_at', 'remember_token', 'right', 'deleted_at', 'created_at', 'updated_at', 'password'
+        'id', 'user_id', 'email_verified_at', 'remember_token', 'right', 'deleted_at', 'created_at', 'updated_at', 'password'
     ];
 
     /**
@@ -97,17 +90,10 @@ class ScaffoldCommand extends Command
         $this->modelPath = $this->option('model-path');
         $this->modelNamespace = $this->option('model-namespace');
 
-        $clone = $this->option('clone');
-
-        if(empty($clone)) {
-            if(empty($modelName)) {
-                $this->generateCodes();
-            } else {
-                $this->generateCode($modelName);
-            }
+        if(empty($modelName)) {
+            $this->generateCodes();
         } else {
-            $this->copyTo($this->compileFiles, $clone);
-            $this->copyTo($this->compileDetailFiles, $clone);
+            $this->generateCode($modelName);
         }
     }
 
@@ -137,17 +123,17 @@ class ScaffoldCommand extends Command
         $this->snakeTableName = Str::snake($this->tableName);
         $this->url = str_replace('_', '/', $this->snakeModelName);
 
-        if($this->option('check')) {
-            $this->info("modelName: " . $this->modelName);
-            $this->info("kebabModelName: " . $this->kebabModelName);
-            $this->info("camelModelName: " . $this->camelModelName);
-            $this->info("snakeModelName: " . $this->snakeModelName);
-            $this->info("titleName: " . $this->titleName);
-            $this->info("tableName: " . $this->tableName);
-            $this->info("camelTableName: " . $this->camelTableName);
-            $this->info("snakeTableName: " . $this->snakeTableName);
-            $this->info("url: " . $this->url);
-        }
+        // if($this->option('check')) {
+        //     $this->info("modelName: " . $this->modelName);
+        //     $this->info("kebabModelName: " . $this->kebabModelName);
+        //     $this->info("camelModelName: " . $this->camelModelName);
+        //     $this->info("snakeModelName: " . $this->snakeModelName);
+        //     $this->info("titleName: " . $this->titleName);
+        //     $this->info("tableName: " . $this->tableName);
+        //     $this->info("camelTableName: " . $this->camelTableName);
+        //     $this->info("snakeTableName: " . $this->snakeTableName);
+        //     $this->info("url: " . $this->url);
+        // }
 
         $class = $this->modelNamespace . '\\' . $this->modelName;
 
@@ -233,12 +219,6 @@ class ScaffoldCommand extends Command
                 }
             }
         }
-        
-        // $this->updateComponentBootstrap([
-        //     "require('./{$this->url}/list');",
-        //     "require('./{$this->url}/create');",
-        //     "require('./{$this->url}/edit');",
-        // ]);
 
         $this->updateRoute([
             "Route::resource('/{$this->url}', '{$this->modelName}Controller');",
