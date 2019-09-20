@@ -8,30 +8,16 @@ use Carbon\Carbon;
 
 class #modelName#Repository implements Contract
 {
-
-    /**
-     * {@inheritdoc}
-     */
-    public function get#tableName#()
+    public function get#tableName#($key)
     {
-        if(config('app.paginate_type') == 'paginate') {
-            return #modelName#::paginate(config("app.max_page_size"));
-        } else {
-            return #modelName#::simplePaginate(config("app.max_page_size"));
-        }
+        return paginate(#modelName#::where('name', 'LIKE', "%{$key}%"), $key);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function find($id)
     {
         return #modelName#::find($id);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(array $data)
     {
         $#snakeModelName# = #modelName#::create($data);
@@ -39,17 +25,11 @@ class #modelName#Repository implements Contract
         return $#snakeModelName#;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function update($id, array $data)
     {
         #modelName#::where('id', $id)->update($data);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function destroy($id)
     {
         #modelName#::destroy($id);
