@@ -19,6 +19,7 @@ public/mix-manifest.json
 .editorconfig
 .gitattributes
 .styleci.yml
+.vscode
 dump.rdb
 development.bash
 production.bash

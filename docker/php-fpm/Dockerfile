@@ -8,7 +8,3 @@ RUN apk update && mkdir -p /usr/src/php/ext/redis \
     && echo 'redis' >> /usr/src/php-available-exts \
     && docker-php-ext-install pdo_mysql redis \
     && rm -rf /usr/src/php/ext/redis
-
-CMD ["php-fpm"]
-
-EXPOSE 9000
