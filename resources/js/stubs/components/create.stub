@@ -1,5 +1,0 @@
-var base = require('#url#/create');
-
-Vue.component('ssky-#kebabModelName#-create', {
-    mixins: [base]
-});

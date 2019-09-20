@@ -8,7 +8,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
-class ScaffoldCodeCommand extends Command
+class ScaffoldCommand extends Command
 {
     private $modelPath, $modelNamespace;
     private $modelName, $snakeModelName, $tableName, $snakeTableName;
@@ -24,7 +24,7 @@ class ScaffoldCodeCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'ssky:code
+    protected $signature = 'ssky:scaffold
     {model-name? : Specify an model class}
     {--clone= : Copy stubs to other directory}
     {--p|model-path=app : Specify model directory}
@@ -49,13 +49,6 @@ class ScaffoldCodeCommand extends Command
         'resources/views/stubs/show.stub' => 'resources/views/#url#/show.blade.php',
         'resources/views/stubs/create.stub' => 'resources/views/#url#/create.blade.php',
         'resources/views/stubs/edit.stub' => 'resources/views/#url#/edit.blade.php',
-        //JS
-        'resources/js/stubs/ssky/list.stub' => 'resources/js/ssky/#url#/list.js',
-        'resources/js/stubs/ssky/create.stub' => 'resources/js/ssky/#url#/create.js',
-        'resources/js/stubs/ssky/edit.stub' => 'resources/js/ssky/#url#/edit.js',
-        'resources/js/stubs/components/list.stub' => 'resources/js/components/#url#/list.js',
-        'resources/js/stubs/components/create.stub' => 'resources/js/components/#url#/create.js',
-        'resources/js/stubs/components/edit.stub' => 'resources/js/components/#url#/edit.js',
         //Controller
         'app/Http/Controllers/stubs/controller.stub' => 'app/Http/Controllers/#modelName#Controller.php',
         //Repository
@@ -241,11 +234,11 @@ class ScaffoldCodeCommand extends Command
             }
         }
         
-        $this->updateComponentBootstrap([
-            "require('./{$this->url}/list');",
-            "require('./{$this->url}/create');",
-            "require('./{$this->url}/edit');",
-        ]);
+        // $this->updateComponentBootstrap([
+        //     "require('./{$this->url}/list');",
+        //     "require('./{$this->url}/create');",
+        //     "require('./{$this->url}/edit');",
+        // ]);
 
         $this->updateRoute([
             "Route::resource('/{$this->url}', '{$this->modelName}Controller');",

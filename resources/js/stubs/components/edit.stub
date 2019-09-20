@@ -1,5 +1,0 @@
-var base = require('#url#/edit');
-
-Vue.component('ssky-#kebabModelName#-edit', {
-    mixins: [base]
-});
