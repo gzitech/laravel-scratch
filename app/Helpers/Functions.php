@@ -27,3 +27,18 @@ if (! function_exists('user_id')) {
         return Auth::id();
     }
 }
+
+if (! function_exists('toSystemTimeZone')) {
+    function toSystemTimeZone($date){ 
+        $timezone = config('app.timezone');
+        $displayTimezone = config('app.display_timezone');
+        return \Carbon\Carbon::parse($date, $displayTimezone)->timezone($timezone);
+    }
+}
+
+if (! function_exists('toDisplayTimeZone')) {
+    function toDisplayTimeZone($date){
+        $displayTimezone = config('app.display_timezone');
+        return \Carbon\Carbon::parse($date)->timezone($displayTimezone)->toDateTimeString();
+    }
+}
