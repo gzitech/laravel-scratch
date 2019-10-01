@@ -21,5 +21,4 @@ public/mix-manifest.json
 .styleci.yml
 .vscode
 dump.rdb
-development.bash
-production.bash
+*.bash
