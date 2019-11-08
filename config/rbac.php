@@ -26,28 +26,6 @@ return [
         ],
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | sub site roles
-    |--------------------------------------------------------------------------
-    |
-    | default roles for sub sites
-    |
-    */
-
-    'sub_site_roles' => [
-        'owner' => [
-            'role_name' => 'Owner',
-            'role_description' => 'Administrator',
-            'right' => 0,
-        ],
-        'member' => [
-            'role_name' => 'Member',
-            'role_description' => 'General user',
-            'right' => 0,
-        ],
-    ],
-
      /*
     |--------------------------------------------------------------------------
     | rights
@@ -75,11 +53,6 @@ return [
         'right' => [
             "all" => 16,
             "edit" => 32,
-        ],
-        'site' => [
-            "all" => 64,
-            "self" => 128,
-            "edit" => 256,
-        ],
+        ]
     ],
 ];

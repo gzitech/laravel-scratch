@@ -10,21 +10,6 @@
             </li>
         </ul>
     </aside>
-    @right('site.all|site.self')
-    <aside>
-        <h3 class="nav-heading">
-            Site
-        </h3>
-        <ul class="nav flex-column ">
-            @right('site.all|site.self')
-            <li class="nav-item">
-                <a class="nav-link{{ Request::is('site', 'site/*') ?  ' active' : '' }}" href="/site/"><i
-                        class="fa fa-th-large"></i>Site</a>
-            </li>
-            @endright
-        </ul>
-    </aside>
-    @endright
     @right('user.all|role.all')
     <aside>
         <h3 class="nav-heading">
