@@ -23,10 +23,12 @@ class UpdateUserPost extends FormRequest
      */
     public function rules()
     {
+        $id = intval($this->segment(2));
+
         return [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,id,' . $this->id],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $id],
         ];
     }
 }

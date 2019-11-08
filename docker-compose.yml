@@ -20,7 +20,7 @@ services:
         - MYSQL_USER=scratch
         - MYSQL_PASSWORD=PC@Ncd9wa
       ports:
-        - "3306"
+        - "3306:3306"
 
     php-fpm:
       build:
