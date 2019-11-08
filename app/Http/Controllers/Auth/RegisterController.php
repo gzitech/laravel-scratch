@@ -76,18 +76,6 @@ class RegisterController extends Controller
             config('rbac.roles')['member']['id'],
         ]);
 
-        $site = site();
-
-        if($site->id > 0) {
-            $user->sites()->attach([
-                $site->id,
-            ]);
-
-            $user->roles()->attach([
-                $site->default_role_id,
-            ]);
-        }
-
         return $user;
     }
 }

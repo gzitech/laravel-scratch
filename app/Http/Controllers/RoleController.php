@@ -42,12 +42,10 @@ class RoleController extends Controller
     {
         $this->user->authorize('role.all');
 
-        $site = site();
-
         $key = $request->key;
 
         $data = [
-            'roles'=>$this->role->getRoles($site->id, $key),
+            'roles'=>$this->role->getRoles($key),
         ];
 
         return view("role", $data);

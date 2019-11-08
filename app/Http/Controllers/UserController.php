@@ -101,11 +101,10 @@ class UserController extends Controller
         $key = $request->key;
 
         $user = $this->user->find($id);
-        $site = site();
 
         $data = [
             'user'=>$user,
-            'roles'=>$this->role->getRolesByUser($site->id, $user, $key),
+            'roles'=>$this->role->getRolesByUser($user, $key),
             'userRight'=>$this->user->getRightByUser($user),
             'rights'=>$this->user->getConfigRights(),
         ];

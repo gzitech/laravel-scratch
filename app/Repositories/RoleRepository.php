@@ -14,7 +14,7 @@ class RoleRepository implements Contract
      */
     public function getRoles($key)
     {
-        $query = Role::where(['role_name', 'LIKE', "%{$key}%"]);
+        $query = Role::where('role_name', 'LIKE', "%{$key}%");
 
         return paginate($query, $key);
     }

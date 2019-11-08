@@ -29,7 +29,10 @@ class UserRepository implements Contract
      */
     public function getUsers($key)
     {
-        return $this->getUsersBySiteId($key);
+        $query = User::where(function($query) use($key) {
+            $query->where('first_name', 'LIKE', "%{$key}%")->orWhere('last_name', 'LIKE', "%{$key}%")->orWhere('email', 'LIKE', "%{$key}%");
+        });
+        return paginate($query, $key);
     }
 
     /**
@@ -170,13 +173,11 @@ class UserRepository implements Contract
      */
     public function clearRightByRoleId($role_id) {
 
-        $site = site();
-
         $role = Role::find($role_id);
 
         $role->users()->chunkById(64, function ($users) use($site) {
             foreach ($users as $user) {
-                $cacheKey = $this->cachePrefix . $site->id . "." . $user->id;
+                $cacheKey = $this->cachePrefix . "." . $user->id;
                 Cache::forget($cacheKey);
             }
         });
@@ -198,10 +199,9 @@ class UserRepository implements Contract
     {
         if (Auth::check()) {
 
-            $site = site();
             $user = user();
 
-            $cacheKey = $this->cachePrefix . $site->id . "." . $user->id;
+            $cacheKey = $this->cachePrefix . "." . $user->id;
 
             $userRight = Cache::remember($cacheKey, $this->cacheSeconds, function () use ($user) {
                 return $this->getRightByUser($user);
