@@ -29,27 +29,7 @@ class UserRepository implements Contract
      */
     public function getUsers($key)
     {
-        $site_id = site()->id;
-
-        return $this->getUsersBySiteId($site_id, $key);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getUsersBySiteId($site_id, $key)
-    {
-        if($site_id > 0) {
-            $query = Site::find($site_id)->users()->where(function($query) use($key) {
-                $query->where('first_name', 'LIKE', "%{$key}%")->orWhere('last_name', 'LIKE', "%{$key}%")->orWhere('email', 'LIKE', "%{$key}%");
-            });
-        } else {
-            $query = User::where(function($query) use($key) {
-                $query->where('first_name', 'LIKE', "%{$key}%")->orWhere('last_name', 'LIKE', "%{$key}%")->orWhere('email', 'LIKE', "%{$key}%");
-            });
-        }
-
-        return paginate($query, $key);
+        return $this->getUsersBySiteId($key);
     }
 
     /**
@@ -57,9 +37,7 @@ class UserRepository implements Contract
      */
     public function getUsersByRoleId($role_id, $key)
     {
-        $site_id = site()->id;
-
-        $role = Role::where([['id', $role_id], ['site_id', $site_id]]);
+        $role = Role::where(['id', $role_id]);
         
         return $this->getUsersByRole($role, $key);
     }
@@ -101,10 +79,8 @@ class UserRepository implements Contract
      */
     public function getRightByUser(User $user) {
         $right = 0;
-        
-        $site = site();
 
-        $roles = $user->roles()->where('site_id', $site->id)->get();
+        $roles = $user->roles()->get();
 
         foreach($roles as $role) {
             $right = $right | $role->right;

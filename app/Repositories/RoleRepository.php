@@ -12,9 +12,9 @@ class RoleRepository implements Contract
     /**
      * {@inheritdoc}
      */
-    public function getRoles($site_id, $key)
+    public function getRoles($key)
     {
-        $query = Role::where([['site_id', $site_id], ['role_name', 'LIKE', "%{$key}%"]]);
+        $query = Role::where(['role_name', 'LIKE', "%{$key}%"]);
 
         return paginate($query, $key);
     }
@@ -22,21 +22,21 @@ class RoleRepository implements Contract
     /**
      * {@inheritdoc}
      */
-    public function getRolesByUserId($site_id, $user_id, $key)
+    public function getRolesByUserId($user_id, $key)
     {
         $user = User::find($user_id);
         
-        return $this->getRolesByUser($site_id, $user, $key);
+        return $this->getRolesByUser($user, $key);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getRolesByUser($site_id, User $user, $key)
+    public function getRolesByUser(User $user, $key)
     {
-        $query = $user->roles()->where([['site_id', $site_id], [function($query) use($key) {
+        $query = $user->roles()->where(function($query) use($key) {
             $query->where('role_name', 'LIKE', "%{$key}%")->orWhere('role_description', 'LIKE', "%{$key}%");
-        }]]);
+        });
 
         return paginate($query, $key);
     }

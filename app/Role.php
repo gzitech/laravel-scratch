@@ -15,7 +15,7 @@ class Role extends Model
      * @var array
      */
     protected $fillable = [
-        'site_id', 'role_name', 'role_description',
+        'role_name', 'role_description',
     ];
 
     public function users()

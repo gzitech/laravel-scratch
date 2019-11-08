@@ -9,7 +9,6 @@ use App\Site;
 interface UserRepository
 {
     public function getUsers($key);
-    public function getUsersBySiteId($site_id, $key);
     public function getUsersByRoleId($role_id, $key);
     public function getUsersByRole(Role $role, $key);
     public function getRight();
