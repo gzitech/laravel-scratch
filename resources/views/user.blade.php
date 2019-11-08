@@ -20,7 +20,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">First Name</th>
+                                <th id="confirm-key" scope="col">First Name</th>
                                 <th scope="col">Last Name</th>
                                 <th scope="col">Email</th>
                                 <th scope="col"></th>
@@ -39,8 +39,10 @@
                                     @right('user.edit')
                                     <a href="/user/{{ $user->id }}/edit" title="Edit" class="btn btn-outline-primary"><i
                                             class="fa fa-pencil"></i></a>
-                                    <a href="/user/{{ $user->id }}/destroy" title="Destroy"
+                                    @if($user->id !== user_id() )
+                                    <a href="/user/{{ $user->id }}/destroy" title="Destroy {{ $user->first_name }}"
                                         class="btn btn-outline-danger"><i class="fa fa-trash-o"></i></a>
+                                    @endif
                                     @endright
                                 </td>
                             </tr>

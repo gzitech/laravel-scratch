@@ -20,7 +20,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Role Name</th>
+                                <th id="confirm-key" scope="col">Role Name</th>
                                 <th scope="col">Role Description</th>
                                 <th scope="col"></th>
                             </tr>
@@ -42,8 +42,8 @@
                                     @right('role.edit')
                                     <a href="/role/{{ $role->id }}/edit" title="Edit" class="btn btn-outline-primary"><i
                                             class="fa fa-pencil"></i></a>
-                                    <a href="/role/{{ $role->id }}/destroy" title="Destroy"
-                                        class="btn btn-outline-danger"><i class="fa fa-trash-o"></i></a>
+                                    <a href="/role/{{ $role->id }}/destroy" title="Destroy {{ $role->role_name }}"
+                                       class="btn btn-outline-danger"><i class="fa fa-trash-o"></i></a>
                                     @endright
                                 </td>
                             </tr>
