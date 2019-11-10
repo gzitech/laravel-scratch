@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\User;
 use App\Role;
-use App\Site;
 use App\Contracts\Repositories\UserRepository as Contract;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;

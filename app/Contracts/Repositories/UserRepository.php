@@ -4,7 +4,6 @@ namespace App\Contracts\Repositories;
 
 use App\User;
 use App\Role;
-use App\Site;
 
 interface UserRepository
 {

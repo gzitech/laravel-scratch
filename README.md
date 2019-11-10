@@ -1,6 +1,6 @@
 # laravel-scratch
 
-a start point for you support role-based access control, multi site, subscription.
+a start point for you support role-based access control.
 
 ## Access Control
 
@@ -21,11 +21,6 @@ role-based access control (RBAC)
         'right' => [
             "all" => 16,
             "edit" => 32,
-        ],
-        'site' => [
-            "all" => 64,
-            "self" => 128,
-            "edit" => 256,
         ],
     ],
 ```

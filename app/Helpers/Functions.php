@@ -10,12 +10,6 @@ if (! function_exists('paginate')) {
     }
 }
 
-if (! function_exists('site')) {
-    function site() {
-        return app('App\Site');
-    }
-}
-
 if (! function_exists('user')) {
     function user() {
         return Auth::user();
