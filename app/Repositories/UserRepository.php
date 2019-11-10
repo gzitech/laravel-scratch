@@ -176,7 +176,7 @@ class UserRepository implements Contract
 
         $role = Role::find($role_id);
 
-        $role->users()->chunkById(64, function ($users) use($site) {
+        $role->users()->chunkById(64, function ($users) {
             foreach ($users as $user) {
                 $cacheKey = $this->cachePrefix . "." . $user->id;
                 Cache::forget($cacheKey);
