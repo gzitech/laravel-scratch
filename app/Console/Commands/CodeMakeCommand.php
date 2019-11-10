@@ -8,7 +8,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
-class CodeScaffoldCommand extends Command
+class CodeMakeCommand extends Command
 {
     private $modelPath, $modelNamespace;
     private $modelName, $snakeModelName, $tableName, $snakeTableName;
@@ -24,10 +24,11 @@ class CodeScaffoldCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'code:scaffold
+    protected $signature = 'make:code
     {model-name? : Specify an model class}
-    {--m|model-path=app : Specify model directory}
-    {--n|model-namespace=App : Specify model namespace}
+    {--clone= : Copy stubs to other directory}
+    {--p|model-path=app : Specify model directory}
+    {--s|model-namespace=App : Specify model namespace}
     {--c|check : Only show you what will create without write}
     {--d|delete : Delete all files base on rules}
     {--f|force : Overwrite existing code by default}';
@@ -39,6 +40,14 @@ class CodeScaffoldCommand extends Command
      */
     protected $description = 'Create scaffold code base on models';
 
+    protected $baseFiles = [
+        // command
+        'app/Console/Commands/CodeMakeCommand.php' => 'app/Console/Commands/CodeMakeCommand.php',
+    ];
+
+    /**
+     * use $this->compileFile() to compile.
+     */
     protected $compileFiles = [
         //views
         'resources/views/stubs/model.stub' => 'resources/views/#url#.blade.php',
@@ -55,10 +64,17 @@ class CodeScaffoldCommand extends Command
         'app/Http/Requests/stubs/update.stub' => 'app/Http/Requests/Update#modelName#Post.php',
     ];
 
+    /**
+     * use $this->compileDetailFile() to compile.
+     */
     protected $compileDetailFiles = [
         //views
         'resources/views/stubs/create-form.stub' => 'resources/views/#url#/create-form.blade.php',
         'resources/views/stubs/edit-form.stub' => 'resources/views/#url#/edit-form.blade.php',
+    ];
+
+    protected $ignoreModels = [
+        'User', 'Role'
     ];
 
     protected $ignoreFieldNames = [
@@ -90,10 +106,18 @@ class CodeScaffoldCommand extends Command
         $this->modelPath = $this->option('model-path');
         $this->modelNamespace = $this->option('model-namespace');
 
-        if(empty($modelName)) {
-            $this->generateCodes();
+        $clone = $this->option('clone');
+
+        if(empty($clone)) {
+            if(empty($modelName)) {
+                $this->generateCodes();
+            } else {
+                $this->generateCode($modelName);
+            }
         } else {
-            $this->generateCode($modelName);
+            $this->copyTo($this->baseFiles, $clone);
+            $this->copyTo($this->compileFiles, $clone);
+            $this->copyTo($this->compileDetailFiles, $clone);
         }
     }
 
@@ -107,7 +131,9 @@ class CodeScaffoldCommand extends Command
             $rel = $model->getRelativePathName();
             $modelName =  rtrim($rel, '.php');
 
-            $this->generateCode($modelName);
+            if (!in_array($modelName, $this->ignoreModels)) {
+                $this->generateCode($modelName);
+            }
         }
     }
 
@@ -123,17 +149,17 @@ class CodeScaffoldCommand extends Command
         $this->snakeTableName = Str::snake($this->tableName);
         $this->url = str_replace('_', '/', $this->snakeModelName);
 
-        // if($this->option('check')) {
-        //     $this->info("modelName: " . $this->modelName);
-        //     $this->info("kebabModelName: " . $this->kebabModelName);
-        //     $this->info("camelModelName: " . $this->camelModelName);
-        //     $this->info("snakeModelName: " . $this->snakeModelName);
-        //     $this->info("titleName: " . $this->titleName);
-        //     $this->info("tableName: " . $this->tableName);
-        //     $this->info("camelTableName: " . $this->camelTableName);
-        //     $this->info("snakeTableName: " . $this->snakeTableName);
-        //     $this->info("url: " . $this->url);
-        // }
+        if($this->option('check')) {
+            $this->info("modelName: " . $this->modelName);
+            $this->info("kebabModelName: " . $this->kebabModelName);
+            $this->info("camelModelName: " . $this->camelModelName);
+            $this->info("snakeModelName: " . $this->snakeModelName);
+            $this->info("titleName: " . $this->titleName);
+            $this->info("tableName: " . $this->tableName);
+            $this->info("camelTableName: " . $this->camelTableName);
+            $this->info("snakeTableName: " . $this->snakeTableName);
+            $this->info("url: " . $this->url);
+        }
 
         $class = $this->modelNamespace . '\\' . $this->modelName;
 
@@ -284,9 +310,11 @@ class CodeScaffoldCommand extends Command
         foreach($columns as $column) {
             $columnTitle = $this->strTitle($column);
 
+            $confirmKey = $outLine === "" ? ' id="confirm-key"': '';
+
             $outLine .= str_replace(
-                ['#ColumnName#', '#ColumnTitle#', '#modelName#', '#kebabModelName#', '#camelModelName#', '#snakeModelName#', '#titleName#', '#tableName#', '#camelTableName#', '#snakeTableName#', '#url#'],
-                [$column, $columnTitle, $this->modelName, $this->kebabModelName, $this->camelModelName, $this->snakeModelName, $this->titleName, $this->tableName, $this->camelTableName, $this->snakeTableName, $this->url],
+                ['#ColumnName#', '#ColumnTitle#', '#modelName#', '#kebabModelName#', '#camelModelName#', '#snakeModelName#', '#titleName#', '#tableName#', '#camelTableName#', '#snakeTableName#', '#url#', '#ConfirmKey#'],
+                [$column, $columnTitle, $this->modelName, $this->kebabModelName, $this->camelModelName, $this->snakeModelName, $this->titleName, $this->tableName, $this->camelTableName, $this->snakeTableName, $this->url, $confirmKey],
                 $content
             ). "\n";
         }
@@ -294,13 +322,6 @@ class CodeScaffoldCommand extends Command
         $outLine = trim($outLine, " \n");
 
         return $outLine;
-    }
-
-    protected function updateComponentBootstrap($lines)
-    {
-        $path = resource_path('js/components/bootstrap.js');
-
-        $this->updateFile($path, $lines);
     }
 
     protected function updateRoute($lines)
@@ -359,21 +380,38 @@ class CodeScaffoldCommand extends Command
 
         foreach($compileFiles as $filename=>$compiledFile) {
 
-            $stubs = $this->filesystem->files(dirname($filename));
+            if(Str::endsWith($filename, '.stub')) {
+                $stubs = $this->filesystem->files(dirname($filename));
 
-            foreach($stubs as $stub){
-                $rel = $stub->getRelativePathName();
-                $src = base_path($stub);
-                $target = $this->combinePath($targetDir, $stub);
+                foreach($stubs as $stub){
+                    $rel = $stub->getRelativePathName();
+                    $src = base_path($stub);
+                    $target = $this->combinePath($targetDir, $stub);
+
+                    if($this->filesystem->exists($src) && ($this->option('force') || !$this->filesystem->exists($target))) {
+
+                        if (! $this->filesystem->isDirectory($directory = $this->filesystem->dirname($target))) {
+                            $this->filesystem->makeDirectory($directory, 0755, true);
+                        }
+
+                        $this->filesystem->copy($src, $target);
+                        $this->info($stub);
+                    }
+                }
+
+            } else {
+                $src = base_path($filename);
+
+                $target = $this->combinePath($targetDir, $compiledFile);
 
                 if($this->filesystem->exists($src) && ($this->option('force') || !$this->filesystem->exists($target))) {
 
                     if (! $this->filesystem->isDirectory($directory = $this->filesystem->dirname($target))) {
                         $this->filesystem->makeDirectory($directory, 0755, true);
                     }
-
+                    
                     $this->filesystem->copy($src, $target);
-                    $this->info($stub);
+                    $this->info($filename);
                 }
             }
         }
