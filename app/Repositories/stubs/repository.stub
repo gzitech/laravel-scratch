@@ -10,7 +10,10 @@ class #modelName#Repository implements Contract
 {
     public function get#tableName#($key)
     {
-        return paginate(#modelName#::where('name', 'LIKE', "%{$key}%"), $key);
+        $query = #modelName#::where(function($query) use($key) {
+            $query->where('id', 'LIKE', "%{$key}%");
+        });
+        return paginate($query, $key);
     }
 
     public function find($id)
