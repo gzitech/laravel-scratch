@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class UserRepository implements Contract
 {
@@ -129,7 +130,7 @@ class UserRepository implements Contract
         $password = '';
 
         if(empty($data['password'])) {
-            $password = str_random(10);
+            $password = Str::random(10);
             $data['password'] = Hash::make($password);
         }
 
